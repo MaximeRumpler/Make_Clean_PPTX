@@ -1,2 +1,2 @@
 -r skills/make-clean-pptx/requirements.txt
-pytest>=8.0
+pytest>=9.1.1
