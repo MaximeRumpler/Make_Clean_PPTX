@@ -1,0 +1,23 @@
+{
+  "name": "make-clean-pptx",
+  "description": "The make-clean-pptx agent skill: clean, sober PowerPoint decks from a library of layouts and visuals.",
+  "owner": {
+    "name": "Maxime Rumpler",
+    "url": "https://github.com/MaximeRumpler"
+  },
+  "plugins": [
+    {
+      "name": "make-clean-pptx",
+      "source": "./",
+      "description": "Clean, sober PowerPoint decks from a library of layouts and visuals, with built-in checks.",
+      "version": "1.0.0",
+      "license": "EUPL-1.2",
+      "keywords": [
+        "pptx",
+        "powerpoint",
+        "presentation",
+        "slides"
+      ]
+    }
+  ]
+}

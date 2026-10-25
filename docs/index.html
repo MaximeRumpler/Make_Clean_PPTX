@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make Clean PPTX · Gallery</title>
+<meta name="description" content="54 layouts and 60 visuals of the make-clean-pptx agent skill: clean, sober PowerPoint decks, theme-ready.">
+<style>
+  :root {
+    --bg: #F7F7F5; --card: #FFFFFF; --ink: #111111; --ink2: #404040; --muted: #707070; --line: #E3E3E0;
+    --accent: #10B981; --navy: #1C2333; --chip: #EFEFEC; --shadow: 0 1px 2px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #11151F; --card: #1A2030; --ink: #F2F2F2; --ink2: #C9CDD6; --muted: #8E96A8; --line: #2A3245;
+      --chip: #222A3C; --shadow: none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #11151F; --card: #1A2030; --ink: #F2F2F2; --ink2: #C9CDD6; --muted: #8E96A8; --line: #2A3245;
+    --chip: #222A3C; --shadow: none;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 Inter, "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif; }
+  a { color: inherit; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+  header { background: var(--navy); color: #fff; }
+  header .wrap { padding-top: 44px; padding-bottom: 36px; display: grid; gap: 18px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand i { width: 6px; height: 40px; border-radius: 3px; background: linear-gradient(#10B981, #34D399); }
+  h1 { margin: 0; font-size: clamp(26px, 4vw, 38px); letter-spacing: -.02em; }
+  .lede { margin: 0; color: #AEB6C6; max-width: 760px; font-size: 16px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .links a { text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: .02em; padding: 7px 14px; border-radius: 999px; border: 1px solid #3B4660; color: #D7DCE6; }
+  .links a.primary { border-color: var(--accent); color: #34D399; }
+  .links a:hover { background: rgba(255,255,255,.06); }
+  .stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 6px; }
+  .stats b { display: block; font-size: 24px; color: #fff; }
+  .stats span { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #8E96A8; }
+
+  .controls { z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .controls .wrap { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; padding-top: 14px; padding-bottom: 14px; }
+  .seg { display: inline-flex; background: var(--chip); border-radius: 10px; padding: 3px; }
+  .seg button { border: 0; background: transparent; color: var(--ink2); font: inherit; font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 8px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+  input[type=search] { flex: 1 1 220px; min-width: 0; font: inherit; font-size: 14px; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--ink); }
+  input[type=search]:focus, button:focus-visible, .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .theme { border: 1px solid var(--line); background: var(--card); color: var(--ink2); border-radius: 10px; padding: 8px 11px; font: inherit; font-size: 13px; cursor: pointer; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+  .chips button { border: 1px solid var(--line); background: var(--card); color: var(--ink2); font: inherit; font-size: 12.5px; padding: 5px 11px; border-radius: 999px; cursor: pointer; }
+  .chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .chips em { font-style: normal; color: var(--muted); margin-left: 4px; }
+  .chips button[aria-pressed="true"] em { color: inherit; opacity: .7; }
+
+  @media (min-width: 900px) { .controls { position: sticky; top: 0; } }
+  main .wrap { padding-top: 26px; padding-bottom: 60px; }
+  .count { color: var(--muted); font-size: 13px; margin: 0 0 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; cursor: pointer; text-align: left; padding: 0; font: inherit; color: inherit; box-shadow: var(--shadow); transition: transform .15s ease, border-color .15s ease; }
+  .card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
+  .card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: #fff; border-bottom: 1px solid var(--line); }
+  .card div { padding: 12px 14px 14px; }
+  .id { font: 600 11.5px/1 "SFMono-Regular", Consolas, "Liberation Mono", monospace; color: var(--accent); letter-spacing: .02em; }
+  .card h3 { margin: 6px 0 4px; font-size: 15px; }
+  .card p { margin: 0; color: var(--muted); font-size: 13px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .empty { padding: 60px 0; text-align: center; color: var(--muted); }
+
+  dialog { border: 0; border-radius: 14px; padding: 0; width: min(980px, calc(100vw - 32px)); background: var(--card); color: var(--ink); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+  dialog::backdrop { background: rgba(10, 14, 22, .6); }
+  .dlg { display: grid; grid-template-columns: 1.6fr 1fr; }
+  .dlg img { width: 100%; height: auto; display: block; background: #fff; align-self: center; }
+  .dlg section { padding: 22px 22px 24px; display: grid; gap: 12px; align-content: start; }
+  .dlg h2 { margin: 0; font-size: 20px; }
+  .dlg dl { margin: 0; display: grid; gap: 10px; font-size: 13.5px; }
+  .dlg dt { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .dlg dd { margin: 2px 0 0; color: var(--ink2); }
+  .dlg code { display: block; white-space: pre-wrap; word-break: break-word; background: var(--chip); border-radius: 8px; padding: 10px 12px; font: 12px/1.5 "SFMono-Regular", Consolas, monospace; color: var(--ink); }
+  .close { position: absolute; top: 10px; right: 10px; border: 0; width: 34px; height: 34px; border-radius: 50%; background: rgba(17,17,17,.75); color: #fff; font-size: 18px; cursor: pointer; }
+  @media (max-width: 760px) { .dlg { grid-template-columns: 1fr; } }
+
+  footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  footer .wrap { padding-top: 22px; padding-bottom: 30px; display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: space-between; }
+  @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand"><i aria-hidden="true"></i><h1>Make Clean PPTX</h1></div>
+    <p class="lede">A skill that teaches an AI assistant to turn your notes into PowerPoint decks. Below are the slide designs and charts it picks from. They are black, grey and white; your own PowerPoint theme recolours them.</p>
+    <div class="links">
+      <a class="primary" href="https://github.com/MaximeRumpler/Make_Clean_PPTX#install">Install the skill</a>
+      <a href="https://github.com/MaximeRumpler/Make_Clean_PPTX">GitHub</a>
+      <a href="https://github.com/MaximeRumpler/Make_Clean_PPTX/blob/main/CATALOG.md">Catalogue</a>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="wrap">
+    <div class="seg" role="group" aria-label="Library">
+      <button type="button" data-lib="all" aria-pressed="true">All</button>
+      <button type="button" data-lib="layouts" aria-pressed="false">Layouts</button>
+      <button type="button" data-lib="visuals" aria-pressed="false">Visuals</button>
+    </div>
+    <input type="search" id="q" placeholder="Search: waterfall, decision, kpi, timeline…" aria-label="Search the gallery">
+    <button type="button" class="theme" id="theme" aria-label="Toggle colour theme">Theme</button>
+    <div class="chips" id="chips" role="group" aria-label="Category"></div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <p class="count" id="count" aria-live="polite"></p>
+    <div class="grid" id="grid"></div>
+  </div>
+</main>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <button class="close" type="button" aria-label="Close" onclick="document.getElementById('dlg').close()">×</button>
+  <div class="dlg">
+    <img id="dlg-img" alt="">
+    <section>
+      <span class="id" id="dlg-id"></span>
+      <h2 id="dlg-title"></h2>
+      <dl id="dlg-dl"></dl>
+      <code id="dlg-code"></code>
+    </section>
+  </div>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    <span>Built by <a href="https://github.com/MaximeRumpler">Maxime Rumpler</a> · <a href="https://github.com/KairosTech-fr">KairosTech</a> · <a href="https://kairostech.fr">kairostech.fr</a></span>
+    <span>EUPL-1.2 · your decks are yours · icons by Lucide (ISC)</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const state = { lib: "all", cat: null, q: "" };
+  let items = [];
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  // theme toggle, remembered per viewer
+  try { const t = localStorage.getItem("mcp-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  $("theme").addEventListener("click", () => {
+    const dark = document.documentElement.dataset.theme
+      ? document.documentElement.dataset.theme === "dark"
+      : matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("mcp-theme", document.documentElement.dataset.theme); } catch (e) {}
+  });
+
+  function visible() {
+    const words = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+    return items.filter((it) =>
+      (state.lib === "all" || it.lib === state.lib) &&
+      (!state.cat || it.category === state.cat) &&
+      words.every((w) => [it.id, it.name, it.category, it.tags, it.use_when, it.description, it.objective].join(" ").toLowerCase().includes(w)));
+  }
+
+  function renderChips() {
+    const pool = items.filter((it) => state.lib === "all" || it.lib === state.lib);
+    const cats = [];
+    pool.forEach((it) => { if (!cats.includes(it.category)) cats.push(it.category); });
+    if (state.cat && !cats.includes(state.cat)) state.cat = null;
+    $("chips").innerHTML = cats.map((c) => {
+      const n = pool.filter((it) => it.category === c).length;
+      return `<button type="button" data-cat="${esc(c)}" aria-pressed="${state.cat === c}">${esc(c)}<em>${n}</em></button>`;
+    }).join("");
+  }
+
+  function render() {
+    const list = visible();
+    $("count").textContent = `${list.length} of ${items.length} slides`;
+    $("grid").innerHTML = list.length ? list.map((it, i) => `
+      <button type="button" class="card" data-i="${items.indexOf(it)}">
+        <img src="${esc(it.thumbnail)}" alt="${esc(it.name)}: ${esc(it.description)}" loading="lazy" width="640" height="360">
+        <div><span class="id">${esc(it.id)}</span><h3>${esc(it.name)}</h3><p>${esc(it.use_when)}</p></div>
+      </button>`).join("") : `<p class="empty">Nothing matches. Try another word or clear the filters.</p>`;
+  }
+
+  function open(it) {
+    $("dlg-img").src = it.thumbnail;
+    $("dlg-img").alt = `${it.name}: ${it.description}`;
+    $("dlg-id").textContent = `${it.id} · ${it.lib === "layouts" ? "Layout" : "Visual"} · ${it.category}`;
+    $("dlg-title").textContent = it.name;
+    const rows = [["What it shows", it.description], ["Use it when", it.use_when]];
+    if (it.objective) rows.push(["Objective", it.objective]);
+    if (it.frame) rows.push(["Native size", it.frame]);
+    if (it.style) rows.push(["Style", it.style]);
+    rows.push(["Editable fields", it.fields]);
+    $("dlg-dl").innerHTML = rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+    $("dlg-code").textContent = it.lib === "layouts"
+      ? `{"id": "${it.id}", "fill": { … }}`
+      : `"insert": [{"id": "${it.id}", "component": "${it.id}",\n            "into": "Content Area", "fill": { … }}]`;
+    $("dlg").showModal();
+  }
+
+  document.querySelector(".seg").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    state.lib = b.dataset.lib;
+    document.querySelectorAll(".seg button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+    renderChips(); render();
+  });
+  $("chips").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    state.cat = state.cat === b.dataset.cat ? null : b.dataset.cat;
+    renderChips(); render();
+  });
+  $("q").addEventListener("input", (e) => { state.q = e.target.value; render(); });
+  $("grid").addEventListener("click", (e) => { const c = e.target.closest(".card"); if (c) open(items[+c.dataset.i]); });
+  $("dlg").addEventListener("click", (e) => { if (e.target === $("dlg")) $("dlg").close(); });
+
+  fetch("catalog.json").then((r) => r.json()).then((data) => {
+    items = data;
+    const n = (lib) => items.filter((it) => it.lib === lib).length;
+    const cats = new Set(items.map((it) => it.lib + it.category)).size;
+    $("stats").innerHTML = [[n("layouts"), "layouts"], [n("visuals"), "visuals"], [cats, "categories"], ["1,900", "bundled icons"]]
+      .map(([v, l]) => `<div><b>${v}</b><span>${l}</span></div>`).join("");
+    renderChips(); render();
+  }).catch(() => { $("count").textContent = "The catalogue could not be loaded."; });
+})();
+</script>
+</body>
+</html>

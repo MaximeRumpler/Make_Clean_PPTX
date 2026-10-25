@@ -1,0 +1,38 @@
+Make Clean PPTX
+Copyright (c) 2026 Maxime Rumpler
+
+Licensed under the European Union Public Licence v. 1.2 (EUPL-1.2), see LICENSE.
+The EUPL is available in all official languages of the European Union, all
+versions having the same validity: https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+
+What this means: you may use, copy, modify and distribute this work freely. If you
+distribute a modified version, or make it available to others over a network
+(for example as an online service), you must share its source code under the
+EUPL or a licence listed as compatible in its appendix.
+
+
+YOUR PRESENTATIONS ARE YOURS
+----------------------------
+As an additional permission from the copyright holder, presentations, documents,
+images and any other output that you create with this software, including the
+parts of the layouts, visuals, icons and theme that the software copies into
+them, are not subject to the obligations of the EUPL. You may use, modify,
+distribute and license them as you wish, with no attribution required.
+The copyleft applies to the software and to the libraries themselves (the
+generator, the scripts, the pptx and index files as distributed in this
+repository), not to the decks you make with them.
+
+
+THIRD-PARTY CONTENT
+-------------------
+- Lucide icons, bundled in skills/make-clean-pptx/assets/icons/:
+  ISC License, Copyright (c) Lucide Icons and Contributors,
+  see skills/make-clean-pptx/assets/icons/LICENSE-lucide.txt
+- Icons fetched at run time keep their own licences and are not part of this
+  repository: Tabler Icons (MIT), Material Symbols (Apache-2.0),
+  OpenMoji (CC BY-SA 4.0, attribution added automatically).
+- Photos fetched at run time from Openverse and Wikimedia Commons keep their own
+  licences (CC0, public domain, CC BY, CC BY-SA); credits are written to the
+  speaker notes and to <deck>.credits.md.
+- Python and Node.js dependencies are installed separately and keep their own
+  licences (MIT, BSD, ISC, PSF, MIT-CMU).

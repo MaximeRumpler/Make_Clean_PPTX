@@ -1,0 +1,59 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - run: pytest
+
+  render:
+    # Same suite with LibreOffice present, so the render round-trip test runs too.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libreoffice-impress poppler-utils fonts-liberation
+      - run: pip install -r requirements-dev.txt
+      - run: pytest
+
+  library:
+    # The libraries are generated: rebuilding them must reproduce the committed indexes.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: library/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: npm ci --prefix library --ignore-scripts
+      - run: pip install -r requirements-dev.txt
+      - run: node library/tools/build.js all
+      - run: python library/tools/post.py all
+      - run: python library/tools/build_index.py
+      - run: git diff --exit-code -- skills/make-clean-pptx/assets/   # pptx and csv are byte-reproducible
+      - run: pytest tests/test_libraries.py

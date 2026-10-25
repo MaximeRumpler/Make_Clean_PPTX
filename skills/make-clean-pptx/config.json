@@ -1,0 +1,27 @@
+{
+  "_comment": "Where the libraries live. By default the copies bundled in assets/ are used (no network). Set MAKE_CLEAN_PPTX_TEMPLATES_DIR or --local-dir to use your own files, or --remote / MAKE_CLEAN_PPTX_REPO to download them from a GitHub repository (your fork).",
+  "assets_dir": "assets",
+  "repo": "MaximeRumpler/Make_Clean_PPTX",
+  "ref": "main",
+  "path": "skills/make-clean-pptx/assets",
+  "cache_ttl_hours": 24,
+  "files": {
+    "layouts": {
+      "pptx": "layouts.pptx",
+      "index": "layouts.csv"
+    },
+    "visuals": {
+      "pptx": "visuals.pptx",
+      "index": "visuals.csv"
+    }
+  },
+  "icons": {
+    "local_dirs": []
+  },
+  "images": {
+    "max_dimension": 2560,
+    "min_width": 1600,
+    "max_download_mb": 25,
+    "allowed_licenses": ["cc0", "pdm", "by", "by-sa"]
+  }
+}

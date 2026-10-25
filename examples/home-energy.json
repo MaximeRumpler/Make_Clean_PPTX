@@ -1,0 +1,56 @@
+{
+  "output": "build/examples/home-energy.pptx",
+  "properties": {"title": "What actually moves the energy bill", "author": "Make Clean PPTX example"},
+  "slides": [
+    {"id": "L-03", "fill": {"Title": "What moves the energy bill", "Subtitle": "Home energy for non-specialists: where the money goes and what to do first"}},
+
+    {"id": "L-13", "fill": {
+      "Kicker": "Where the energy goes",
+      "Number": "2/3", "Number caption": "of a typical household's energy goes to heating and hot water",
+      "Title": "Heating is the bill",
+      "Body": "Any plan that does not touch heating and hot water only works on the remaining third. Start there."}},
+
+    {"id": "L-20", "fill": {
+      "Kicker": "Three levers",
+      "Title": "Three levers, very different paybacks",
+      "Subtitle": "What each option does and when it pays back",
+      "Icon 1": {"icon": "lucide:house"}, "Heading 1": "Insulation",
+      "Body 1": "Loft insulation usually pays back in 3 to 5 years. New windows take far longer.",
+      "Icon 2": {"icon": "lucide:heater"}, "Heading 2": "Heat pump",
+      "Body 2": "Roughly three times less heating energy than resistance heating, provided the house is well insulated.",
+      "Icon 3": {"icon": "lucide:solar-panel"}, "Heading 3": "Solar panels",
+      "Body 3": "Help most when power is used during the day. A battery rarely pays back on its own."}},
+
+    {"id": "L-16", "fill": {
+      "Kicker": "Our position",
+      "Title": "Insulate first, then electrify heating, then add solar",
+      "Argument 1": "Insulation lowers every later bill",
+      "Argument 1 detail": "It is the cheapest kilowatt-hour: the one you no longer need.",
+      "Argument 2": "Heat pumps need insulation to shine",
+      "Argument 2 detail": "In a leaky house the heat pump is oversized and runs less efficiently.",
+      "Argument 3": "Solar comes last",
+      "Argument 3 detail": "Size it to daytime use once heating is electric."}},
+
+    {"id": "L-51", "fill": {
+      "Kicker": "This week",
+      "Title": "Three quick wins cost almost nothing",
+      "Band 1 label": "Thermostat", "Band 1 heading": "Lower it by 1 °C", "Band 1 body": "The easiest saving: no purchase, no works.",
+      "Band 2 label": "Draughts", "Band 2 heading": "Fix the gaps", "Band 2 body": "Doors, windows and loft hatch: seal what you can feel.",
+      "Band 3 label": "Standby", "Band 3 heading": "Switch off standby loads", "Band 3 body": "Use switchable power strips for TV and office equipment."}},
+
+    {"id": "L-31", "fill": {"Kicker": "Plan", "Title": "Six months from audit to heat pump", "Subtitle": "Review after the first winter"},
+     "insert": [{"id": "V-TIM-01", "component": "V-TIM-01", "into": "Content Area", "fill": {
+       "Date 1": "Month 1", "Milestone 1": "Energy audit",
+       "Date 2": "Months 2-3", "Milestone 2": "Insulation works",
+       "Date 3": "Month 6", "Milestone 3": "Heat pump installed",
+       "Date 4": "After winter", "Milestone 4": "Review the bills",
+       "Date 5": null, "Milestone 5": null, "Date 6": null, "Milestone 6": null}}]},
+
+    {"id": "L-47", "fill": {
+      "Point 1": "Heating and hot water are two thirds of the bill",
+      "Point 2": "Insulation first: it pays back in 3 to 5 years",
+      "Point 3": "Then a heat pump, then solar sized to daytime use",
+      "Point 4": "Quick wins start this week, at no cost",
+      "Decision": "Approve the audit budget today"}}
+  ]
+}

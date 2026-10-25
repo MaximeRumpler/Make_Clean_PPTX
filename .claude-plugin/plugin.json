@@ -1,0 +1,24 @@
+{
+  "name": "make-clean-pptx",
+  "version": "1.0.0",
+  "description": "Clean, sober PowerPoint decks from a library of 54 layouts and 60 visuals: plan, choose, fill, lint, render and review. Theme-ready, icons included, no invented content.",
+  "author": {
+    "name": "Maxime Rumpler",
+    "url": "https://github.com/MaximeRumpler"
+  },
+  "homepage": "https://github.com/MaximeRumpler/Make_Clean_PPTX",
+  "repository": "https://github.com/MaximeRumpler/Make_Clean_PPTX",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "pptx",
+    "powerpoint",
+    "libreoffice",
+    "presentation",
+    "slides",
+    "deck",
+    "charts",
+    "icons",
+    "skill"
+  ],
+  "skills": "./skills"
+}
