@@ -63,7 +63,7 @@ Browse them in the [gallery](https://maximerumpler.github.io/Make_Clean_PPTX/). 
 
 ## Then add your colours
 
-*From your content, first Make_Clean, then add your colours.* The companion skill [**Make_Colors_PPTX**](https://github.com/MaximeRumpler/Make_Colors_PPTX) (in preparation) turns a brand guide, a website or an example file into a PowerPoint theme and applies it to your clean deck.
+*From your content, first Make_Clean, then add your colours.* The companion skill **Make_Colors_PPTX** (in preparation) turns a brand guide, a website or an example file into a PowerPoint theme and applies it to your clean deck.
 
 * * *
 

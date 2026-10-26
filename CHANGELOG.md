@@ -7,7 +7,7 @@ All notable changes to this project are documented here. Format based on [Keep a
 ### Added
 - `render_check.py --odp`: also saves an OpenDocument copy of the deck for LibreOffice users (the skill already triggered on `.odp`).
 - Release workflow: every release gets the skill as a zip (for Claude.ai and Claude desktop), a sample deck (`.pptx`, `.odp`) and its contact sheet. Can be run by hand to backfill a release.
-- README: install for Claude.ai and Claude desktop, Windows note, how to update, CI badge, link to the companion skill Make_Colors_PPTX. `CITATION.cff`.
+- README: install for Claude.ai and Claude desktop, Windows note, how to update, CI badge, mention of the companion skill Make_Colors_PPTX (linked once it is public). `CITATION.cff`.
 - Gallery: static install and usage text, readable without JavaScript.
 
 ### Changed
