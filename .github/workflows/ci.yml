@@ -10,11 +10,20 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Windows and macOS run without LibreOffice: the render tests skip, everything else must pass.
+    # Ubuntu jobs keep the names "test (3.9)" / "test (3.12)": branch protection requires them.
+    name: ${{ matrix.os == 'ubuntu-latest' && format('test ({0})', matrix.python-version) || format('test ({0}, {1})', matrix.os, matrix.python-version) }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest]
         python-version: ["3.9", "3.12"]
+        include:
+          - os: windows-latest
+            python-version: "3.12"
+          - os: macos-latest
+            python-version: "3.12"
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7

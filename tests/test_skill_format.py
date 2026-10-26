@@ -35,7 +35,7 @@ def test_referenced_files_exist():
 
 
 def test_config_is_consistent():
-    cfg = json.loads((SKILL / "config.json").read_text())
+    cfg = json.loads((SKILL / "config.json").read_text(encoding="utf-8"))
     assert set(cfg["files"]) == {"layouts", "visuals"}
     for kind in cfg["files"].values():
         for name in kind.values():
@@ -53,8 +53,8 @@ def test_skill_is_self_contained():
 
 
 def test_plugin_manifests_parse():
-    plugin = json.loads((ROOT / ".claude-plugin" / "plugin.json").read_text())
-    market = json.loads((ROOT / ".claude-plugin" / "marketplace.json").read_text())
+    plugin = json.loads((ROOT / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+    market = json.loads((ROOT / ".claude-plugin" / "marketplace.json").read_text(encoding="utf-8"))
     assert plugin["name"] == "make-clean-pptx"
     assert market["plugins"][0]["name"] == plugin["name"]
     assert (ROOT / "skills" / "make-clean-pptx" / "SKILL.md").is_file()
@@ -62,6 +62,6 @@ def test_plugin_manifests_parse():
 
 def test_licence_copies_in_skill_folder():
     """The skill is often copied alone: it carries the licence and the notice."""
-    assert (SKILL / "LICENSE.txt").read_text() == (ROOT / "LICENSE").read_text()
-    assert (SKILL / "NOTICE.txt").read_text() == (ROOT / "NOTICE").read_text()
+    assert (SKILL / "LICENSE.txt").read_text(encoding="utf-8") == (ROOT / "LICENSE").read_text(encoding="utf-8")
+    assert (SKILL / "NOTICE.txt").read_text(encoding="utf-8") == (ROOT / "NOTICE").read_text(encoding="utf-8")
     assert "EUPL-1.2" in _frontmatter((SKILL / "SKILL.md").read_text(encoding="utf-8"))["license"]

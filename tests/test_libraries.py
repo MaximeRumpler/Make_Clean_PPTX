@@ -25,7 +25,7 @@ from read_index import load_index  # noqa: E402
 
 
 def run(script, *args):
-    p = subprocess.run([sys.executable, str(SCRIPTS / script), *map(str, args)], capture_output=True, text=True)
+    p = subprocess.run([sys.executable, str(SCRIPTS / script), *map(str, args)], capture_output=True, encoding="utf-8")
     return p.returncode, p.stdout, p.stderr
 
 
