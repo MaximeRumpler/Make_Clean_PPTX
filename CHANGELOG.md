@@ -10,11 +10,21 @@ All notable changes to this project are documented here. Format based on [Keep a
 - README: install for Claude.ai and Claude desktop, Windows note, how to update, CI badge, mention of the companion skill Make_Colors_PPTX (linked once it is public). `CITATION.cff`.
 - Gallery: static install and usage text, readable without JavaScript.
 - README: the Make PPTX set (Make_Clean, Make_Style, Make_Colors), link to the example deck of the latest release, `.odp` mentioned.
+- `doctor.py --fix`: installs missing Python packages from `requirements.txt` (normal install, then `--user`; never `--break-system-packages`), reports what was installed and what is still missing, and gives a plain-language `message` the agent can pass on to the user.
+- `render_check.py`: when LibreOffice refuses a deck written by another tool, retries once on a re-saved copy made with python-pptx in a temporary folder (the user's file is never touched), reported as `"resaved_copy": true`. Finds LibreOffice in its usual Windows and macOS install folders when it is not on the PATH.
+- CI runs the test suite on Windows and macOS too (Python 3.12, without LibreOffice).
+- SKILL.md: give the user the full path of the delivered files (in the outputs folder when the harness has one); `doctor.py --fix` in Troubleshooting.
 
 ### Changed
 - `install.sh` only replaces a previous copy of this skill (never an unrelated folder), swaps in the new copy after it is complete, and no longer forces packages into a system-managed Python (`--break-system-packages` removed; falls back to `--user`, then explains how to use a virtual environment).
 - Dependabot keeps Python requirements as minimums instead of raising them on every release (raising Pillow to 13 would have dropped Python 3.9).
 - Banner without the "plan · choose · fill · check" line.
+- Shorter, plain-language error hints in `doctor.py`, `render_check.py` (per operating system), `build_deck.py` (a missing package now gives a JSON error instead of a traceback) and `fetch_image.py`.
+- `render_check.py`: a deck LibreOffice cannot convert now exits 5 ("rendering failed"), as documented, instead of 4 (reserved for missing tools).
+
+### Fixed
+- `doctor.py` crashed when python-pptx was missing (the very case it checks for).
+- Windows: scripts print UTF-8 (the console code page could not encode some characters and stopped the script), and the LibreOffice profile path is now a valid `file:` URI.
 
 ## [1.0.0] - 2026-10-25
 

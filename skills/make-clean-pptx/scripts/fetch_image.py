@@ -187,8 +187,8 @@ def main(argv=None) -> int:
         print(json.dumps({
             "error": "no usable image found" if not errors else "image sources unreachable",
             "details": errors,
-            "hint": "Try broader/other keywords, lower --min-width, or --orientation any. If the network blocks "
-                    "these hosts, use pictures/icons from the templates or ask the user to attach images.",
+            "hint": "Try simpler keywords, --orientation any or a lower --min-width. If the photo sites are "
+                    "blocked here, use icons instead or ask the user for their own images.",
         }, indent=2))
         return 3
     if args.list:
@@ -206,9 +206,12 @@ def main(argv=None) -> int:
         print(json.dumps({**info, **{k: c[k] for k in ("source", "title", "creator", "license", "license_url", "landing_url", "credit")}},
                          indent=2, ensure_ascii=False))
         return 0
-    print(json.dumps({"error": "all candidates failed to download", "details": errors}, indent=2))
+    print(json.dumps({"error": "all candidates failed to download", "details": errors,
+                      "hint": "Try other keywords, or go without a photo."}, indent=2))
     return 3
 
 
 if __name__ == "__main__":
+    for _stream in (sys.stdout, sys.stderr):  # Windows pipes default to a legacy code page; agents read UTF-8
+        getattr(_stream, "reconfigure", lambda **_: None)(encoding="utf-8")
     sys.exit(main())

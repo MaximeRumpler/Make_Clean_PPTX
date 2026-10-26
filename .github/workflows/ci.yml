@@ -10,11 +10,18 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Windows and macOS run without LibreOffice: the render tests skip, everything else must pass.
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest]
         python-version: ["3.9", "3.12"]
+        include:
+          - os: windows-latest
+            python-version: "3.12"
+          - os: macos-latest
+            python-version: "3.12"
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7

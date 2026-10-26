@@ -78,7 +78,7 @@ python3 scripts/render_check.py build/deck.pptx --out-dir build/render
 Open `build/render/contact-sheet.png`, then single slides where something looks off. Review against `references/review-checklist.md`: leftover placeholders, overflow, cramped or empty slides, three identical layouts in a row, a chart whose headline does not say what it shows. If your harness offers sub-agents (Claude Code: the `deck-reviewer` agent of this plugin), delegate this review to get a fresh pair of eyes; otherwise do it yourself. Fix the spec and rebuild. Stop after three rounds and tell the user what is still off and why. LibreOffice differs from PowerPoint by a few pixels: judge layout and content, not kerning. Without a way to view images, rely on the lint and say the visual check was skipped.
 
 ### 6. Deliver
-Hand over the `.pptx` (and `<deck>.credits.md` when images or attributed icons were used). If the user asked for `.odp` or uses LibreOffice, add `--odp` to the last `render_check.py` run and hand over the `.odp` too. Two or three sentences: slide count, the storyline, anything to double-check (figures you could not verify, an image you could not find). No recap of the steps.
+Hand over the `.pptx` (and `<deck>.credits.md` when images or attributed icons were used). Give the full path of every delivered file; in harnesses with an outputs folder (Claude.ai, Claude desktop), save them there so the user can download them. If the user asked for `.odp` or uses LibreOffice, add `--odp` to the last `render_check.py` run and hand over the `.odp` too. Two or three sentences: slide count, the storyline, anything to double-check (figures you could not verify, an image you could not find). No recap of the steps.
 
 ## Reviewing an existing deck
 When the user asks to review, clean up or "make professional" a deck they already have: run `lint_deck.py` and `render_check.py` on it, review with `references/review-checklist.md`, then either list concrete fixes or, if asked to redo it, extract the content and rebuild it with this workflow. **Never overwrite the user's file**: write the new deck next to it (`<name>-clean.pptx`) and say where it is.
@@ -97,6 +97,7 @@ When the user asks to review, clean up or "make professional" a deck they alread
 
 | Symptom | Fix |
 |---|---|
+| A script says a Python package is missing | Run `python3 scripts/doctor.py --fix`: it installs what is missing and says, in one sentence to pass on, what is left to do. |
 | `required field 'X' still shows its template placeholder` | Fill X, or set it to `null` if the slide does not need it. |
 | `shown at 42% of its size … 8pt floor` | The visual is too big for that frame: use a layout with a larger frame (`frame` column: full, wide, half) or fewer items. |
 | `no shape named 'X'` | Read the card (`read_index.py … --id`) for the exact field names. |
