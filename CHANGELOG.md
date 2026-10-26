@@ -10,6 +10,9 @@ All notable changes to this project are documented here. Format based on [Keep a
 - README: install for Claude.ai and Claude desktop, Windows note, how to update, CI badge, mention of the companion skill Make_Colors_PPTX (linked once it is public). `CITATION.cff`.
 - Gallery: static install and usage text, readable without JavaScript.
 - README: the Make PPTX set (Make_Clean, Make_Style, Make_Colors), link to the example deck of the latest release, `.odp` mentioned.
+- **Signature visuals** (new family, shown last in the catalogue): six metaphor illustrations drawn as native shapes in the neutral greys, V-SIG-01 meshing gears, V-SIG-02 light bulb, V-SIG-03 puzzle, V-SIG-04 winding road, V-SIG-05 mountain and summit flag, V-SIG-06 target. They are opt-in: rows tagged `signature` are left out of `read_index.py` searches and listings unless the request names them, and visual-selection.md limits them to one or two per deck, a single metaphor, never for figures.
+- Visuals V-STR-09 half-ring layers and V-TIM-06 serpentine timeline (eight steps on an S path).
+- Drawing kit: `path()` for free-form shapes (custom geometry with lines, Bezier curves and arcs).
 
 ### Changed
 - `install.sh` only replaces a previous copy of this skill (never an unrelated folder), swaps in the new copy after it is complete, and no longer forces packages into a system-managed Python (`--break-system-packages` removed; falls back to `--user`, then explains how to use a virtual environment).

@@ -72,6 +72,18 @@ def test_placeholders_are_not_content():
                     assert not pattern.search(shp.text_frame.text), f"{lib}: '{shp.text_frame.text}'"
 
 
+def test_signature_visuals_are_opt_in():
+    """Signature metaphors never come up in an ordinary search, only when asked for."""
+    sig = [e for e in load_index(ASSETS / "visuals.csv") if e["category"] == "Signature"]
+    assert len(sig) >= 6 and all("signature" in e["tags"].split() and e["id"].startswith("V-SIG-") for e in sig)
+    code, out, _ = run("read_index.py", ASSETS / "visuals.csv", "-q", "target goal gears puzzle road mountain idea", "--top", "60")
+    assert code == 0 and "V-SIG-" not in out
+    code, out, _ = run("read_index.py", ASSETS / "visuals.csv", "--category", "signature")
+    assert code == 0 and out.count("V-SIG-") == len(sig)
+    code, out, _ = run("read_index.py", ASSETS / "visuals.csv", "-q", "signature puzzle", "--top", "1")
+    assert "V-SIG-03" in out
+
+
 def test_icons_bundle():
     data = json.loads((ASSETS / "icons" / "lucide.json").read_text(encoding="utf-8"))
     assert len(data) > 1500 and "rocket" in data and data["rocket"]["tags"]

@@ -6,7 +6,7 @@
 
 [![CI](https://img.shields.io/github/actions/workflow/status/MaximeRumpler/Make_Clean_PPTX/ci.yml?branch=main&style=flat-square&label=CI&color=10B981&labelColor=1C2333)](https://github.com/MaximeRumpler/Make_Clean_PPTX/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-EUPL--1.2-10B981?style=flat-square&labelColor=1C2333)](LICENSE)
-[![Gallery](https://img.shields.io/badge/Gallery-114_slides-10B981?style=flat-square&labelColor=1C2333)](https://maximerumpler.github.io/Make_Clean_PPTX/)
+[![Gallery](https://img.shields.io/badge/Gallery-122_slides-10B981?style=flat-square&labelColor=1C2333)](https://maximerumpler.github.io/Make_Clean_PPTX/)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-plugin-D97757?style=flat-square&logo=anthropic&logoColor=white&labelColor=1C2333)](#install)
 
 </div>
@@ -53,7 +53,7 @@ Review my-deck.pptx and make it look professional.
 
 ## What's inside
 
-| **54 slide designs** | **60 charts and diagrams** | **1,900 icons** |
+| **54 slide designs** | **68 charts and diagrams** | **1,900 icons** |
 |:---:|:---:|:---:|
 | covers, key messages, figures, options, next steps | bars, waterfalls, matrices, timelines, org charts | bundled, plus free online icons and photos |
 

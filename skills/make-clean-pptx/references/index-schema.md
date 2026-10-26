@@ -16,7 +16,7 @@ Each library has one index: `assets/layouts.csv` and `assets/visuals.csv`. The a
 | `category` | ✓ | ✓ | family used for browsing (see below) |
 | `style` | ✓ | | `Standard`, `Editorial` (typographic, airy) or `Bold` (dark surfaces) |
 | `density` | ✓ | | `Low`, `Medium`, `High`: how much text the slide holds |
-| `kind` | | ✓ | `chart` (native, data-driven), `diagram`, `matrix`, `table`, `timeline` |
+| `kind` | | ✓ | `chart` (native, data-driven), `diagram`, `matrix`, `table`, `timeline`, `illustration` (a metaphor drawing, see opt-in rows) |
 | `frame` | | ✓ | native size: `full` (12.1 × 4.6 in), `wide` (7.9 × 4.6), `half` (5.9 × 4.2) |
 | `objective` | | ✓ | controlled vocabulary, see visual-selection.md |
 | `data_type` | | ✓ | `Quantitative`, `Time series`, `Ordinal`, `Qualitative`, `Hierarchical`, `Relational`, `Sequential` |
@@ -30,7 +30,11 @@ Each library has one index: `assets/layouts.csv` and `assets/visuals.csv`. The a
 | `related` | | ✓ | close alternatives |
 | `fields` | ✓ | ✓ | the editable fields, see below |
 
-Categories: layouts use Cover, Agenda, Divider, Statement, Text, Media, Team, Frame, KPI, Table, Decision, Closing, Editorial, Process. Visuals use Compare, Evolve, Compose, Relate, KPI, Matrix, Process, Time, Structure, Frameworks.
+Categories: layouts use Cover, Agenda, Divider, Statement, Text, Media, Team, Frame, KPI, Table, Decision, Closing, Editorial, Process. Visuals use Compare, Evolve, Compose, Relate, KPI, Matrix, Process, Time, Structure, Frameworks, and Signature (opt-in, last).
+
+## Opt-in rows (tag `signature`)
+
+Some rows must never be picked by default: the **Signature** visuals (`V-SIG-*`, gears, light bulb, puzzle, road, mountain, target) are metaphor illustrations that set the tone of a deck, and one too many makes it look like clip art. They are marked by the word `signature` in `tags` (and `objective` = `Set the tone`, `kind` = `illustration`). `read_index.py` leaves every row tagged `signature` out of searches and listings unless the request names it (`-q "signature …"`, `--category signature`, `--where tags=signature`); `--id` and `--slide` always work. Use the same tag to make rows of your own libraries opt-in. When to use them: visual-selection.md.
 
 ## `fields` syntax
 
