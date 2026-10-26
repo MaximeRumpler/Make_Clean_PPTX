@@ -30,11 +30,11 @@ Read what the user gave you. Work out the audience, the goal, the language (the 
   ```text
   Three quick choices before I start (reply "1a 2b 3a", or just tell me):
   1. Format: a) PowerPoint .pptx (default)  b) LibreOffice .odp  c) both
-  2. Confidentiality: a) public  b) internal (default)  c) confidential  d) I can't share the real content
+  2. Confidentiality: a) no label (default)  b) internal  c) confidential  d) I can't share the real content
   3. Length: a) about 8 slides (default)  b) shorter  c) longer
   ```
-  Each choice changes how you build and deliver (label in the footer, no online sources, metadata, skeleton deck): apply `references/deck-options.md`.
-- If everything is clear, or your harness cannot wait for an answer, state your assumptions in one line (defaults: `.pptx`, internal, the length you inferred) and go.
+  Each choice changes how you build and deliver (label in the footer, no online sources, metadata, skeleton deck): apply `references/deck-options.md`. Do nothing extra when the user keeps the defaults.
+- If everything is clear, or your harness cannot wait for an answer, state your assumptions in one line (defaults: `.pptx`, no label, the length you inferred) and go.
 - A few facts make a short deck (3 to 4 slides); only when there is a topic and no content at all, ask for the key points instead of inventing them.
 
 ### 2. Plan the story, then choose

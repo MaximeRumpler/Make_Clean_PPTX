@@ -2,6 +2,8 @@
 
 The user settles these in the single question message of step 1 (or you state the defaults when you cannot ask). They apply to the whole process, not only to delivery. Ask again only if the user changes their mind.
 
+The defaults add nothing: a PowerPoint file, no label, the usual sources. Labels, restrictions and checks apply only when the user chooses them. If the content clearly looks sensitive (client names, salaries, unreleased results) and the user did not choose, suggest the confidential option in one line; do not apply it on your own.
+
 ## Format
 
 | Choice | What you do |
@@ -18,8 +20,8 @@ Why it matters beyond the label: an online icon or photo search sends your query
 
 | Choice | Label | Online sources (icons, photos) | File properties | Speaker notes |
 |---|---|---|---|---|
-| Public | none | allowed | title only | as usual |
-| Internal (default) | `Internal` in every `Footer` field | allowed for icons; photos only with generic queries that do not reveal the subject | title only, no author unless the user gives one | as usual |
+| No label (default) | none | allowed | title only | as usual |
+| Internal | `Internal` in every `Footer` field | allowed for icons; photos only with generic queries that do not reveal the subject | title only, no author unless the user gives one | as usual |
 | Confidential | `Confidential` in every `Footer` field | **none**: bundled Lucide icons only (`find_icon.py` without `--source`), no `fetch_image.py` | title only, no author, no keywords, no subject | only what the user wrote; tell them notes travel with the file |
 | I can't share the real content | `Confidential` in every `Footer` field | none | as confidential | instructions only |
 
