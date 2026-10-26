@@ -29,19 +29,36 @@ done
 
 mkdir -p "$DEST_ROOT"
 DEST="$DEST_ROOT/make-clean-pptx"
-rm -rf "$DEST"
+
+# Only ever replace a previous copy of this skill, never an unrelated folder.
+if [[ -e "$DEST" && ! -L "$DEST" ]] && ! grep -qs '^name: make-clean-pptx$' "$DEST/SKILL.md"; then
+  echo "$DEST exists and is not a make-clean-pptx install; move it away first." >&2
+  exit 1
+fi
+
 if [[ $LINK -eq 1 ]]; then
+  rm -rf "$DEST"
   ln -s "$SRC" "$DEST"
   echo "linked  $DEST -> $SRC"
 else
-  cp -R "$SRC" "$DEST"
-  find "$DEST" -name '__pycache__' -type d -prune -exec rm -rf {} +
+  # Copy next to the target first, then swap, so a failed copy leaves the old install intact.
+  STAGE="$DEST.new.$$"
+  trap 'rm -rf "$STAGE"' EXIT
+  cp -R "$SRC" "$STAGE"
+  find "$STAGE" -name '__pycache__' -type d -prune -exec rm -rf {} +
+  rm -rf "$DEST"
+  mv "$STAGE" "$DEST"
   echo "copied  $SRC -> $DEST"
 fi
 
 if [[ $DEPS -eq 1 ]]; then
-  python3 -m pip install -r "$SRC/requirements.txt" || \
-    python3 -m pip install --break-system-packages -r "$SRC/requirements.txt"
+  # Never force packages into a system-managed Python: try a user install, else explain.
+  python3 -m pip install -r "$SRC/requirements.txt" 2>/dev/null || \
+    python3 -m pip install --user -r "$SRC/requirements.txt" || {
+      echo "pip could not install the requirements here. Use a virtual environment:" >&2
+      echo "  python3 -m venv ~/.venvs/pptx && ~/.venvs/pptx/bin/pip install -r \"$SRC/requirements.txt\"" >&2
+      exit 3
+    }
 fi
 
 echo

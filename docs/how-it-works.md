@@ -27,6 +27,8 @@ Nothing is drawn from scratch: the slides already exist and are cloned, so spaci
 
 - **Claude Code without the plugin:** `git clone` this repository, then `./install.sh` (copies the skill to `~/.claude/skills/`; `--project` for `./.claude/skills/`).
 - **Any other assistant:** `npx skills add MaximeRumpler/Make_Clean_PPTX`, or copy `skills/make-clean-pptx/` where it loads skills, or point it at [`AGENTS.md`](../AGENTS.md).
+- **Windows:** the plugin, the zip and `npx skills add` work as is; `install.sh` needs Git Bash or WSL, or copy the `skills/make-clean-pptx/` folder by hand.
+- **Updating:** the same command or upload again. `install.sh` replaces only a previous copy of this skill, never another folder.
 - **Python 3.9+** with `pip install -r skills/make-clean-pptx/requirements.txt`. Optional, for the visual check: LibreOffice and poppler (`apt install libreoffice-impress poppler-utils`).
 - The libraries, icons and indexes are bundled: building a deck works offline. Online sources (more icons, free photos) are used when available.
 

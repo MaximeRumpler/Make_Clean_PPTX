@@ -4,6 +4,7 @@
 
 *Give your AI assistant your notes. Get back a clean, professional PowerPoint.*
 
+[![CI](https://img.shields.io/github/actions/workflow/status/MaximeRumpler/Make_Clean_PPTX/ci.yml?branch=main&style=flat-square&label=CI&color=10B981&labelColor=1C2333)](https://github.com/MaximeRumpler/Make_Clean_PPTX/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-EUPL--1.2-10B981?style=flat-square&labelColor=1C2333)](LICENSE)
 [![Gallery](https://img.shields.io/badge/Gallery-114_slides-10B981?style=flat-square&labelColor=1C2333)](https://maximerumpler.github.io/Make_Clean_PPTX/)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-plugin-D97757?style=flat-square&logo=anthropic&logoColor=white&labelColor=1C2333)](#install)
@@ -30,11 +31,13 @@ The slides are black, grey and white. Apply your company's PowerPoint theme and 
 
 ## Install
 
-| **Claude Code** | **Other AI assistants** |
-|:---|:---|
-| `/plugin install make-clean-pptx --marketplace MaximeRumpler/Make_Clean_PPTX` | `npx skills add MaximeRumpler/Make_Clean_PPTX` |
+| **Claude Code** | **Claude.ai and Claude desktop** | **Other AI assistants** |
+|:---|:---|:---|
+| `/plugin marketplace add MaximeRumpler/Make_Clean_PPTX`<br>then `/plugin install make-clean-pptx@make-clean-pptx` | Download [`make-clean-pptx.zip`](https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest), then *Settings → Capabilities → Skills → Upload skill* | `npx skills add MaximeRumpler/Make_Clean_PPTX` |
 
-The skill needs Python, which most assistants already have. If something is missing, it tells you what to install.
+Works the same on Windows, macOS and Linux. The skill needs Python, which most assistants already have. If something is missing, it tells you what to install.
+
+**Update**: Claude Code, `/plugin marketplace update MaximeRumpler/Make_Clean_PPTX`; Claude.ai, upload the new zip; other assistants, run the `npx skills add` line again.
 
 ## Use
 
@@ -55,6 +58,12 @@ Review my-deck.pptx and make it look professional.
 | covers, key messages, figures, options, next steps | bars, waterfalls, matrices, timelines, org charts | bundled, plus free online icons and photos |
 
 Browse them in the [gallery](https://maximerumpler.github.io/Make_Clean_PPTX/). How it works and how to add your own designs: [docs/how-it-works.md](docs/how-it-works.md).
+
+* * *
+
+## Then add your colours
+
+*From your content, first Make_Clean, then add your colours.* The companion skill [**Make_Colors_PPTX**](https://github.com/MaximeRumpler/Make_Colors_PPTX) (in preparation) turns a brand guide, a website or an example file into a PowerPoint theme and applies it to your clean deck.
 
 * * *
 

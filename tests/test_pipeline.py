@@ -199,7 +199,8 @@ def test_render_roundtrip(fx, tmp_path):
         {"slide": 6, "fill": {"Title": "Chart"}, "insert": [{"source": "shapes", "slide": 2, "component": "Bar Chart", "into": "Content Area"}]},
     ]})
     assert code == 0
-    c, out, _ = run("render_check.py", rep["output"], "--out-dir", tmp_path / "r", "--dpi", 40)
+    c, out, _ = run("render_check.py", rep["output"], "--out-dir", tmp_path / "r", "--dpi", 40, "--odp")
     assert c == 0, out
     info = json.loads(out)
     assert len(info["slides"]) == 2 and Path(info["contact_sheet"]).is_file()
+    assert Path(info["odp"]).is_file() and Path(info["odp"]).suffix == ".odp"
