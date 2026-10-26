@@ -26,7 +26,7 @@ def fx(tmp_path_factory):
 
 
 def run(script, *args):
-    p = subprocess.run([sys.executable, str(SCRIPTS / script), *map(str, args)], capture_output=True, text=True)
+    p = subprocess.run([sys.executable, str(SCRIPTS / script), *map(str, args)], capture_output=True, encoding="utf-8")
     return p.returncode, p.stdout, p.stderr
 
 
@@ -95,7 +95,7 @@ def test_image_replace_cover_crop_and_alt(fx, tmp_path):
     assert pic.image.size == (1600, 400)
     assert pic.crop_left > 0 and pic.crop_right > 0 and pic.crop_top == 0  # wide image cropped sideways
     assert pic._element.xpath(".//p:cNvPr")[0].get("descr") == "A wide blue image"
-    assert Path(rep["credits_file"]).read_text().count("Me, CC0") == 1
+    assert Path(rep["credits_file"]).read_text(encoding="utf-8").count("Me, CC0") == 1
     notes = Presentation(rep["output"]).slides[0].notes_slide.notes_text_frame.text
     assert "Me, CC0" in notes
 

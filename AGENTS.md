@@ -11,7 +11,7 @@ Whenever the user asks for a presentation, slide deck, pitch deck, slides, Power
 1. Read `skills/make-clean-pptx/SKILL.md` completely and follow its workflow. All paths in that file are relative to its own folder.
 2. Read `skills/make-clean-pptx/references/layout-rules.md` before planning slides, and `visual-selection.md` before choosing charts or diagrams.
 3. Use only the scripts in `skills/make-clean-pptx/scripts/`. Do not draw slides from scratch with python-pptx: it cannot reproduce the design.
-4. Requirements: Python 3.9+, `pip install -r skills/make-clean-pptx/requirements.txt`. Run `python3 skills/make-clean-pptx/scripts/doctor.py` to check the environment.
+4. Requirements: Python 3.9+, `pip install -r skills/make-clean-pptx/requirements.txt`. Run `python3 skills/make-clean-pptx/scripts/doctor.py` to check the environment (`--fix` installs missing packages).
 5. If you can start a sub-agent, give it `agents/deck-reviewer.md` as instructions for the review step.
 
 To install the skill for any supported assistant: `npx skills add MaximeRumpler/Make_Clean_PPTX`.

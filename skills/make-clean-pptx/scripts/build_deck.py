@@ -53,16 +53,23 @@ import sys
 from copy import deepcopy
 from pathlib import Path
 
-from lxml import etree
-from pptx import Presentation
-from pptx.chart.data import CategoryChartData
-from pptx.oxml.ns import qn
+try:
+    from lxml import etree
+    from pptx import Presentation
+    from pptx.chart.data import CategoryChartData
+    from pptx.oxml.ns import qn
 
-from _clone import SlideCloner, delete_slide
-from _common import eprint, estimate_fit, is_dark, iter_shapes, overflows, shape_kind, token_xml
-from _svg import SvgError, svg_to_shapes
-from fetch_templates import FetchError, ensure_templates
-from read_index import load_index, resolve
+    from _clone import SlideCloner, delete_slide
+    from _common import eprint, estimate_fit, is_dark, iter_shapes, overflows, shape_kind, token_xml
+    from _svg import SvgError, svg_to_shapes
+    from fetch_templates import FetchError, ensure_templates
+    from read_index import load_index, resolve
+except ImportError as _exc:  # a missing package would otherwise end in a traceback
+    if __name__ != "__main__":
+        raise
+    print(json.dumps({"error": f"a Python package the skill needs is missing ({_exc.name})",
+                      "hint": "Run scripts/doctor.py --fix to install it, then build again."}))
+    sys.exit(1)
 
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tif", ".tiff", ".webp"}
 SOURCE_ALIASES = {"design": "layouts", "shapes": "visuals"}
@@ -790,4 +797,6 @@ def main(argv=None) -> int:
 
 
 if __name__ == "__main__":
+    for _stream in (sys.stdout, sys.stderr):  # Windows pipes default to a legacy code page; agents read UTF-8
+        getattr(_stream, "reconfigure", lambda **_: None)(encoding="utf-8")
     sys.exit(main())
