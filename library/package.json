@@ -7,7 +7,7 @@
     "build": "node tools/build.js"
   },
   "dependencies": {
-    "pptxgenjs": "3.12.0"
+    "pptxgenjs": "4.0.1"
   },
   "overrides": {
     "image-size": "^2.0.4"
