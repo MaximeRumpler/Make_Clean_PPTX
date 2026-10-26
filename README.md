@@ -63,6 +63,8 @@ Browse them in the [gallery](https://maximerumpler.github.io/Make_Clean_PPTX/), 
 
 ## The Make PPTX set
 
+Part of [**Make PPTX**](https://github.com/MaximeRumpler/Make_PPTX), a set of three skills from your notes to a finished deck.
+
 *From your content, first Make_Clean, then add your style and your colours.*
 
 | **Make_Clean_PPTX** | **Make_Style_PPTX** | **Make_Colors_PPTX** |
