@@ -24,7 +24,11 @@ All paths below are relative to the folder that contains this SKILL.md.
 ## Workflow
 
 ### 1. Understand the content
-Read what the user gave you. Work out the audience, the goal, the language (the deck uses the language of the content) and the length. Ask at most one short question, only if the purpose or the expected length cannot be inferred; otherwise state your assumption in one line and go.
+Read what the user gave you. Work out the audience, the goal, the language (the deck uses the language of the content), the length and the file format. Many users are not technical: guide them, in their language, without jargon.
+
+- **Ask once, briefly, only what you cannot infer**, in a single message: the purpose or audience, the number of slides, and the format if they did not say it: *PowerPoint (`.pptx`, works everywhere) or LibreOffice (`.odp`)?* Offer the likely answer as the default ("about 8 slides, PowerPoint, unless you prefer otherwise").
+- If everything is clear, or your harness cannot wait for an answer, state your assumptions in one line (default: `.pptx`) and go.
+- A few facts make a short deck (3 to 4 slides); only when there is a topic and no content at all, ask for the key points instead of inventing them.
 
 ### 2. Plan the story, then choose
 Read `references/layout-rules.md` (storytelling, density, rhythm) before planning. Write the outline for yourself: one line per slide with **the message as a full sentence**, then for each message:
@@ -78,7 +82,7 @@ python3 scripts/render_check.py build/deck.pptx --out-dir build/render
 Open `build/render/contact-sheet.png`, then single slides where something looks off. Review against `references/review-checklist.md`: leftover placeholders, overflow, cramped or empty slides, three identical layouts in a row, a chart whose headline does not say what it shows. If your harness offers sub-agents (Claude Code: the `deck-reviewer` agent of this plugin), delegate this review to get a fresh pair of eyes; otherwise do it yourself. Fix the spec and rebuild. Stop after three rounds and tell the user what is still off and why. LibreOffice differs from PowerPoint by a few pixels: judge layout and content, not kerning. Without a way to view images, rely on the lint and say the visual check was skipped.
 
 ### 6. Deliver
-Hand over the `.pptx` (and `<deck>.credits.md` when images or attributed icons were used). Give the full path of every delivered file; in harnesses with an outputs folder (Claude.ai, Claude desktop), save them there so the user can download them. If the user asked for `.odp` or uses LibreOffice, add `--odp` to the last `render_check.py` run and hand over the `.odp` too. Two or three sentences: slide count, the storyline, anything to double-check (figures you could not verify, an image you could not find). No recap of the steps.
+Hand over the `.pptx` (and `<deck>.credits.md` when images or attributed icons were used). Give the full path of every delivered file; in harnesses with an outputs folder (Claude.ai, Claude desktop), save them there so the user can download them. If the user asked for `.odp` or uses LibreOffice, add `--odp` to the last `render_check.py` run and hand over the `.odp` too. Two or three sentences: slide count, the storyline, anything to double-check (figures you could not verify, an image you could not find), and how to open it if the user seems unsure (PowerPoint, Keynote, Google Slides by import, LibreOffice). If the visual check was skipped because LibreOffice is missing, say so in plain words and that it is optional. No recap of the steps.
 
 ## Reviewing an existing deck
 When the user asks to review, clean up or "make professional" a deck they already have: run `lint_deck.py` and `render_check.py` on it, review with `references/review-checklist.md`, then either list concrete fixes or, if asked to redo it, extract the content and rebuild it with this workflow. **Never overwrite the user's file**: write the new deck next to it (`<name>-clean.pptx`) and say where it is.
