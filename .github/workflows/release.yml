@@ -1,0 +1,41 @@
+name: release
+
+# Attaches ready-to-use files to a GitHub release, so people can try the skill without git:
+# the skill as a zip (Claude.ai / Claude desktop "upload a skill"), and a sample deck with its contact sheet.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing release tag to (re)attach the files to, e.g. v1.0.0"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  assets:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      # A release checks out its tag; a manual run uses the branch it is started from.
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libreoffice-impress poppler-utils fonts-liberation
+      - run: pip install -r skills/make-clean-pptx/requirements.txt
+      - name: Skill zip
+        run: |
+          mkdir -p dist
+          (cd skills && zip -rq ../dist/make-clean-pptx.zip make-clean-pptx -x '*__pycache__*')
+      - name: Sample deck
+        run: |
+          python skills/make-clean-pptx/scripts/build_deck.py --spec examples/home-energy.json
+          python skills/make-clean-pptx/scripts/render_check.py build/examples/home-energy.pptx --out-dir build/examples/render --odp
+          cp build/examples/home-energy.pptx build/examples/home-energy.odp dist/
+          cp build/examples/render/contact-sheet.png dist/home-energy-contact-sheet.png
+      - run: gh release upload "$TAG" dist/* --clobber

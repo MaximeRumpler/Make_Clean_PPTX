@@ -2,6 +2,9 @@ version: 2
 updates:
   - package-ecosystem: pip
     directory: "/"
+    # Requirements are minimums ("works with"), not pins: only raise one when a
+    # newer version is actually needed, so users on Python 3.9 are never cut off.
+    versioning-strategy: increase-if-necessary
     schedule:
       interval: monthly
     groups:

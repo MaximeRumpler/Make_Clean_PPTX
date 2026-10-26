@@ -36,6 +36,10 @@
   .links a { text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: .02em; padding: 7px 14px; border-radius: 999px; border: 1px solid #3B4660; color: #D7DCE6; }
   .links a.primary { border-color: var(--accent); color: #34D399; }
   .links a:hover { background: rgba(255,255,255,.06); }
+  .how { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 24px; max-width: 980px; }
+  .how h2 { margin: 0 0 4px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #8E96A8; }
+  .how p { margin: 0; color: #AEB6C6; font-size: 13.5px; }
+  .how code { font: 12.5px/1.5 "SFMono-Regular", Consolas, "Liberation Mono", monospace; color: #D7DCE6; overflow-wrap: anywhere; }
   .stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 6px; }
   .stats b { display: block; font-size: 24px; color: #fff; }
   .stats span { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #8E96A8; }
@@ -94,6 +98,11 @@
       <a class="primary" href="https://github.com/MaximeRumpler/Make_Clean_PPTX#install">Install the skill</a>
       <a href="https://github.com/MaximeRumpler/Make_Clean_PPTX">GitHub</a>
       <a href="https://github.com/MaximeRumpler/Make_Clean_PPTX/blob/main/CATALOG.md">Catalogue</a>
+    </div>
+    <div class="how">
+      <section><h2>Install</h2><p>Claude Code: <code>/plugin marketplace add MaximeRumpler/Make_Clean_PPTX</code>. Claude.ai: upload <a href="https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest">make-clean-pptx.zip</a>. Other assistants: <code>npx skills add MaximeRumpler/Make_Clean_PPTX</code>.</p></section>
+      <section><h2>Ask</h2><p><code>Make a 10-slide deck from this report for the board.</code> It plans one message per slide, picks a design and a chart, fills it with your content and checks the file. It never makes up numbers.</p></section>
+      <section><h2>Then add your colours</h2><p>Apply your PowerPoint theme, or use the companion skill <a href="https://github.com/MaximeRumpler/Make_Colors_PPTX">Make_Colors_PPTX</a> (in preparation) to build one from your brand guide or website.</p></section>
     </div>
     <div class="stats" id="stats"></div>
   </div>

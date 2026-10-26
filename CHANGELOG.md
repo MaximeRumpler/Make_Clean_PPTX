@@ -2,6 +2,19 @@
 
 All notable changes to this project are documented here. Format based on [Keep a Changelog](https://keepachangelog.com/), versioning follows [SemVer](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- `render_check.py --odp`: also saves an OpenDocument copy of the deck for LibreOffice users (the skill already triggered on `.odp`).
+- Release workflow: every release gets the skill as a zip (for Claude.ai and Claude desktop), a sample deck (`.pptx`, `.odp`) and its contact sheet. Can be run by hand to backfill a release.
+- README: install for Claude.ai and Claude desktop, Windows note, how to update, CI badge, link to the companion skill Make_Colors_PPTX. `CITATION.cff`.
+- Gallery: static install and usage text, readable without JavaScript.
+
+### Changed
+- `install.sh` only replaces a previous copy of this skill (never an unrelated folder), swaps in the new copy after it is complete, and no longer forces packages into a system-managed Python (`--break-system-packages` removed; falls back to `--user`, then explains how to use a virtual environment).
+- Dependabot keeps Python requirements as minimums instead of raising them on every release (raising Pillow to 13 would have dropped Python 3.9).
+- Banner without the "plan · choose · fill · check" line.
+
 ## [1.0.0] - 2026-10-25
 
 First public release.
