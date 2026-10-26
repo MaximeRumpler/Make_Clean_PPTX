@@ -9,6 +9,7 @@ All notable changes to this project are documented here. Format based on [Keep a
 - Release workflow: every release gets the skill as a zip (for Claude.ai and Claude desktop), a sample deck (`.pptx`, `.odp`) and its contact sheet. Can be run by hand to backfill a release.
 - README: install for Claude.ai and Claude desktop, Windows note, how to update, CI badge, mention of the companion skill Make_Colors_PPTX (linked once it is public). `CITATION.cff`.
 - Gallery: static install and usage text, readable without JavaScript.
+- README: the Make PPTX set (Make_Clean, Make_Style, Make_Colors), link to the example deck of the latest release, `.odp` mentioned.
 
 ### Changed
 - `install.sh` only replaces a previous copy of this skill (never an unrelated folder), swaps in the new copy after it is complete, and no longer forces packages into a system-managed Python (`--break-system-packages` removed; falls back to `--user`, then explains how to use a virtual environment).

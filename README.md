@@ -25,7 +25,7 @@ Make Clean PPTX is a *skill*, a set of instructions and tools that teaches an AI
 
 You give it your notes, a report or a few figures, in English or French. It writes one message per slide, takes a matching slide design and chart from its library, and checks the file before handing it over. It never makes up numbers.
 
-The slides are black, grey and white. Apply your company's PowerPoint theme and they switch to your colours and fonts. They open in LibreOffice too.
+The slides are black, grey and white. Apply your company's PowerPoint theme and they switch to your colours and fonts. They open in LibreOffice too, and can be saved as `.odp`.
 
 * * *
 
@@ -57,13 +57,20 @@ Review my-deck.pptx and make it look professional.
 |:---:|:---:|:---:|
 | covers, key messages, figures, options, next steps | bars, waterfalls, matrices, timelines, org charts | bundled, plus free online icons and photos |
 
-Browse them in the [gallery](https://maximerumpler.github.io/Make_Clean_PPTX/). How it works and how to add your own designs: [docs/how-it-works.md](docs/how-it-works.md).
+Browse them in the [gallery](https://maximerumpler.github.io/Make_Clean_PPTX/), or download a [finished example deck](https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest) made from a page of notes. How it works and how to add your own designs: [docs/how-it-works.md](docs/how-it-works.md).
 
 * * *
 
-## Then add your colours
+## The Make PPTX set
 
-*From your content, first Make_Clean, then add your colours.* The companion skill **Make_Colors_PPTX** (in preparation) turns a brand guide, a website or an example file into a PowerPoint theme and applies it to your clean deck.
+*From your content, first Make_Clean, then add your style and your colours.*
+
+| **Make_Clean_PPTX** | **Make_Style_PPTX** | **Make_Colors_PPTX** |
+|:---|:---|:---|
+| **Form.** Notes in, clean deck out. | **Look.** The same deck in another style: editorial, organic, geometric, tech, soft. | **Brand.** Your colours, fonts and logo, from your brand guidelines, website or example files. |
+| This repository | In preparation | In preparation |
+
+Each one works on its own; Make_Clean_PPTX is all you need to start.
 
 * * *
 
