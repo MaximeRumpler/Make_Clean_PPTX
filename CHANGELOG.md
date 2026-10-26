@@ -5,7 +5,7 @@ All notable changes to this project are documented here. Format based on [Keep a
 ## [Unreleased]
 
 ### Added
-- Deck options settled up front in one short choice message (format, confidentiality, length), with defaults that add nothing (`.pptx`, no label) when the user does not choose or the harness cannot ask. New `references/deck-options.md`: confidentiality label in the footer, no online icon or photo searches for confidential content, minimal file properties, and a skeleton deck with bracketed instructions when the user cannot share the real content.
+- Deck options settled up front in one short choice message (format, confidentiality, length, accessibility), with defaults that add nothing (`.pptx`, no label) when the user does not choose or the harness cannot ask. New `references/deck-options.md`: confidentiality label in the footer, no online icon or photo searches for confidential content, minimal file properties, and a skeleton deck with bracketed instructions when the user cannot share the real content.
 - SKILL.md guides non-technical users: one short message of questions for what cannot be inferred (purpose, length, PowerPoint `.pptx` or LibreOffice `.odp`), with a proposed default; plain-language delivery (how to open the file, skipped visual check).
 - `render_check.py --odp`: also saves an OpenDocument copy of the deck for LibreOffice users (the skill already triggered on `.odp`).
 - Release workflow: every release gets the skill as a zip (for Claude.ai and Claude desktop), a sample deck (`.pptx`, `.odp`) and its contact sheet. Can be run by hand to backfill a release.
