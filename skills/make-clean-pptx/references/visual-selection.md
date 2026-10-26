@@ -28,6 +28,7 @@ The visuals library is indexed by **what the visual does for the reader**, not b
 | risks, exposure, criticality, sensitivity | Assess risk |
 | organisation, structure, architecture, governance, model | Describe a structure |
 | process, steps, flow, workflow, method | Describe a process |
+| a metaphor, a tone, an identity, "make it memorable" | Set the tone (Signature visuals only, see section 6) |
 
 ```bash
 python3 scripts/read_index.py visuals --where objective="break down"
@@ -50,10 +51,11 @@ python3 scripts/read_index.py visuals -q "variance budget actual contribution"
 | Likelihood × impact | risk matrix, tornado | V-MAT-04, V-CMP-04 |
 | Values over two dimensions | heatmap | V-REL-04 |
 | Options × criteria | scored comparison, RACI | V-CMP-06, V-FRM-04 |
-| Hierarchy | org chart, logic tree, pyramid | V-STR-01, V-STR-02, V-STR-03 |
+| Hierarchy | org chart, logic tree, pyramid, half-ring layers | V-STR-01, V-STR-02, V-STR-03, V-STR-09 |
 | Actors and links | hub and spoke, Venn | V-STR-05, V-STR-06 |
 | Ordered steps | chevrons, stage-gate, swimlane, cycle | V-PRO-01, V-PRO-04, V-PRO-03, V-PRO-02 |
 | Dates and work | milestones, roadmap lanes, Gantt, now-next-later | V-TIM-01, V-TIM-02, V-TIM-03, V-TIM-05 |
+| Six to eight steps in order | serpentine timeline | V-TIM-06 |
 | Known management tool | SWOT, five forces, PESTEL, BMC, value chain, OKR | V-MAT-02, V-FRM-02, V-FRM-03, V-FRM-01, V-FRM-06, V-FRM-05 |
 
 When the request names a known tool (SWOT, RACI, Gantt, waterfall), go straight to it.
@@ -83,3 +85,13 @@ The visual goes into a frame of a layout. Pick the layout for what must be *said
 | Four indicators read together | L-36 Dashboard |
 
 Check the `frame` column: `full` visuals belong in L-31 / L-33, `wide` in L-32 / L-35, `half` in L-34. The builder scales the visual to the frame and warns if text gets too small.
+
+## 6. Signature visuals: sparingly, on purpose
+
+The **Signature** family (`V-SIG-*`: meshing gears, light bulb, puzzle, winding road, mountain and summit flag, target) holds metaphor illustrations that give a deck a recognisable tone. A metaphor is strong once and tiring the third time, and a deck full of them reads as clip art, so they are opt-in: hidden from searches unless asked for (`read_index.py visuals --category signature`, see index-schema.md).
+
+- **Only when** the user asks for a tone, an identity or "something memorable", or when the metaphor genuinely *is* the message (parts that drive each other: gears; four parts that make a whole: puzzle; an ambition reached in stages: mountain).
+- **At most one or two per deck**, typically on the opening of a chapter or the closing vision, never as filler.
+- **One metaphor per deck**: never two different ones (no gears on slide 3 and a puzzle on slide 9). Reuse the same one if a second is needed.
+- **Never for figures or data**: the labels are words. A real plan goes on a timeline (V-TIM-01), real scopes on concentric circles (V-STR-08).
+- Prefer the ordinary visual whenever it says the same thing: the signature is a seasoning, not the meal.

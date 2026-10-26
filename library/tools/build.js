@@ -12,7 +12,7 @@ const OUT = path.join(ROOT, "out");
 
 const LIBS = {
   layouts: ["opening", "message", "content", "data", "closing"],
-  visuals: ["compare", "evolve", "compose", "relate", "kpi", "matrix", "process", "time", "structure", "frameworks"],
+  visuals: ["compare", "evolve", "compose", "relate", "kpi", "matrix", "process", "time", "structure", "frameworks", "signature"],
 };
 
 function load(lib) {

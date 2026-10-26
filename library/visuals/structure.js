@@ -1,6 +1,6 @@
 // Structure: hierarchies, layers, relations, causes.
 const L = require("../tools/lib.js");
-const { C, text, rect, ellipse, line, hrule, vrule } = L;
+const { C, text, rect, ellipse, path, line, hrule, vrule } = L;
 const { arrow } = require("./_kit.js");
 
 const box = (ctx, name, ph, x, y, w, h, o = {}) => text(ctx, name, ph, x, y, w, h, o.style || "caption", Object.assign({
@@ -191,6 +191,35 @@ module.exports = {
           text(ctx, `Ring ${i + 1}`, ["Outer ring", "Middle ring", "Core"][i], b.x + D + 0.3, y + 0.15, b.w - D - 0.3, 0.4, "small", { bold: true, color: "ink" });
           text(ctx, `Ring ${i + 1} text`, "What it contains", b.x + D + 0.3, y + 0.55, b.w - D - 0.3, 0.7, "caption", { color: "ink2", optional: true });
         }
+      },
+    },
+    {
+      id: "V-STR-09", name: "Half-ring layers", category: "Structure", kind: "diagram", frame: "wide",
+      objective: "Describe a structure", data_type: "Hierarchical", dimensions: 1, complexity: "Low",
+      description: "A dark half disc at the base wrapped by three nested half rings, each layer named at its top.",
+      use_when: "Layers that build outwards from a core: capabilities around a product, circles of stakeholders, foundations to reach.",
+      limits: "A core and three rings (the outer ring can be deleted with null); a few words per layer.",
+      tags: "half ring radial layers semicircle arch core onion nested levels foundations rainbow",
+      related: "V-STR-08 V-STR-03",
+      fill_notes: "Layer 1 is the core, Layer 4 the outer ring; Layer n text (optional).",
+      draw(ctx, b) {
+        const cx = b.x + b.w / 2, base = b.y + b.h - 0.05, radii = [1.05, 2.0, 2.95, 3.9];
+        for (let i = radii.length - 1; i >= 0; i--) {
+          const ro = radii[i], ri = i ? radii[i - 1] : 0, fill = ["a1", "a3", "a5", "a6"][i];
+          const pts = [{ x: 0, y: ro }, { x: 2 * ro, y: ro, curve: { type: "arc", wR: ro, hR: ro, stAng: 180, swAng: 180 } }];
+          if (ri) pts.push({ x: ro + ri, y: ro }, { x: ro - ri, y: ro, curve: { type: "arc", wR: ri, hR: ri, stAng: 0, swAng: -180 } });
+          pts.push({ close: true });
+          path(ctx, cx - ro, base - ro, 2 * ro, ro, pts, Object.assign({ fill, line: "paper", lw: 1.5 }, i === 3 ? { follows: "Layer 4" } : {}));
+        }
+        radii.forEach((ro, i) => {
+          const ri = i ? radii[i - 1] : 0, w = i ? 2.0 : 1.6, top = i ? base - ro + 0.1 : base - ro + 0.3, dark = i === 0;
+          text(ctx, `Layer ${i + 1}`, i ? `Layer ${i + 1}` : "Core", cx - w / 2, top, w, 0.32, "small", {
+            bold: true, color: dark ? "paper" : "ink", align: "center", valign: "middle", optional: i === 3,
+          });
+          text(ctx, `Layer ${i + 1} text`, "What this layer adds", cx - w / 2, top + 0.33, w, i ? ro - ri - 0.48 : 0.45, "caption", {
+            color: dark ? "a5" : "ink2", align: "center", optional: true,
+          });
+        });
       },
     },
   ],
