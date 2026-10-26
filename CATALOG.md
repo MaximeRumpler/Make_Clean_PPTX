@@ -96,7 +96,7 @@ Every layout and every visual shipped with the skill, generated from the indexes
 |:---:|:---:|:---:|
 | <img src="docs/thumbnails/L-54.jpg" width="260"><br>**L-54** Vertical sequence<br><sub>A method, procedure or chronology of up to five steps with a line of detail each.</sub> |  |  |
 
-## Visuals (60)
+## Visuals (68)
 
 ### Compare
 
@@ -153,7 +153,7 @@ Every layout and every visual shipped with the skill, generated from the indexes
 | | | |
 |:---:|:---:|:---:|
 | <img src="docs/thumbnails/V-TIM-01.jpg" width="260"><br>**V-TIM-01** Milestone timeline<br><sub>Key dates of a project, a history, a launch plan.</sub> | <img src="docs/thumbnails/V-TIM-02.jpg" width="260"><br>**V-TIM-02** Roadmap by lanes<br><sub>Multi-stream roadmap over quarters or years.</sub> | <img src="docs/thumbnails/V-TIM-03.jpg" width="260"><br>**V-TIM-03** Gantt chart<br><sub>Detailed schedule with tasks and durations.</sub> |
-| <img src="docs/thumbnails/V-TIM-04.jpg" width="260"><br>**V-TIM-04** Three horizons<br><sub>Balance short-term performance with mid- and long-term growth (portfolio, innovation).</sub> | <img src="docs/thumbnails/V-TIM-05.jpg" width="260"><br>**V-TIM-05** Now, next, later<br><sub>Product or programme roadmap without committed dates.</sub> |  |
+| <img src="docs/thumbnails/V-TIM-04.jpg" width="260"><br>**V-TIM-04** Three horizons<br><sub>Balance short-term performance with mid- and long-term growth (portfolio, innovation).</sub> | <img src="docs/thumbnails/V-TIM-05.jpg" width="260"><br>**V-TIM-05** Now, next, later<br><sub>Product or programme roadmap without committed dates.</sub> | <img src="docs/thumbnails/V-TIM-06.jpg" width="260"><br>**V-TIM-06** Serpentine timeline<br><sub>A long sequence that a single line would cram: a programme of six to eight phases, a history, an onboarding path.</sub> |
 
 ### Structure
 
@@ -161,7 +161,7 @@ Every layout and every visual shipped with the skill, generated from the indexes
 |:---:|:---:|:---:|
 | <img src="docs/thumbnails/V-STR-01.jpg" width="260"><br>**V-STR-01** Organisation chart<br><sub>Organisation, governance or team structure on three levels.</sub> | <img src="docs/thumbnails/V-STR-02.jpg" width="260"><br>**V-STR-02** Logic tree<br><sub>Break a problem or objective into its drivers (issue tree, KPI tree, decision tree).</sub> | <img src="docs/thumbnails/V-STR-03.jpg" width="260"><br>**V-STR-03** Pyramid<br><sub>Hierarchy of needs, priorities or foundations (vision to operations).</sub> |
 | <img src="docs/thumbnails/V-STR-04.jpg" width="260"><br>**V-STR-04** Layered architecture<br><sub>System, data or operating model architecture; stack of capabilities.</sub> | <img src="docs/thumbnails/V-STR-05.jpg" width="260"><br>**V-STR-05** Hub and spoke<br><sub>Ecosystem around a core: partners, stakeholders, services around a platform.</sub> | <img src="docs/thumbnails/V-STR-06.jpg" width="260"><br>**V-STR-06** Venn diagram<br><sub>Where three domains meet: the sweet spot, a skills profile, a value proposition.</sub> |
-| <img src="docs/thumbnails/V-STR-07.jpg" width="260"><br>**V-STR-07** Fishbone<br><sub>Root cause analysis of a quality, delay or performance problem.</sub> | <img src="docs/thumbnails/V-STR-08.jpg" width="260"><br>**V-STR-08** Concentric circles<br><sub>Scope or influence by distance: core business, adjacent, ecosystem; TAM SAM SOM.</sub> |  |
+| <img src="docs/thumbnails/V-STR-07.jpg" width="260"><br>**V-STR-07** Fishbone<br><sub>Root cause analysis of a quality, delay or performance problem.</sub> | <img src="docs/thumbnails/V-STR-08.jpg" width="260"><br>**V-STR-08** Concentric circles<br><sub>Scope or influence by distance: core business, adjacent, ecosystem; TAM SAM SOM.</sub> | <img src="docs/thumbnails/V-STR-09.jpg" width="260"><br>**V-STR-09** Half-ring layers<br><sub>Layers that build outwards from a core: capabilities around a product, circles of stakeholders, foundations to reach.</sub> |
 
 ### Frameworks
 
@@ -169,3 +169,10 @@ Every layout and every visual shipped with the skill, generated from the indexes
 |:---:|:---:|:---:|
 | <img src="docs/thumbnails/V-FRM-01.jpg" width="260"><br>**V-FRM-01** Business model canvas<br><sub>Describe or compare business models.</sub> | <img src="docs/thumbnails/V-FRM-02.jpg" width="260"><br>**V-FRM-02** Five forces<br><sub>Assess the attractiveness of an industry or segment.</sub> | <img src="docs/thumbnails/V-FRM-03.jpg" width="260"><br>**V-FRM-03** PESTEL<br><sub>Scan the external environment before a strategy or a market entry.</sub> |
 | <img src="docs/thumbnails/V-FRM-04.jpg" width="260"><br>**V-FRM-04** RACI matrix<br><sub>Clarify who is responsible, accountable, consulted and informed.</sub> | <img src="docs/thumbnails/V-FRM-05.jpg" width="260"><br>**V-FRM-05** OKR tree<br><sub>Present objectives and key results, or any goal with measurable outcomes.</sub> | <img src="docs/thumbnails/V-FRM-06.jpg" width="260"><br>**V-FRM-06** Value chain<br><sub>Where value is created in a company; locate costs, strengths or improvements.</sub> |
+
+### Signature
+
+| | | |
+|:---:|:---:|:---:|
+| <img src="docs/thumbnails/V-SIG-01.jpg" width="260"><br>**V-SIG-01** Meshing gears<br><sub>Signature metaphor, only on request or when the idea is that parts drive each other: a mechanism, teams or levers working together.</sub> | <img src="docs/thumbnails/V-SIG-02.jpg" width="260"><br>**V-SIG-02** Light bulb<br><sub>Signature metaphor, only on request or when the slide introduces one idea and its three facets: an insight, an innovation, a proposal.</sub> | <img src="docs/thumbnails/V-SIG-03.jpg" width="260"><br>**V-SIG-03** Puzzle<br><sub>Signature metaphor, only on request or when four parts must fit together to make the whole: a solution, an offer, a team.</sub> |
+| <img src="docs/thumbnails/V-SIG-04.jpg" width="260"><br>**V-SIG-04** Winding road<br><sub>Signature metaphor, only on request or when the story is a journey: a transformation path, a programme told as a road ahead.</sub> | <img src="docs/thumbnails/V-SIG-05.jpg" width="260"><br>**V-SIG-05** Mountain and summit flag<br><sub>Signature metaphor, only on request or when the message is an ambition reached in stages: a target state, a long climb, a vision.</sub> | <img src="docs/thumbnails/V-SIG-06.jpg" width="260"><br>**V-SIG-06** Target<br><sub>Signature metaphor, only on request or when the message is focus on one aim: the objective, the core target and what surrounds it.</sub> |

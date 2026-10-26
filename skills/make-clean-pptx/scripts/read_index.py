@@ -11,6 +11,7 @@ Examples
   read_index.py visuals --query "variance budget actual" --where objective="Break down"
   read_index.py visuals --where frame=wide --where kind=chart
   read_index.py visuals --id V-COM-01
+  read_index.py visuals --category signature     # opt-in metaphors, hidden otherwise
   read_index.py path/to/index.csv --format json
 
 "layouts" and "visuals" resolve to the bundled indexes (or to your own, see
@@ -172,6 +173,17 @@ def search(entries: list[dict], query: str, top: int = 10) -> list[dict]:
     return [e for _, e in scored[:top]]
 
 
+# Rows tagged with this word are opt-in (signature metaphors, see index-schema.md):
+# left out of searches and listings unless the request names them.
+OPT_IN_TAG = "signature"
+
+
+def opt_in_filter(entries: list[dict], *requests: str | None) -> list[dict]:
+    if any(OPT_IN_TAG in (r or "").lower() for r in requests):
+        return entries
+    return [e for e in entries if OPT_IN_TAG not in e.get("tags", "").lower().split()]
+
+
 def where(entries: list[dict], conditions: list[str]) -> list[dict]:
     out = entries
     for cond in conditions or []:
@@ -243,6 +255,7 @@ def main(argv=None) -> int:
         selected = [hit] if hit else []
         args.detail = True
     else:
+        selected = opt_in_filter(selected, args.query, args.category, *(args.where or []))
         if args.category:
             selected = [e for e in selected if args.category.lower() in e["category"].lower()]
         selected = where(selected, args.where)

@@ -117,10 +117,26 @@ function rect(ctx, x, y, w, h, o = {}) {
   if (o.flipV) opts.flipV = true;
   if (o.angleRange) opts.angleRange = o.angleRange;
   if (o.arcThicknessRatio) opts.arcThicknessRatio = o.arcThicknessRatio;
-  ctx.s.addShape(o.shape || "rect", opts);
+  if (o.points) opts.points = o.points;
+  ctx.s.addShape(o.points ? "custGeom" : o.shape || "rect", opts);
   return opts;
 }
 const ellipse = (ctx, x, y, w, h, o = {}) => rect(ctx, x, y, w, h, Object.assign({ shape: "ellipse" }, o));
+
+// A free-form shape (custom geometry): `pts` are in inches from the top left of
+// the box, as pptxgenjs expects ({x, y}, {x, y, curve: {type: "cubic", x1, y1, x2, y2}}, {close: true}).
+// Coordinates are rounded so that rebuilds stay byte-identical.
+const r4 = (v) => Math.round(v * 10000) / 10000;
+function path(ctx, x, y, w, h, pts, o = {}) {
+  const points = pts.map((p) => {
+    if (p.close) return { close: true };
+    const q = { x: r4(p.x), y: r4(p.y) };
+    if (p.moveTo) q.moveTo = true;
+    if (p.curve) q.curve = Object.fromEntries(Object.entries(p.curve).map(([k, v]) => [k, typeof v === "number" ? r4(v) : v]));
+    return q;
+  });
+  return rect(ctx, x, y, w, h, Object.assign({}, o, { points }));
+}
 
 function line(ctx, x1, y1, x2, y2, o = {}) {
   const opts = {
@@ -228,6 +244,6 @@ function background(ctx, color) { ctx.s.background = { color: C[color] || color 
 
 module.exports = {
   C, FONT, TYPE, G, W, H, MX, CW, GUT, SERIES, init, Ctx, charLimit,
-  text, rect, ellipse, line, hrule, vrule, frame, image, icon, chart, series, cats, table, chrome, footer, background,
+  text, rect, ellipse, path, line, hrule, vrule, frame, image, icon, chart, series, cats, table, chrome, footer, background,
   get pres() { return pres; },
 };

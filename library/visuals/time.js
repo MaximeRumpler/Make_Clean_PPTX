@@ -1,6 +1,6 @@
 // Time: milestones, roadmaps, schedules.
 const L = require("../tools/lib.js");
-const { C, text, rect, ellipse, line, hrule, vrule, series } = L;
+const { C, text, rect, ellipse, path, line, hrule, vrule, series } = L;
 
 module.exports = {
   family: "Time",
@@ -105,6 +105,34 @@ module.exports = {
           text(ctx, `Column ${i + 1} heading`, n, x, b.y, w, 0.6, "h3", { fill, color: i < 1 ? "paper" : "ink", inset: 0.15, valign: "middle", keep: true });
           rect(ctx, x, b.y + 0.6, w, b.h - 0.6, { fill: "surface" });
           text(ctx, `Column ${i + 1} items`, ["Item", "Item", "Item"], x + 0.2, b.y + 0.8, w - 0.4, b.h - 1.0, "small", { bullets: true });
+        });
+      },
+    },
+    {
+      id: "V-TIM-06", name: "Serpentine timeline", category: "Time", kind: "timeline", frame: "full",
+      objective: "Plan", data_type: "Sequential", dimensions: 1, complexity: "Low",
+      description: "Eight numbered steps on a path that snakes across three rows, each with a label above and a short text below.",
+      use_when: "A long sequence that a single line would cram: a programme of six to eight phases, a history, an onboarding path.",
+      limits: "Six to eight steps (steps 7 and 8 can be deleted with null); a few words per label.",
+      tags: "serpentine snake s path timeline steps phases sequence journey long process roadmap",
+      related: "V-TIM-01 V-PRO-01",
+      fill_notes: "Step n (label), Step n text (optional). Steps read left to right, then right to left, then left to right.",
+      draw(ctx, b) {
+        const gap = 1.42, r = gap / 2, ys = [0, 1, 2].map((k) => b.y + 0.95 + k * gap);
+        const xl = b.x + r + 0.05, xr = b.x + b.w - r - 0.05, len = xr - xl, rel = (x, y) => ({ x: x - b.x, y: y - b.y });
+        const arc = (x, y, st, sw) => Object.assign(rel(x, y), { curve: { type: "arc", wR: r, hR: r, stAng: st, swAng: sw } });
+        path(ctx, b.x, b.y, b.w, b.h, [
+          rel(b.x, ys[0]), rel(xr, ys[0]), arc(xr, ys[1], 270, 180),
+          rel(xl, ys[1]), arc(xl, ys[2], 270, -180), rel(b.x + b.w, ys[2]),
+        ], { line: "a5", lw: 9 });
+        const at = [[0, 1], [0, 3], [0, 5], [1, 4], [1, 2], [2, 1], [2, 3], [2, 5]];
+        at.forEach(([row, f], i) => {
+          const x = xl + (len * f) / 6, y = ys[row], d = 0.46, w = 1.7;
+          text(ctx, `Step ${i + 1} number`, String(i + 1), x - d / 2, y - d / 2, d, d, "small", {
+            shape: "ellipse", fill: "a1", line: "paper", lw: 1.5, color: "paper", bold: true, align: "center", valign: "middle", follows: `Step ${i + 1}`, limit: 2,
+          });
+          text(ctx, `Step ${i + 1}`, "Step", x - w / 2, y - 0.83, w, 0.5, "small", { bold: true, color: "ink", align: "center", valign: "bottom", optional: i > 5 });
+          text(ctx, `Step ${i + 1} text`, "What happens", x - w / 2, y + 0.3, w, 0.45, "caption", { color: "ink2", align: "center", optional: true });
         });
       },
     },
