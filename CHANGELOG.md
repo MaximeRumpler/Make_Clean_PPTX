@@ -10,6 +10,9 @@ All notable changes to this project are documented here. Format based on [Keep a
 - README: install for Claude.ai and Claude desktop, Windows note, how to update, CI badge, mention of the companion skill Make_Colors_PPTX (linked once it is public). `CITATION.cff`.
 - Gallery: static install and usage text, readable without JavaScript.
 - README: the Make PPTX set (Make_Clean, Make_Style, Make_Colors), link to the example deck of the latest release, `.odp` mentioned.
+- **Signature visuals** (new family, shown last in the catalogue): six metaphor illustrations drawn as native shapes in the neutral greys, V-SIG-01 meshing gears, V-SIG-02 light bulb, V-SIG-03 puzzle, V-SIG-04 winding road, V-SIG-05 mountain and summit flag, V-SIG-06 target. They are opt-in: rows tagged `signature` are left out of `read_index.py` searches and listings unless the request names them, and visual-selection.md limits them to one or two per deck, a single metaphor, never for figures.
+- Visuals V-STR-09 half-ring layers and V-TIM-06 serpentine timeline (eight steps on an S path).
+- Drawing kit: `path()` for free-form shapes (custom geometry with lines, Bezier curves and arcs).
 - `doctor.py --fix`: installs missing Python packages from `requirements.txt` (normal install, then `--user`; never `--break-system-packages`), reports what was installed and what is still missing, and gives a plain-language `message` the agent can pass on to the user.
 - `render_check.py`: when LibreOffice refuses a deck written by another tool, retries once on a re-saved copy made with python-pptx in a temporary folder (the user's file is never touched), reported as `"resaved_copy": true`. Finds LibreOffice in its usual Windows and macOS install folders when it is not on the PATH.
 - CI runs the test suite on Windows and macOS too (Python 3.12, without LibreOffice).
