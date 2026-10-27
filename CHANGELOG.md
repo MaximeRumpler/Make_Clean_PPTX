@@ -5,6 +5,8 @@ All notable changes to this project are documented here. Format based on [Keep a
 ## [Unreleased]
 
 ### Added
+- **Theme contract** for brand themes (and the companion skill Make_Colors_PPTX): `references/theme-contract.md` explains the role of every theme slot and font, the required accent ramp and the text/fill pairs to keep readable; `assets/theme-contract.json` is the machine-readable version, generated from the libraries by `library/tools/build_contract.py` (uses per slot and pairs are measured, not typed) and checked in CI.
+- `lint_deck.py --contrast` (opt-in): WCAG contrast of every text run over the fill under it, computed from the deck's own theme (colour map, `lumMod`/`lumOff`/`tint`/`shade`/`alpha`, groups, tables, chart data labels), plus a check of the theme against the contract. Default lint output is unchanged.
 - Deck options settled up front in one short choice message (format, confidentiality, length, accessibility), with defaults that add nothing (`.pptx`, no label) when the user does not choose or the harness cannot ask. New `references/deck-options.md`: confidentiality label in the footer, no online icon or photo searches for confidential content, minimal file properties, and a skeleton deck with bracketed instructions when the user cannot share the real content.
 - SKILL.md guides non-technical users: one short message of questions for what cannot be inferred (purpose, length, PowerPoint `.pptx` or LibreOffice `.odp`), with a proposed default; plain-language delivery (how to open the file, skipped visual check).
 - `render_check.py --odp`: also saves an OpenDocument copy of the deck for LibreOffice users (the skill already triggered on `.odp`).
@@ -28,6 +30,7 @@ All notable changes to this project are documented here. Format based on [Keep a
 - `render_check.py`: a deck LibreOffice cannot convert now exits 5 ("rendering failed"), as documented, instead of 4 (reserved for missing tools).
 
 ### Fixed
+- Text too faint in the neutral visuals, found by the new contrast check: the dark-slice labels of V-COM-03 (donut, now white on dark slices), the captions on mid-grey boxes of V-MAT-05, V-TIM-04 and V-STR-09 (now ink), and the quadrant texts of V-MAT-03 (now ink2 on grey fills).
 - `doctor.py` crashed when python-pptx was missing (the very case it checks for).
 - Windows: scripts print UTF-8 (the console code page could not encode some characters and stopped the script), and the LibreOffice profile path is now a valid `file:` URI.
 

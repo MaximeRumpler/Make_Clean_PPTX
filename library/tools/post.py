@@ -7,6 +7,7 @@
 2. Rewrites every token colour as a theme reference (schemeClr + lumMod/lumOff),
    in slides and charts, so that applying another theme recolours everything.
 3. Rewrites the sentinel fonts as theme fonts (+mj-lt / +mn-lt, caps for labels).
+   Data labels inside dark pie/doughnut slices switch to paper text.
 4. Visuals only: gathers the shapes named "<ID>::<field>" into one group named
    <ID>, the unit that build_deck.py inserts into a layout frame.
 5. Saves deterministic zips into skills/make-clean-pptx/assets/.
@@ -103,6 +104,38 @@ def recolour(root, unknown: set) -> None:
                 mods.append(m)
         for m in reversed(mods):
             el.insert(0, m)
+
+
+DARK_SLOTS = {"accent1", "accent2", "tx1", "tx2"}  # same rule as is_dark() in scripts/_common.py
+C_NS = "{%s}" % NS["c"]
+
+
+def slice_labels(root) -> int:
+    """Data labels drawn inside pie and doughnut slices take paper text on dark slices.
+
+    pptxgenjs gives every label one colour; a dark label on the darkest slice
+    is unreadable (and fails `lint_deck.py --contrast`).
+    """
+    n = 0
+    for chart in root.iter(C_NS + "pieChart", C_NS + "doughnutChart"):
+        for ser in chart.iter(C_NS + "ser"):
+            fills = {}
+            for dpt in ser.findall(C_NS + "dPt"):
+                clr = dpt.find(C_NS + "spPr/" + A + "solidFill/" + A + "schemeClr")
+                if clr is not None:
+                    fills[dpt.find(C_NS + "idx").get("val")] = clr.get("val")
+            for dl in ser.iter(C_NS + "dLbl"):
+                pos = dl.find(C_NS + "dLblPos")
+                if pos is not None and pos.get("val") == "outEnd":
+                    continue
+                if fills.get(dl.find(C_NS + "idx").get("val")) not in DARK_SLOTS:
+                    continue
+                for clr in dl.iterfind(C_NS + "txPr//" + A + "defRPr/" + A + "solidFill/" + A + "schemeClr"):
+                    clr.set("val", "bg1")
+                    for m in list(clr):
+                        clr.remove(m)
+                    n += 1
+    return n
 
 
 def refont(root) -> None:
@@ -229,6 +262,8 @@ def process(lib: str) -> dict:
                 root = etree.fromstring(data)
                 recolour(root, unknown)
                 refont(root)
+                if name.startswith("ppt/charts/"):
+                    slice_labels(root)
                 if name.startswith("ppt/slides/"):
                     mark_decorative(root)
                 if lib == "visuals" and name.startswith("ppt/slides/"):

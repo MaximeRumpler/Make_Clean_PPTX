@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 """Structural quality checks for a finished deck.
 
-    lint_deck.py deck.pptx [--json] [--max-fonts 3] [--min-font 10]
+    lint_deck.py deck.pptx [--json] [--max-fonts 3] [--min-font 10] [--contrast]
 
 Catches what the eyes of a tired reviewer miss: leftover template text,
 empty placeholders, text that probably overflows, text or pictures outside the
 slide, overlapping text boxes, pictures without alt text, too many fonts.
 Run render_check.py as well: this linter cannot see the actual rendering.
+
+--contrast (opt-in) also checks colours against the deck's own theme: every
+text run against the fill under it (WCAG: 4.5:1, or 3:1 for text of 18 pt or
+14 pt bold), and the theme against assets/theme-contract.json (accent ramp
+order, the colour pairs the libraries rely on). Text too faint to read is an
+error; a theme that would break pairs the deck does not use is a warning.
+See references/theme-contract.md.
 
 Exit code: 0 = no errors (warnings may exist), 1 = errors found, 2 = unreadable file.
 """
@@ -19,7 +26,9 @@ import sys
 
 from pptx import Presentation
 
-from _common import abs_box, estimate_fit, has_text, iter_shapes, overflows, shape_kind
+from _common import SKILL_DIR, abs_box, estimate_fit, has_text, iter_shapes, overflows, shape_kind
+
+CONTRACT = SKILL_DIR / "assets" / "theme-contract.json"
 
 LEFTOVER = re.compile(
     r"lorem ipsum|click to (add|edit)|your (text|title|name|logo)( here)?|insert (text|title|image)|"
@@ -44,7 +53,37 @@ def _iou(a, b) -> float:
     return inter / min(area(a), area(b))
 
 
-def lint(path: str, max_fonts: int = 3, min_font: float = 10.0) -> dict:
+def contrast(prs, add) -> dict:
+    """Contrast checks against the deck's theme; adds findings through `add`, returns a summary."""
+    from _contrast import NS, check_deck, clr_map, theme_findings
+
+    rep = check_deck(prs)
+    worst = {}
+    for r in rep["results"]:
+        if r["ratio"] >= r["need"]:
+            continue
+        key = (r["slide"], r["shape"])
+        if key not in worst or r["ratio"] / r["need"] < worst[key]["ratio"] / worst[key]["need"]:
+            worst[key] = r
+    for (n, shape), r in sorted(worst.items(), key=lambda kv: (kv[0][0], str(kv[0][1]))):
+        size = "large text" if r["need"] < 4.5 else "text at %g pt" % r["pt"]
+        add("error", n, shape, (
+            "text hard to read: '%s' is %s (#%s) on %s (#%s), contrast %.1f:1, %s needs %.1f:1. "
+            "Use the other text colour on this fill (paper on dark, ink on light), or change the fill"
+            % (r["text"], r["fg_label"], r["fg"], r["bg_label"], r["bg"], r["ratio"], size, r["need"])))
+    themes = []
+    if CONTRACT.is_file() and len(prs.slides):
+        master = prs.slides[0].slide_layout.slide_master
+        contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+        for f in theme_findings(rep["theme"], contract, clr_map(master._element.find("p:clrMap", NS))):
+            themes.append(f["message"])
+            add("warning", 0, None, "theme: " + f["message"])
+    return {"theme": rep["theme"].get("name", ""), "colors": rep["theme"].get("colors", {}),
+            "checked_runs": rep["checked"], "unchecked_runs": rep["unchecked"],
+            "failing_shapes": len(worst), "theme_findings": themes}
+
+
+def lint(path: str, max_fonts: int = 3, min_font: float = 10.0, check_contrast: bool = False) -> dict:
     prs = Presentation(path)
     sw, sh = prs.slide_width, prs.slide_height
     tol_x, tol_y = int(sw * 0.01), int(sh * 0.01)
@@ -119,7 +158,10 @@ def lint(path: str, max_fonts: int = 3, min_font: float = 10.0) -> dict:
     if len(fonts) > max_fonts:
         add("warning", 0, None, f"{len(fonts)} different explicit fonts ({', '.join(sorted(fonts))}); stick to the theme fonts")
 
-    return {"slides": len(prs.slides), "errors": errors, "warnings": warnings}
+    report = {"slides": len(prs.slides), "errors": errors, "warnings": warnings}
+    if check_contrast:
+        report["contrast"] = contrast(prs, add)
+    return report
 
 
 def main(argv=None) -> int:
@@ -128,9 +170,10 @@ def main(argv=None) -> int:
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--max-fonts", type=int, default=3)
     ap.add_argument("--min-font", type=float, default=10.0)
+    ap.add_argument("--contrast", action="store_true", help="also check text contrast against the deck's theme")
     args = ap.parse_args(argv)
     try:
-        report = lint(args.pptx, args.max_fonts, args.min_font)
+        report = lint(args.pptx, args.max_fonts, args.min_font, args.contrast)
     except Exception as exc:  # noqa: BLE001
         print(f"error: cannot read {args.pptx}: {exc}", file=sys.stderr)
         return 2
@@ -138,6 +181,11 @@ def main(argv=None) -> int:
         print(json.dumps(report, indent=2, ensure_ascii=False))
     else:
         print(f"{report['slides']} slides, {len(report['errors'])} errors, {len(report['warnings'])} warnings")
+        if "contrast" in report:
+            c = report["contrast"]
+            print(f"contrast: theme '{c['theme']}', {c['checked_runs']} text runs checked, "
+                  f"{c['failing_shapes']} shapes too faint, "
+                  f"{c['unchecked_runs']} over pictures or gradients not checked")
         for level, items in (("ERROR", report["errors"]), ("warn ", report["warnings"])):
             for it in items:
                 where = f"slide {it['slide']}" if it["slide"] else "deck"

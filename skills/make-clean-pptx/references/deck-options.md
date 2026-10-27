@@ -39,6 +39,7 @@ Extra care, only when the user chooses it or asks for an accessible deck:
 
 - Alt text on every photo, illustration and meaningful icon (`"alt"` in the value); purely decorative icons get no alt text.
 - Charts: the headline says what the chart shows, and the speaker notes give the key values in one or two sentences (charts have no alt text field yet).
+- Run `lint_deck.py --contrast` on the built deck: it measures every text against the fill under it with the deck's own theme (4.5:1, or 3:1 for large text) and fix what it reports. See `theme-contract.md`.
 - Never let colour carry meaning alone: label series and categories directly, add values or a word ("risk", "on track") next to any colour code.
 - Prefer layouts with fewer, larger text fields; never more text than the field's limit.
 - Every slide keeps a visible title; do not leave a slide with only a visual.

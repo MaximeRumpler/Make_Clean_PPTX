@@ -217,7 +217,7 @@ module.exports = {
             bold: true, color: dark ? "paper" : "ink", align: "center", valign: "middle", optional: i === 3,
           });
           text(ctx, `Layer ${i + 1} text`, "What this layer adds", cx - w / 2, top + 0.33, w, i ? ro - ri - 0.48 : 0.45, "caption", {
-            color: dark ? "a5" : "ink2", align: "center", optional: true,
+            color: dark ? "a5" : i === 1 ? "ink" : "ink2", align: "center", optional: true,
           });
         });
       },
