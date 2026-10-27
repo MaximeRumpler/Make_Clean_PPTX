@@ -81,7 +81,7 @@ module.exports = {
           const x = b.x + 0.45 + k * (w * 0.6), y = b.y + lev * (h * 0.6);
           rect(ctx, x, y, w, h, { fill: ["a1", "a3", "a5"][i], transparency: 0 });
           text(ctx, `Horizon ${i + 1}`, `Horizon ${i + 1}`, x + 0.2, y + 0.15, w - 0.4, 0.4, "small", { bold: true, color: i < 1 ? "paper" : "ink" });
-          text(ctx, `Horizon ${i + 1} text`, "What this horizon covers", x + 0.2, y + 0.55, w - 0.4, h - 0.7, "caption", { color: i < 1 ? "a6" : "ink2", optional: true });
+          text(ctx, `Horizon ${i + 1} text`, "What this horizon covers", x + 0.2, y + 0.55, w - 0.4, h - 0.7, "caption", { color: i < 1 ? "a6" : i === 1 ? "ink" : "ink2", optional: true });
         });
         line(ctx, b.x + 0.3, b.y + b.h - 0.4, b.x + b.w, b.y + b.h - 0.4, { color: "ink", w: 1, end: "triangle" });
         line(ctx, b.x + 0.3, b.y + b.h - 0.4, b.x + 0.3, b.y, { color: "ink", w: 1, end: "triangle" });

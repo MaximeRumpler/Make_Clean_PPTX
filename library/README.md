@@ -13,6 +13,7 @@ npm ci --prefix library                       # pptxgenjs, pinned
 node library/tools/build.js all               # -> library/out/{layouts,visuals}.pptx + registries
 python library/tools/post.py all              # theme, groups -> skills/make-clean-pptx/assets/*.pptx
 python library/tools/build_index.py           # -> skills/make-clean-pptx/assets/*.csv
+python library/tools/build_contract.py        # -> skills/make-clean-pptx/assets/theme-contract.json
 python library/tools/fit_test.py layouts      # fill every field at its limit, look at the contact sheet
 python library/tools/fit_test.py visuals
 python library/tools/gallery.py               # docs/thumbnails, docs/catalog.json, CATALOG.md, docs/preview.jpg
@@ -20,7 +21,7 @@ python library/tools/build_icons.py <lucide repo>   # only when updating the bun
 pytest
 ```
 
-`fit_test.py` and `gallery.py` need LibreOffice and poppler. CI rebuilds the libraries and fails if the committed indexes differ from the generated ones.
+`fit_test.py` and `gallery.py` need LibreOffice and poppler. CI rebuilds the libraries and fails if the committed indexes or the theme contract differ from the generated ones, and runs `lint_deck.py --contrast` on both libraries.
 
 ## Layout
 

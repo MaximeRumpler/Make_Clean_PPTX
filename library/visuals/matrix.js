@@ -18,7 +18,9 @@ function quadrants(ctx, px, py, pw, ph, names, o = {}) {
   [[0, 0], [1, 0], [0, 1], [1, 1]].forEach(([cx, cy], i) => {
     rect(ctx, px + cx * qw + 0.03, py + cy * qh + 0.03, qw - 0.06, qh - 0.06, { fill: fills[i] });
     text(ctx, `Quadrant ${i + 1}`, names[i], px + cx * qw + 0.18, py + cy * qh + 0.15, qw - 0.4, 0.35, "label", { color: "ink", keep: !names[i].startsWith("Quadrant") });
-    if (o.texts) text(ctx, `Quadrant ${i + 1} text`, "What to do here", px + cx * qw + 0.18, py + cy * qh + 0.5, qw - 0.4, qh - 0.7, "caption", { optional: true });
+    if (o.texts) text(ctx, `Quadrant ${i + 1} text`, "What to do here", px + cx * qw + 0.18, py + cy * qh + 0.5, qw - 0.4, qh - 0.7, "caption", {
+      optional: true, color: fills[i] === "surface" ? undefined : "ink2", // muted is too light on accent fills
+    });
   });
 }
 
@@ -127,7 +129,7 @@ module.exports = {
           const dark = fill === "a1";
           rect(ctx, px + c * cw + 0.04, py + r * ch + 0.04, cw - 0.08, ch - 0.08, { fill });
           text(ctx, `Box ${i} heading`, `Box ${i}`, px + c * cw + 0.2, py + r * ch + 0.15, cw - 0.4, 0.35, "small", { bold: true, color: dark ? "paper" : "ink" });
-          text(ctx, `Box ${i} text`, "Short text", px + c * cw + 0.2, py + r * ch + 0.5, cw - 0.4, ch - 0.7, "caption", { color: dark ? "a6" : "ink2", optional: true });
+          text(ctx, `Box ${i} text`, "Short text", px + c * cw + 0.2, py + r * ch + 0.5, cw - 0.4, ch - 0.7, "caption", { color: dark ? "a6" : fill === "a3" ? "ink" : "ink2", optional: true });
         }
         axes(ctx, px, py, pw, ph);
       },

@@ -64,5 +64,9 @@ jobs:
       - run: node library/tools/build.js all
       - run: python library/tools/post.py all
       - run: python library/tools/build_index.py
-      - run: git diff --exit-code -- skills/make-clean-pptx/assets/   # pptx and csv are byte-reproducible
-      - run: pytest tests/test_libraries.py
+      - run: python library/tools/build_contract.py   # theme-contract.json is measured on the libraries
+      - run: git diff --exit-code -- skills/make-clean-pptx/assets/   # pptx, csv and json are byte-reproducible
+      - run: pytest tests/test_libraries.py tests/test_theme_contract.py
+      # Theme contract: the neutral libraries pass the opt-in contrast check
+      - run: python skills/make-clean-pptx/scripts/lint_deck.py --contrast skills/make-clean-pptx/assets/layouts.pptx
+      - run: python skills/make-clean-pptx/scripts/lint_deck.py --contrast skills/make-clean-pptx/assets/visuals.pptx

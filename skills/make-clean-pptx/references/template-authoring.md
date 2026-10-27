@@ -15,6 +15,7 @@ library/
   tools/build.js         pptxgenjs -> out/<lib>.pptx + out/<lib>.registry.json
   tools/post.py          theme colours and fonts, visual groups, deterministic zip -> skill assets/
   tools/build_index.py   registry -> assets/<lib>.csv
+  tools/build_contract.py  libraries -> assets/theme-contract.json (slot roles, uses, colour pairs)
   tools/build_icons.py   Lucide repository -> assets/icons/
   tools/fit_test.py      every field filled at its limit, built, linted, rendered
   tools/gallery.py       thumbnails, docs/catalog.json, CATALOG.md, README mosaic
@@ -27,6 +28,7 @@ cd library && npm ci && cd ..
 node library/tools/build.js all
 python library/tools/post.py all
 python library/tools/build_index.py
+python library/tools/build_contract.py
 python library/tools/fit_test.py layouts && python library/tools/fit_test.py visuals   # look at the contact sheets
 python library/tools/gallery.py
 pytest
@@ -35,6 +37,7 @@ pytest
 ## Design rules (the neutral system)
 
 - **Colours are theme references.** Draw only with the tokens of `tokens.json` (`ink`, `ink2`, `muted`, `line`, `surface`, `paper`, `a1`…`a6`); `post.py` rewrites them as `schemeClr` (+ lumMod/lumOff), so a PowerPoint theme recolours everything. An unknown colour makes `post.py` fail on purpose.
+- **Text on a fill follows the theme contract** (`theme-contract.md`): paper text on `a1` and `a2`, ink (or ink2) on `a3` to `a6` and `surface`, `muted` only on `paper` and `surface`. Every new text/fill pair becomes a requirement for brand themes, so reuse the existing pairs; CI runs `lint_deck.py --contrast` on both libraries.
 - **Fonts are theme fonts** (`+mj-lt` headings, `+mn-lt` body). The neutral theme uses Arial (Liberation Sans in LibreOffice, same metrics).
 - **One grid**: 13.333 × 7.5 in, 0.6 in side margins, kicker / title / lead / content / footer bands (`tokens.grid`).
 - **Placeholders, never content.** A field's text describes the slot ("Slide title states the takeaway", "Short text", "00"). No names, figures, dates or quotes. Charts use round placeholder numbers and generic labels ("Category 1").
