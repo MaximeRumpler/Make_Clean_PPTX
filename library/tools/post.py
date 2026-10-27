@@ -178,17 +178,26 @@ def _xfrm(shape):
     return int(off.get("x")), int(off.get("y")), int(ext.get("cx")), int(ext.get("cy"))
 
 
+# Name of a shape that is not a field: "<role>#<n>" or "<role>#<n> > <field it holds>"
+# (lib.js Ctx.roleName; contract in references/style-contract.md).
+ROLE_NAME = re.compile(r"^(card|callout|keyfigure|label|panel|frame|decoration)#\d+( > .+)?$")
 DECOR_URI = "{C183D7F6-B498-43B3-948B-1728B52AA6E4}"
 ADEC = "http://schemas.microsoft.com/office/drawing/2017/decorative"
 
 
 def mark_decorative(root) -> int:
-    """Flag rules, dots and backgrounds as decorative so screen readers skip them."""
+    """Flag rules, dots, cards and backgrounds as decorative so screen readers skip them.
+
+    These are the shapes that are not fields: role-tagged containers ("card#2 > Heading 2",
+    "decoration#5") and the marks that follow a field ("Step 1 mark"). Their text, if any,
+    lives in the field they hold, which stays readable.
+    """
     n = 0
     for c in root.iter(P + "cNvPr"):
         name = c.get("name") or ""
-        if (name.startswith("Decoration") or name.endswith(" mark") or " mark " in name or "::Decoration" in name
-                or name.split("::")[-1].endswith((" mark", " stem", " elbow"))):
+        last = name.split("::")[-1]
+        if (ROLE_NAME.match(last) or name.endswith(" mark") or " mark " in name
+                or last.endswith((" mark", " stem", " elbow"))):
             if c.find(A + "extLst") is None:
                 ext_lst = etree.SubElement(c, A + "extLst")
                 ext = etree.SubElement(ext_lst, A + "ext", uri=DECOR_URI)

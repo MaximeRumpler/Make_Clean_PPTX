@@ -79,7 +79,7 @@ module.exports = {
         const w = b.w / 2.2, h = (b.h - 0.6) / 2.2;
         [[0, 2], [1, 1], [2, 0]].forEach(([k, lev], i) => {
           const x = b.x + 0.45 + k * (w * 0.6), y = b.y + lev * (h * 0.6);
-          rect(ctx, x, y, w, h, { fill: ["a1", "a3", "a5"][i], transparency: 0 });
+          rect(ctx, x, y, w, h, { fill: ["a1", "a3", "a5"][i], transparency: 0, role: "card", for: `Horizon ${i + 1}` });
           text(ctx, `Horizon ${i + 1}`, `Horizon ${i + 1}`, x + 0.2, y + 0.15, w - 0.4, 0.4, "small", { bold: true, color: i < 1 ? "paper" : "ink" });
           text(ctx, `Horizon ${i + 1} text`, "What this horizon covers", x + 0.2, y + 0.55, w - 0.4, h - 0.7, "caption", { color: i < 1 ? "a6" : i === 1 ? "ink" : "ink2", optional: true });
         });
@@ -103,7 +103,7 @@ module.exports = {
         ["Now", "Next", "Later"].forEach((n, i) => {
           const x = b.x + i * (w + gap), fill = ["a1", "a3", "a6"][i];
           text(ctx, `Column ${i + 1} heading`, n, x, b.y, w, 0.6, "h3", { fill, color: i < 1 ? "paper" : "ink", inset: 0.15, valign: "middle", keep: true });
-          rect(ctx, x, b.y + 0.6, w, b.h - 0.6, { fill: "surface" });
+          rect(ctx, x, b.y + 0.6, w, b.h - 0.6, { fill: "surface", role: "card", for: `Column ${i + 1} items` });
           text(ctx, `Column ${i + 1} items`, ["Item", "Item", "Item"], x + 0.2, b.y + 0.8, w - 0.4, b.h - 1.0, "small", { bullets: true });
         });
       },

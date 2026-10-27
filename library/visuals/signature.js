@@ -123,7 +123,7 @@ module.exports = {
         const end = (deg, rr) => pt(cx, cy, r + rr, (deg * Math.PI) / 180);
         const e1 = end(-170, 0.6), e2 = end(-90, 0.6), e3 = end(-10, 0.6);
         text(ctx, "Label 1", "Short label", e1.x - 0.12 - lw, e1.y - 0.4, lw, 0.6, "small", { bold: true, color: "ink", limit: 30, align: "right", valign: "middle" });
-        text(ctx, "Label 2", "Short label", e2.x - lw / 2, b.y, lw, e2.y - b.y - 0.06, "small", { bold: true, color: "ink", limit: 30, align: "center", valign: "bottom" });
+        text(ctx, "Label 2", "Short label", e2.x - lw / 2, b.y, lw, e2.y - b.y - 0.06, "small", { bold: true, color: "ink", align: "center", valign: "bottom" });
         text(ctx, "Label 3", "Short label", e3.x + 0.12, e3.y - 0.4, lw, 0.6, "small", { bold: true, color: "ink", limit: 30, valign: "middle" });
       },
     },

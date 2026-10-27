@@ -141,7 +141,7 @@ def make(out: Path) -> dict:
         [3, "D-003", "Content", "Image right", "Text left, photo right", "illustrate a message", "Title|text|70; Body|text|250; Photo|image|1.10:1", "photo image"],
         [4, "D-004", "Data", "Three stats", "Three big numbers", "key figures kpi", "Title|text|70; Number 1|text|6; Label 1|text|40", "numbers kpi stats"],
         [5, "D-005", "Data", "Table", "Simple table", "compare values", "Title|text|70; Table|table", "table comparison"],
-        [6, "D-006", "Frame", "Content frame", "Title and an empty area for a component", "diagrams charts", "Title|text|70; Content Area|frame", "diagram frame"],
+        [6, "D-006", "Frame", "Content frame", "Title and an empty area for a component", "diagrams charts", "Title|text|70; Content Area|frame||role=frame", "diagram frame"],
     ])
     index(out / "visuals_index.xlsx", [
         [1, "S-001", "Process", "Timeline 4 steps", "Horizontal timeline", "roadmap phases", "Step 1 title|text|20", "timeline roadmap"],

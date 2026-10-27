@@ -20,7 +20,7 @@ module.exports = {
         const gap = 0.25, w = (b.w - 2 * gap) / 3, h = Math.min(b.h, 2.4);
         for (let i = 0; i < 3; i++) {
           const x = b.x + i * (w + gap);
-          rect(ctx, x, b.y, w, h, { fill: "surface" });
+          rect(ctx, x, b.y, w, h, { fill: "surface", role: "keyfigure", for: `Value ${i + 1}` });
           rect(ctx, x, b.y, w, 0.06, { fill: i === 0 ? "a1" : "a4" });
           text(ctx, `Value ${i + 1}`, "00", x + 0.25, b.y + 0.3, w - 0.5, 0.9, "number", { size: 40, optional: i > 0 });
           text(ctx, `Label ${i + 1}`, "What is measured", x + 0.25, b.y + 1.25, w - 0.5, 0.45, "small", { bold: true, color: "ink", optional: i > 0 });

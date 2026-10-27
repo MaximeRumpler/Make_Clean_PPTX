@@ -76,7 +76,7 @@ module.exports = {
       use_when: "Formal opening with a strong structure; works well for board and committee decks.",
       tags: "cover band sidebar vertical formal board committee",
       draw(ctx) {
-        rect(ctx, 0, 0, 4.2, H, { fill: "a1" });
+        rect(ctx, 0, 0, 4.2, H, { fill: "a1", role: "panel", for: "Title" });
         text(ctx, "Kicker", "Context or event", MX, 0.8, 3.0, 0.6, "label", { color: "a4", optional: true });
         text(ctx, "Date", "Date", MX, 6.45, 3.0, 0.3, "caption", { color: "a4", optional: true });
         text(ctx, "Title", "Presentation title", 4.9, 2.5, 7.8, 1.9, "hero", { valign: "bottom" });

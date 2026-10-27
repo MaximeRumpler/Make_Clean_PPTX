@@ -28,8 +28,6 @@ const SOFT_ROLES = new Set(["card", "callout", "keyfigure", "label"]);
 
 // Roles of the shapes, for the restyler of style packs (references/style-contract.md).
 const ROLES = ["card", "callout", "keyfigure", "label", "panel", "frame", "decoration"];
-// false while the role names are being introduced: shapes keep "Decoration n".
-const NAME_ROLES = false;
 
 let pres = null;
 function init(p) { pres = p; }
@@ -41,7 +39,6 @@ class Ctx {
     this.prefix = prefix || "";
     this.fields = [];
     this.names = new Set();
-    this.deco = 0;
     this.roles = {};
     this.links = [];
   }
@@ -50,12 +47,10 @@ class Ctx {
     this.names.add(n);
     return this.prefix ? `${this.prefix}::${n}` : n;
   }
-  decoName() { this.deco += 1; return this.prefix ? `${this.prefix}::Decoration ${this.deco}` : `Decoration ${this.deco}`; }
   // Name of a shape that is not a field: "<role>#<n>", plus " > <field>" for the text it holds.
   roleName(role, link) {
     if (!ROLES.includes(role)) throw new Error(`unknown role '${role}' on ${this.prefix || "slide"}`);
     if (link) this.links.push(link); // checked against the fields once the slide is drawn
-    if (!NAME_ROLES) return this.decoName();
     this.roles[role] = (this.roles[role] || 0) + 1;
     return this.name(`${role}#${this.roles[role]}${link ? " > " + link : ""}`);
   }

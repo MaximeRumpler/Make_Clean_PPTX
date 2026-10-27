@@ -60,7 +60,7 @@ def main() -> int:
                 "lib": lib, "id": e["id"], "slide": e["slide"], "name": e["name"], "category": e["category"],
                 "description": e["description"], "use_when": e["use_when"], "tags": e["tags"],
                 "objective": e.get("objective", ""), "frame": e.get("frame", ""), "style": e.get("style", ""),
-                "fields": len(e["field_list"]), "thumbnail": rel,
+                "arrange": e.get("arrange", ""), "fields": len(e["field_list"]), "thumbnail": rel,
             })
     (DOCS / "catalog.json").write_text(json.dumps(catalog, indent=1, ensure_ascii=False), encoding="utf-8")
 

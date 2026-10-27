@@ -63,7 +63,7 @@ module.exports = {
         const lanes = 3, lh = b.h / lanes, labW = 1.8, cols = 5, cw = (b.w - labW) / cols;
         for (let l = 0; l < lanes; l++) {
           const y = b.y + l * lh;
-          rect(ctx, b.x, y, b.w, lh, { fill: l % 2 ? "paper" : "surface" });
+          rect(ctx, b.x, y, b.w, lh, { fill: l % 2 ? "paper" : "surface", role: "panel", for: `Lane ${l + 1}` });
           text(ctx, `Lane ${l + 1}`, `Actor ${l + 1}`, b.x + 0.15, y, labW - 0.3, lh, "small", { bold: true, color: "ink", valign: "middle", optional: l > 1 });
         }
         vrule(ctx, b.x + labW, b.y, b.h, { color: "line" });
@@ -72,7 +72,7 @@ module.exports = {
         const centre = ([c, l]) => [b.x + labW + c * cw + cw / 2, b.y + l * lh + lh / 2];
         boxes.forEach((p, i) => {
           const [x, y] = centre(p);
-          text(ctx, `Box ${i + 1}`, "Activity", x - bw / 2, y - bh / 2, bw, bh, "caption", { fill: i === boxes.length - 1 ? "a1" : "paper", line: "ink", color: i === boxes.length - 1 ? "paper" : "ink", align: "center", valign: "middle", inset: 0.05, optional: i > 2 });
+          text(ctx, `Box ${i + 1}`, "Activity", x - bw / 2, y - bh / 2, bw, bh, "caption", { fill: i === boxes.length - 1 ? "a1" : "paper", line: "ink", role: "card", color: i === boxes.length - 1 ? "paper" : "ink", align: "center", valign: "middle", inset: 0.05, optional: i > 2 });
           if (i) {
             const [px, pyy] = centre(boxes[i - 1]);
             if (Math.abs(pyy - y) < 0.01) arrow(ctx, px + bw / 2, y, x - bw / 2, y, { follows: `Box ${i + 1}` });
@@ -94,7 +94,7 @@ module.exports = {
         const n = 4, gd = 0.7, sw = (b.w - (n - 1) * (gd + 0.2)) / n, y = b.y + 0.3;
         for (let i = 0; i < n; i++) {
           const x = b.x + i * (sw + gd + 0.2);
-          text(ctx, `Stage ${i + 1}`, `Stage ${i + 1}`, x, y, sw, 0.8, "small", { fill: "surface", color: "ink", bold: true, align: "center", valign: "middle" });
+          text(ctx, `Stage ${i + 1}`, `Stage ${i + 1}`, x, y, sw, 0.8, "small", { fill: "surface", role: "card", color: "ink", bold: true, align: "center", valign: "middle" });
           text(ctx, `Stage ${i + 1} text`, "Main activities", x, y + 0.95, sw, b.h - 1.3, "caption", { color: "ink2", optional: true });
           if (i < n - 1) {
             const gx = x + sw + 0.1;
@@ -165,7 +165,7 @@ module.exports = {
         const n = 4, w = b.w / n, stepH = (b.h - 1.6) / n;
         for (let i = 0; i < n; i++) {
           const h = stepH * (i + 1) + 0.4, x = b.x + i * w, y = b.y + b.h - h;
-          rect(ctx, x + 0.04, y, w - 0.08, h, { fill: ["a6", "a4", "a2", "a1"][i] });
+          rect(ctx, x + 0.04, y, w - 0.08, h, { fill: ["a6", "a4", "a2", "a1"][i], role: "card", for: `Level ${i + 1}` });
           text(ctx, `Level ${i + 1}`, `Level ${i + 1}`, x + 0.2, y + 0.15, w - 0.4, 0.4, "small", { bold: true, color: i > 1 ? "paper" : "ink" });
           text(ctx, `Level ${i + 1} text`, "What this level looks like", x + 0.2, y - 1.1, w - 0.4, 1.0, "caption", { color: "ink2", valign: "bottom", optional: true });
         }

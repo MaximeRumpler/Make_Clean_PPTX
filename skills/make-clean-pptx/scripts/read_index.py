@@ -55,7 +55,8 @@ def parse_fields(raw: str | None) -> list[dict]:
     """Parse 'Title|text|60; Number 1|text|4|optional,default,follows=Item 1; Photo|image|1.78:1' into dicts.
 
     Flags: optional (deleted when not filled), default (the template text is an
-    acceptable value and is kept), follows=X (removed when X is removed).
+    acceptable value and is kept), follows=X (removed when X is removed),
+    role=R (the field is drawn as a container: card, label, frame...).
     """
     out = []
     for chunk in re.split(r"[;\n]+", raw or ""):
@@ -67,9 +68,12 @@ def parse_fields(raw: str | None) -> list[dict]:
         if len(parts) > 2 and parts[2] in ("optional", "default"):
             flags.append(parts[2])
         follows = next((f.split("=", 1)[1].strip() for f in flags if f.startswith("follows=")), None)
+        role = next((f.split("=", 1)[1].strip() for f in flags if f.startswith("role=")), None)
         entry = {"name": parts[0], "type": parts[1] if len(parts) > 1 and parts[1] else "text",
                  "limit": None, "hint": None, "optional": "optional" in flags, "default": "default" in flags,
                  "follows": follows}
+        if role:
+            entry["role"] = role
         if len(parts) > 2 and parts[2] and parts[2] not in ("optional", "default"):
             if parts[2].isdigit():
                 entry["limit"] = int(parts[2])

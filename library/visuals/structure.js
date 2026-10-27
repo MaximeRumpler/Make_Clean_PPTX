@@ -4,7 +4,7 @@ const { C, text, rect, ellipse, path, line, hrule, vrule } = L;
 const { arrow } = require("./_kit.js");
 
 const box = (ctx, name, ph, x, y, w, h, o = {}) => text(ctx, name, ph, x, y, w, h, o.style || "caption", Object.assign({
-  fill: o.dark ? "a1" : "surface", color: o.dark ? "paper" : "ink", bold: !!o.bold, align: "center", valign: "middle", inset: 0.06,
+  fill: o.dark ? "a1" : "surface", role: "card", color: o.dark ? "paper" : "ink", bold: !!o.bold, align: "center", valign: "middle", inset: 0.06,
 }, o));
 
 module.exports = {
@@ -99,7 +99,7 @@ module.exports = {
         for (let i = 0; i < n; i++) {
           const y = b.y + i * (lh + 0.1);
           text(ctx, `Layer ${i + 1}`, `Layer ${i + 1}`, b.x, y, labW, lh, "small", { fill: i === 0 ? "a1" : "a2", color: "paper", bold: true, valign: "middle", inset: 0.12 });
-          rect(ctx, b.x + labW, y, b.w - labW, lh, { fill: "surface" });
+          rect(ctx, b.x + labW, y, b.w - labW, lh, { fill: "surface", role: "panel", for: `Layer ${i + 1}` });
           for (let k = 0; k < bpl; k++) {
             box(ctx, `Block ${i + 1}.${k + 1}`, "Component", b.x + labW + 0.15 + k * bw, y + 0.12, bw - 0.15, lh - 0.24, { fill: "paper", line: "line", optional: true });
           }
@@ -157,7 +157,7 @@ module.exports = {
       draw(ctx, b) {
         const ew = 2.2, sy = b.y + b.h / 2, sx2 = b.x + b.w - ew - 0.1;
         line(ctx, b.x, sy, sx2, sy, { color: "ink", w: 2, end: "triangle" });
-        text(ctx, "Effect", "Effect or problem", sx2 + 0.1, sy - 0.6, ew, 1.2, "small", { fill: "a1", color: "paper", bold: true, align: "center", valign: "middle", inset: 0.1 });
+        text(ctx, "Effect", "Effect or problem", sx2 + 0.1, sy - 0.6, ew, 1.2, "small", { fill: "a1", role: "callout", color: "paper", bold: true, align: "center", valign: "middle", inset: 0.1 });
         const step = (sx2 - b.x) / 3.2;
         for (let i = 0; i < 6; i++) {
           const up = i < 3, k = i % 3, bx = b.x + 0.4 + k * step, tipX = bx + step * 0.55, endY = up ? b.y + 0.35 : b.y + b.h - 0.35;

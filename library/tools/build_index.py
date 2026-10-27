@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -24,7 +25,7 @@ RAW = STYLE["raw"]
 ASSETS = STYLE["pack"]
 
 COLUMNS = {
-    "layouts": ["id", "slide", "name", "category", "style", "density", "description", "use_when", "tags", "fields"],
+    "layouts": ["id", "slide", "name", "category", "style", "density", "description", "use_when", "tags", "arrange", "fields"],
     "visuals": ["id", "slide", "name", "category", "kind", "frame", "objective", "data_type", "dimensions", "complexity",
                 "description", "use_when", "limits", "fill_notes", "tags", "related", "fields"],
 }
@@ -39,9 +40,43 @@ def field_spec(f: dict) -> str:
     flags = [k for k in ("optional", "default") if f.get(k)]
     if f.get("follows"):
         flags.append(f"follows={f['follows']}")
+    if f.get("role"):
+        flags.append(f"role={f['role']}")
     if flags:
         parts.append(",".join(flags))
     return "|".join(parts).rstrip("|")
+
+
+NUMBERED = re.compile(r"^(.*?)\b(\d+)\b(.*)$")
+ORDERED_WORDS = re.compile(r"\b(step|stage|act|date|milestone|phase|chapter|session|number)\b", re.I)
+ORDERED_TAGS = {"timeline", "process", "steps", "sequence", "roadmap", "agenda", "numbered", "chronology"}
+
+
+def arrange(entry: dict) -> str:
+    """Repeated units a restyler may rearrange: 'row:3', 'grid:4', 'column:5', ':ordered' when order matters.
+
+    A unit is every field carrying the same number ("Heading 2", "Body 2", "card#2 > Heading 2"
+    holds it). Units must be identical apart from that number. An entry can set "arrange"
+    itself in the generator (a string, or false to opt out).
+    """
+    if "arrange" in entry:
+        return entry["arrange"] or ""
+    units: dict = {}
+    for f in entry["fields"]:
+        m = NUMBERED.match(f["name"])
+        if not m or f["type"] == "deco" or f.get("follows"):
+            continue
+        units.setdefault(int(m.group(2)), {})[m.group(1) + "{n}" + m.group(3)] = f
+    if len(units) < 2 or sorted(units) != list(range(1, len(units) + 1)):
+        return ""
+    keys = [set(u) for u in units.values()]
+    if any(k != keys[0] for k in keys):
+        return ""
+    anchors = [(min(f["x"] for f in u.values()), min(f["y"] for f in u.values())) for u in units.values()]
+    xs, ys = {round(a[0], 1) for a in anchors}, {round(a[1], 1) for a in anchors}
+    kind = "row" if len(ys) == 1 else "column" if len(xs) == 1 else "grid"
+    ordered = any(ORDERED_WORDS.search(k) for k in keys[0]) or bool(ORDERED_TAGS & set(entry.get("tags", "").split()))
+    return f"{kind}:{len(units)}" + (":ordered" if ordered else "")
 
 
 def write(lib: str) -> int:
@@ -54,6 +89,8 @@ def write(lib: str) -> int:
         w.writerow(cols)
         for e in reg:
             row = dict(e, fields="; ".join(field_spec(f) for f in e["fields"]))
+            if "arrange" in cols:
+                row["arrange"] = arrange(e)
             w.writerow([row.get(c, "") for c in cols])
     return len(reg)
 
