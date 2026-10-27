@@ -10,7 +10,7 @@ metadata:
 
 # Make Clean PPTX
 
-Turn any content into a deck that looks designed, not generated.
+Turn any content into a clean, readable deck built from tested slide designs.
 
 The design already exists, in two libraries bundled in `assets/`:
 
