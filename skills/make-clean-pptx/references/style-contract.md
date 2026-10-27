@@ -54,11 +54,12 @@ Every shape of the libraries is either a **field** (named in the index, filled b
 | `panel` | a band or sidebar, often bleeding off the slide edge | change texture or edge (torn, wave), keep the area |
 | `frame` | where a visual or items go (`Content Area`, `Plot Area`) | leave the box; it is replaced by the visual or used for positions |
 | `decoration` | rules, dots, arrows, ornaments, illustration parts | restyle or drop as ornament; it carries no text |
+| `logo` | the brand logo slot of the covers and the closing slide (field `Logo`, flag only) | never restyle; keep the box size, keep it in a corner clear of text |
 
 ### Where the tag is: the shape name
 
 - A shape that is not a field is named **`<role>#<n>`**, or **`<role>#<n> > <field>`** when it holds a text field. Examples: `card#2 > Heading 2`, `keyfigure#1 > KPI 1 value`, `panel#1 > Title`, `decoration#7`. `<n>` counts each role on the slide (or in the visual). Grammar: `^(card|callout|keyfigure|label|panel|frame|decoration)#\d+( > .+)?$`; the linked field always exists on the same slide (the generator refuses otherwise).
-- A **field** keeps its name, because the name is the key of the spec's `fill`. When a field is also a container, the index says so with the flag `role=<role>` in the `fields` column (`index-schema.md`): every `frame` and `plot` field (`role=frame`), every `deco` field ("Step 1 mark", `role=decoration` or `role=label`), and every text field drawn with its own fill or outline (`role=label`, `card`, `callout` or `keyfigure`). In a built deck these keep their field names, so a restyler reads their role from the pack's index.
+- A **field** keeps its name, because the name is the key of the spec's `fill`. When a field is also a container, the index says so with the flag `role=<role>` in the `fields` column (`index-schema.md`): every `frame` and `plot` field (`role=frame`), every `deco` field ("Step 1 mark", `role=decoration` or `role=label`), and every text field drawn with its own fill or outline (`role=label`, `card`, `callout` or `keyfigure`), and the logo slot `Logo` (`role=logo`, on L-01 to L-05 and L-49). In a built deck these keep their field names, so a restyler reads their role from the pack's index.
 - Role-tagged shapes are marked decorative for screen readers (their text lives in the fields they hold).
 
 **Why the name.** The shape name is the one carrier that python-pptx reads directly, that the engine already relies on, that PowerPoint and LibreOffice both keep when they save a file, and that `build_deck.py` copies with the shape when it clones slides and visuals. The alternatives were weighed and left aside: `descr` and `title` are the alternative text that screen readers read aloud; a custom attribute on `p:cNvPr` is invalid XML for PowerPoint (repair prompt); an `extLst` extension and shape tags (`p:custDataLst`) are dropped by LibreOffice, and tags need a separate part that cloning would have to copy. The role names cannot collide with a spec key: no field name contains `#` followed by a number, and fill keys only target fields. The one fragility is a person renaming shapes in PowerPoint's Selection Pane; a restyler treats an unknown name as a plain shape and leaves it alone.
@@ -73,6 +74,7 @@ The `arrange` column of `layouts.csv` and `visuals.csv` marks the layouts and vi
 - Text inside the container that holds it: when a new shape is smaller than the box (a drop, a cloud), recompute the text box inside it and lower that field's limit in the pack's index with the formula above, or fall back to the standard shape when the text no longer fits.
 - Theme colours and theme fonts only (`theme-contract.md`), so a brand theme still recolours the pack.
 - Placeholders that describe the slot, never content.
+- The `Logo` slot on the same slides: the brand tool (Make_Colors_PPTX) fills it through deck.json `"logo"`, see `spec-reference.md`.
 
 ## Checked in CI
 

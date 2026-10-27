@@ -9,6 +9,8 @@
   "properties": {"title": "…", "author": "…", "subject": "…", "keywords": "…"},
   "theme": "brand/brand.thmx",
   "theme_fonts_fallback": "Arial",
+  "logo": "brand/logo.png",
+  "logo_alt": "Brand name",
   "slides": [ { …slide… }, { …slide… } ]
 }
 ```
@@ -20,6 +22,14 @@
 The theme is then checked against `references/theme-contract.md` (accent ramp, text and fill pairs): problems are **warnings**, the deck is still built. Fix the theme, not the slides, then check the deck with `lint_deck.py --contrast`.
 
 Fonts: a brand font that is neither common (Windows, macOS, Office) nor installed on this machine gives a warning; with `theme_fonts_fallback` (`"Arial"`, or `{"major": "Georgia", "minor": "Arial"}`) the theme uses the fallback instead. The character limits are measured with Arial, so after a font change run `lint_deck.py` and `render_check.py` again and shorten what overflows. The report gets a `theme` object: source, name, fonts, `dark`, `colour_map`, `contract_findings`.
+
+## Logo
+
+`logo` (optional) puts the user's logo on the covers (L-01 to L-05) and the closing slide (L-49), in their `Logo` slot: a 1.6 × 0.5 in box in a top corner, clear of titles and footers. The logo is scaled to fit and keeps its aspect ratio; it sits on the slot's side (left margin, right margin, or centred on the typographic cover). Accepted files: PNG, JPG, and SVG (converted to native shapes in its own colours; gradients, embedded pictures and text in an SVG are skipped with a warning, so prefer a PNG for those). A relative path is read next to deck.json first, then in the current folder. A missing or unreadable file, or another format, stops the build with a plain error (exit 2).
+
+`logo_alt` is the alt text, normally the brand name. Without it the logo is marked decorative, so screen readers skip it and the lint does not ask for alt text.
+
+Without `logo`, the slots are removed like any optional field left unfilled, and the deck is the same as before the slot existed. One slide can drop the logo with `"Logo": null` in its `fill`, or take another file with `"Logo": "other.png"`. `lint_deck.py` warns when a logo overlaps text. Its contrast against the background is not checked: on the dark cover L-02, use a light version of the logo.
 
 ## Slide
 

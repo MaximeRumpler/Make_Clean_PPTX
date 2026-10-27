@@ -5,7 +5,8 @@
 
 Catches what the eyes of a tired reviewer miss: leftover template text,
 empty placeholders, text that probably overflows, text or pictures outside the
-slide, overlapping text boxes, pictures without alt text, too many fonts.
+slide, overlapping text boxes, a logo over text, pictures without alt text,
+too many fonts.
 Run render_check.py as well: this linter cannot see the actual rendering.
 
 --contrast (opt-in) also checks colours against the deck's own theme: every
@@ -26,7 +27,9 @@ import sys
 
 from pptx import Presentation
 
-from _common import SKILL_DIR, abs_box, estimate_fit, has_text, iter_shapes, overflows, shape_kind
+from _common import SKILL_DIR, abs_box, estimate_fit, has_text, is_decorative, iter_shapes, overflows, shape_kind
+
+LOGO = "Logo"  # name of the logo slot, and of the logo build_deck.py puts in it
 
 CONTRACT = SKILL_DIR / "assets" / "theme-contract.json"
 
@@ -97,10 +100,14 @@ def lint(path: str, max_fonts: int = 3, min_font: float = 10.0, check_contrast: 
         add("error", 0, None, "deck has no slides")
 
     for n, slide in enumerate(prs.slides, 1):
-        text_boxes = []
+        text_boxes, logos = [], []
         for shp in iter_shapes(slide):
             kind = shape_kind(shp)
             name = shp.name
+            if name == LOGO:
+                b = _box(shp)
+                if b:
+                    logos.append(b)
 
             if kind in ("text", "picture", "chart", "table"):
                 b = _box(shp)
@@ -136,8 +143,8 @@ def lint(path: str, max_fonts: int = 3, min_font: float = 10.0, check_contrast: 
                         text_boxes.append((name, b))
 
             if kind == "picture" and shp._element.tag.endswith("}pic"):
-                descr = shp._element.xpath(".//p:cNvPr")[0].get("descr", "")
-                if not descr.strip():
+                cnvpr = shp._element.xpath(".//p:cNvPr")[0]
+                if not cnvpr.get("descr", "").strip() and not is_decorative(cnvpr):
                     add("warning", n, name, "picture has no alt text")
 
             if kind == "table":
@@ -151,6 +158,11 @@ def lint(path: str, max_fonts: int = 3, min_font: float = 10.0, check_contrast: 
             for j in range(i + 1, len(text_boxes)):
                 if _iou(text_boxes[i][1], text_boxes[j][1]) > 0.35:
                     add("warning", n, text_boxes[i][0], f"overlaps text box '{text_boxes[j][0]}'")
+
+        for logo in logos:
+            for tname, tb in text_boxes:
+                if _iou(logo, tb) > 0.02:  # a hair of contact is tolerated, a logo over words is not
+                    add("warning", n, LOGO, f"logo overlaps text box '{tname}'; move the text or remove the logo from this slide")
 
         if not slide.shapes:
             add("warning", n, None, "slide is empty")

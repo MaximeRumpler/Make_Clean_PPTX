@@ -28,7 +28,7 @@
   "frame": "",
   "style": "Bold",
   "arrange": "",
-  "fields": 5,
+  "fields": 6,
   "thumbnail": "thumbnails/L-02.jpg"
  },
  {
@@ -44,7 +44,7 @@
   "frame": "",
   "style": "Editorial",
   "arrange": "",
-  "fields": 3,
+  "fields": 4,
   "thumbnail": "thumbnails/L-03.jpg"
  },
  {
@@ -60,7 +60,7 @@
   "frame": "",
   "style": "Standard",
   "arrange": "",
-  "fields": 6,
+  "fields": 7,
   "thumbnail": "thumbnails/L-04.jpg"
  },
  {
@@ -76,7 +76,7 @@
   "frame": "",
   "style": "Bold",
   "arrange": "",
-  "fields": 5,
+  "fields": 6,
   "thumbnail": "thumbnails/L-05.jpg"
  },
  {
@@ -780,7 +780,7 @@
   "frame": "",
   "style": "Standard",
   "arrange": "row:3",
-  "fields": 12,
+  "fields": 13,
   "thumbnail": "thumbnails/L-49.jpg"
  },
  {
