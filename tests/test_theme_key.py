@@ -188,3 +188,17 @@ def test_bad_fallback_shape_stops_before_building(fx, tmp_path):
     make_thmx(tmp_path / "s" / "t.thmx", BRAND_RAMP)
     code, rep, deck = build(fx, tmp_path / "s", dict(SPEC, theme="t.thmx", theme_fonts_fallback=["Arial"]))
     assert code == 2 and "theme_fonts_fallback must be" in rep["error"] and not deck.exists()
+
+
+def test_theme_found_in_working_directory_when_not_next_to_deck_json(fx, tmp_path):
+    (tmp_path / "spec").mkdir()
+    (tmp_path / "cwd").mkdir()
+    make_thmx(tmp_path / "cwd" / "brand.thmx", BRAND_RAMP)
+    spec = dict(SPEC, theme="brand.thmx", output=str(tmp_path / "deck.pptx"))
+    (tmp_path / "spec" / "deck.json").write_text(json.dumps(spec), encoding="utf-8")
+    p = subprocess.run([sys.executable, str(SCRIPTS / "build_deck.py"), "--spec", str(tmp_path / "spec" / "deck.json"),
+                        "--design", fx["design"], "--shapes", fx["shapes"], "--design-index", fx["design_index"],
+                        "--shapes-index", fx["shapes_index"]], capture_output=True, encoding="utf-8",
+                       cwd=str(tmp_path / "cwd"))
+    assert p.returncode == 0, p.stdout
+    assert 'val="0B2559"' in parts(tmp_path / "deck.pptx")["ppt/theme/theme1.xml"].decode()

@@ -1,6 +1,6 @@
 # Deck spec reference
 
-`build_deck.py --spec deck.json` reads one JSON file. Everything except `slides` is optional. Set `language` to the language tag of the content (`fr-FR`, `en-GB`, `de-DE`…): screen readers and spell checkers use it on every text run.
+`build_deck.py --spec deck.json` reads one JSON file. Everything except `slides` is optional. Relative file paths in it (images, `.svg` files, `local:` icons, `theme`) are looked up in the folder of deck.json first, then in the working directory; absolute paths are used as they are, and a file found in neither place is reported with both folders. Set `language` to the language tag of the content (`fr-FR`, `en-GB`, `de-DE`…): screen readers and spell checkers use it on every text run.
 
 ```json
 {
@@ -15,7 +15,7 @@
 
 ## Brand theme
 
-`theme` replaces the colours and fonts of the deck's theme with those of a PowerPoint theme (`.thmx`), a template (`.potx`), a presentation (`.pptx`) or a theme part (`.xml`). A relative path is read from the folder of deck.json. The slides are not touched: every colour and font in the libraries is a theme reference, so the whole deck follows. The line and effect styles of the libraries stay. If the source has a slide master, its colour map is applied too (dark themes keep `dk1` dark and swap the map). A file that is missing, damaged or not a theme stops the build with a plain error (exit 2).
+`theme` replaces the colours and fonts of the deck's theme with those of a PowerPoint theme (`.thmx`), a template (`.potx`), a presentation (`.pptx`) or a theme part (`.xml`). A relative path is read from the folder of deck.json (then from the working directory). The slides are not touched: every colour and font in the libraries is a theme reference, so the whole deck follows. The line and effect styles of the libraries stay. If the source has a slide master, its colour map is applied too (dark themes keep `dk1` dark and swap the map). A file that is missing, damaged or not a theme stops the build with a plain error (exit 2).
 
 The theme is then checked against `references/theme-contract.md` (accent ramp, text and fill pairs): problems are **warnings**, the deck is still built. Fix the theme, not the slides, then check the deck with `lint_deck.py --contrast`.
 
