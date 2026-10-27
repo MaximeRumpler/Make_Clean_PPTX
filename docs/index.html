@@ -3,8 +3,44 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Make Clean PPTX · Gallery</title>
-<meta name="description" content="54 layouts and 68 visuals of the make-clean-pptx agent skill: clean, sober PowerPoint decks, theme-ready.">
+<title>Make Clean PPTX: PowerPoint slide designs and charts for AI assistants</title>
+<meta name="description" content="The 54 slide layouts and 68 editable charts and diagrams used by Make Clean PPTX, a free agent skill that turns your notes into PowerPoint decks in Claude, Codex, Cursor or Copilot.">
+<link rel="canonical" href="https://maximerumpler.github.io/Make_Clean_PPTX/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Make PPTX">
+<meta property="og:title" content="Make Clean PPTX: notes in, a PowerPoint deck out">
+<meta property="og:description" content="An agent skill for Claude, Codex, Cursor and Copilot. 54 slide layouts, 68 editable charts and diagrams, 1,900 icons. English and French.">
+<meta property="og:url" content="https://maximerumpler.github.io/Make_Clean_PPTX/">
+<meta property="og:image" content="https://maximerumpler.github.io/Make_Clean_PPTX/preview.jpg">
+<meta property="og:image:width" content="1316">
+<meta property="og:image:height" content="764">
+<meta property="og:image:alt" content="Nine sample slides: a cover, a key figure, a waterfall chart, a matrix, a process and a roadmap">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Make Clean PPTX",
+  "alternateName": ["make-clean-pptx", "Make_Clean_PPTX"],
+  "description": "Agent skill that turns notes into PowerPoint decks from 54 slide layouts and 68 editable charts and diagrams, for Claude, Codex, Cursor, GitHub Copilot and other Agent Skills clients.",
+  "applicationCategory": "BusinessApplication",
+  "applicationSubCategory": "AI agent skill",
+  "operatingSystem": "Windows, macOS, Linux",
+  "softwareVersion": "1.0.0",
+  "inLanguage": ["en", "fr"],
+  "url": "https://maximerumpler.github.io/Make_Clean_PPTX/",
+  "downloadUrl": "https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest/download/make-clean-pptx.zip",
+  "installUrl": "https://github.com/MaximeRumpler/Make_Clean_PPTX#install",
+  "license": "https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "author": { "@type": "Person", "name": "Maxime Rumpler", "url": "https://github.com/MaximeRumpler" },
+  "publisher": { "@type": "Organization", "name": "KairosTech", "url": "https://kairostech.fr" },
+  "sameAs": ["https://github.com/MaximeRumpler/Make_Clean_PPTX", "https://github.com/MaximeRumpler/Make_PPTX"]
+}
+</script>
 <style>
   :root {
     --bg: #F7F7F5; --card: #FFFFFF; --ink: #111111; --ink2: #404040; --muted: #707070; --line: #E3E3E0;
@@ -60,6 +96,7 @@
 
   @media (min-width: 900px) { .controls { position: sticky; top: 0; } }
   main .wrap { padding-top: 26px; padding-bottom: 60px; }
+  .grid-title { margin: 0 0 6px; font-size: 18px; letter-spacing: -.01em; }
   .count { color: var(--muted); font-size: 13px; margin: 0 0 16px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; cursor: pointer; text-align: left; padding: 0; font: inherit; color: inherit; box-shadow: var(--shadow); transition: transform .15s ease, border-color .15s ease; }
@@ -98,13 +135,14 @@
       <a class="primary" href="https://github.com/MaximeRumpler/Make_Clean_PPTX#install">Install the skill</a>
       <a href="https://github.com/MaximeRumpler/Make_Clean_PPTX">GitHub</a>
       <a href="https://github.com/MaximeRumpler/Make_Clean_PPTX/blob/main/CATALOG.md">Catalogue</a>
+      <a href="https://github.com/MaximeRumpler/Make_PPTX">The Make PPTX set</a>
     </div>
     <div class="how">
-      <section><h2>Install</h2><p>Claude Code: <code>/plugin marketplace add MaximeRumpler/Make_Clean_PPTX</code>. Claude.ai: upload <a href="https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest">make-clean-pptx.zip</a>. Other assistants: <code>npx skills add MaximeRumpler/Make_Clean_PPTX</code>.</p></section>
+      <section><h2>Install</h2><p>Claude.ai or Claude desktop: download <a href="https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest/download/make-clean-pptx.zip">make-clean-pptx.zip</a>, turn on <em>Code execution and file creation</em> in <em>Settings → Capabilities</em>, then upload the zip under <em>Skills</em>. Claude Code: <code>/plugin marketplace add MaximeRumpler/Make_Clean_PPTX</code>. Other assistants: <code>npx skills add MaximeRumpler/Make_Clean_PPTX</code>.</p></section>
       <section><h2>Ask</h2><p><code>Make a 10-slide deck from this report for the board.</code> It plans one message per slide, picks a design and a chart, fills it with your content and checks the file. It never makes up numbers.</p></section>
       <section><h2>Then style and colour it</h2><p>Apply your PowerPoint theme. Coming next: Make_Style_PPTX for other looks of the same deck, and Make_Colors_PPTX for your brand colours, fonts and logo.</p></section>
     </div>
-    <div class="stats" id="stats"></div>
+    <div class="stats" id="stats"><!-- stats:start --><div><b>54</b><span>layouts</span></div><div><b>68</b><span>visuals</span></div><div><b>25</b><span>categories</span></div><div><b>1,900</b><span>bundled icons</span></div><!-- stats:end --></div>
   </div>
 </header>
 
@@ -123,8 +161,498 @@
 
 <main>
   <div class="wrap">
+    <h2 class="grid-title"><!-- heading:start -->54 slide layouts and 68 charts and diagrams<!-- heading:end --></h2>
     <p class="count" id="count" aria-live="polite"></p>
-    <div class="grid" id="grid"></div>
+    <div class="grid" id="grid"><!-- cards:start -->
+      <button type="button" class="card" data-i="0">
+        <img src="thumbnails/L-01.jpg" alt="Cover, title left: White cover: kicker, large left-aligned title, subtitle, a rule and author/date line." loading="lazy" width="640" height="360">
+        <div><span class="id">L-01</span><h3>Cover, title left</h3><p>Default opening for reports, reviews and proposals.</p></div>
+      </button>
+      <button type="button" class="card" data-i="1">
+        <img src="thumbnails/L-02.jpg" alt="Cover, dark: Full dark cover with white title, muted subtitle and meta line." loading="lazy" width="640" height="360">
+        <div><span class="id">L-02</span><h3>Cover, dark</h3><p>Executive or keynote opening that needs presence.</p></div>
+      </button>
+      <button type="button" class="card" data-i="2">
+        <img src="thumbnails/L-03.jpg" alt="Cover, typographic: Very large centred title between two thin rules, short line below, date at the bottom." loading="lazy" width="640" height="360">
+        <div><span class="id">L-03</span><h3>Cover, typographic</h3><p>Short punchy title (two to five words), editorial or manifesto tone.</p></div>
+      </button>
+      <button type="button" class="card" data-i="3">
+        <img src="thumbnails/L-04.jpg" alt="Cover, split image: Title block on the left half, full-height picture on the right half." loading="lazy" width="640" height="360">
+        <div><span class="id">L-04</span><h3>Cover, split image</h3><p>Opening that benefits from a strong photo (place, product, people).</p></div>
+      </button>
+      <button type="button" class="card" data-i="4">
+        <img src="thumbnails/L-05.jpg" alt="Cover, side band: Dark vertical band on the left third with context and date; title and subtitle on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-05</span><h3>Cover, side band</h3><p>Formal opening with a strong structure; works well for board and committee decks.</p></div>
+      </button>
+      <button type="button" class="card" data-i="5">
+        <img src="thumbnails/L-06.jpg" alt="Agenda, numbered: Six numbered agenda items on a two-column grid, each with a short detail line." loading="lazy" width="640" height="360">
+        <div><span class="id">L-06</span><h3>Agenda, numbered</h3><p>Table of contents for decks with three to six parts.</p></div>
+      </button>
+      <button type="button" class="card" data-i="6">
+        <img src="thumbnails/L-07.jpg" alt="Agenda, timed sessions: Rows of sessions with time, title and owner, separated by thin rules." loading="lazy" width="640" height="360">
+        <div><span class="id">L-07</span><h3>Agenda, timed sessions</h3><p>Workshop, seminar or meeting programme with times and speakers.</p></div>
+      </button>
+      <button type="button" class="card" data-i="7">
+        <img src="thumbnails/L-08.jpg" alt="Agenda, active chapter: Chapter list on the left with the current one highlighted; chapter number and title large on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-08</span><h3>Agenda, active chapter</h3><p>Reminder of where we are, between parts of a long deck.</p></div>
+      </button>
+      <button type="button" class="card" data-i="8">
+        <img src="thumbnails/L-09.jpg" alt="Chapter divider, dark: Dark full slide with a large chapter number, chapter title and one framing line." loading="lazy" width="640" height="360">
+        <div><span class="id">L-09</span><h3>Chapter divider, dark</h3><p>Start of a new part in decks of fifteen slides or more.</p></div>
+      </button>
+      <button type="button" class="card" data-i="9">
+        <img src="thumbnails/L-10.jpg" alt="Divider with key figure: Light divider: chapter title on the left, one large figure and its caption on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-10</span><h3>Divider with key figure</h3><p>Opening a chapter with the single number that motivates it.</p></div>
+      </button>
+      <button type="button" class="card" data-i="10">
+        <img src="thumbnails/L-11.jpg" alt="Transition, seen and next: Two columns: what has been covered (muted) and what comes next (strong), split by a rule." loading="lazy" width="640" height="360">
+        <div><span class="id">L-11</span><h3>Transition, seen and next</h3><p>Bridge between the diagnosis and the proposal, or between two parts.</p></div>
+      </button>
+      <button type="button" class="card" data-i="11">
+        <img src="thumbnails/L-12.jpg" alt="Key message: One sentence set very large on an empty slide, with a short rule above and a source line." loading="lazy" width="640" height="360">
+        <div><span class="id">L-12</span><h3>Key message</h3><p>The single takeaway the audience must remember; a turning point in the story.</p></div>
+      </button>
+      <button type="button" class="card" data-i="12">
+        <img src="thumbnails/L-13.jpg" alt="Figure and interpretation: A very large number on the left, its caption beneath, and the interpretation in a column on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-13</span><h3>Figure and interpretation</h3><p>One fact carries the argument: show the number, then say what it means.</p></div>
+      </button>
+      <button type="button" class="card" data-i="13">
+        <img src="thumbnails/L-14.jpg" alt="Big quote: A large quotation in italics with a thick opening rule and the attribution below." loading="lazy" width="640" height="360">
+        <div><span class="id">L-14</span><h3>Big quote</h3><p>A customer, expert or leader said it better; use real quotes only.</p></div>
+      </button>
+      <button type="button" class="card" data-i="14">
+        <img src="thumbnails/L-15.jpg" alt="Strategic question: The question that frames the discussion, centred and large, with one line of context." loading="lazy" width="640" height="360">
+        <div><span class="id">L-15</span><h3>Strategic question</h3><p>Opening a debate or a decision: state the question before the answers.</p></div>
+      </button>
+      <button type="button" class="card" data-i="15">
+        <img src="thumbnails/L-16.jpg" alt="Position and three arguments: A position statement across the top, then three numbered arguments in columns." loading="lazy" width="640" height="360">
+        <div><span class="id">L-16</span><h3>Position and three arguments</h3><p>Take a stand and back it with three reasons.</p></div>
+      </button>
+      <button type="button" class="card" data-i="16">
+        <img src="thumbnails/L-17.jpg" alt="Central figure with annotations: One very large number in the centre, four short annotations in the corners linked by thin rules." loading="lazy" width="640" height="360">
+        <div><span class="id">L-17</span><h3>Central figure with annotations</h3><p>A number that needs context from several angles (cause, trend, comparison, consequence).</p></div>
+      </button>
+      <button type="button" class="card" data-i="17">
+        <img src="thumbnails/L-18.jpg" alt="Title and text: Title, framing line and one text block, with an optional side note." loading="lazy" width="640" height="360">
+        <div><span class="id">L-18</span><h3>Title and text</h3><p>A paragraph of explanation that does not split into parallel points.</p></div>
+      </button>
+      <button type="button" class="card" data-i="18">
+        <img src="thumbnails/L-19.jpg" alt="Two columns: Two balanced text columns, each with a heading over a strong rule." loading="lazy" width="640" height="360">
+        <div><span class="id">L-19</span><h3>Two columns</h3><p>Two parallel ideas: problem and solution, today and tomorrow, two audiences.</p></div>
+      </button>
+      <button type="button" class="card" data-i="19">
+        <img src="thumbnails/L-20.jpg" alt="Three columns with icons: Three columns, each with an icon, a heading and a short text." loading="lazy" width="640" height="360">
+        <div><span class="id">L-20</span><h3>Three columns with icons</h3><p>Three pillars, benefits, principles or offers of equal weight.</p></div>
+      </button>
+      <button type="button" class="card" data-i="20">
+        <img src="thumbnails/L-21.jpg" alt="Four columns: Four narrow numbered columns separated by thin rules." loading="lazy" width="640" height="360">
+        <div><span class="id">L-21</span><h3>Four columns</h3><p>Four steps, levers or components that read left to right.</p></div>
+      </button>
+      <button type="button" class="card" data-i="21">
+        <img src="thumbnails/L-22.jpg" alt="Four cards: A two-by-two grid of light cards, each with a heading and a short text." loading="lazy" width="640" height="360">
+        <div><span class="id">L-22</span><h3>Four cards</h3><p>Four items of equal weight that need a few lines each (findings, recommendations).</p></div>
+      </button>
+      <button type="button" class="card" data-i="22">
+        <img src="thumbnails/L-23.jpg" alt="Main content and sidebar: Main text on the left two thirds, a grey sidebar with key points on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-23</span><h3>Main content and sidebar</h3><p>Explanation plus the facts, definitions or figures the reader should keep.</p></div>
+      </button>
+      <button type="button" class="card" data-i="23">
+        <img src="thumbnails/L-24.jpg" alt="Text with takeaway box: Explanatory text on the left, a dark box on the right holding the takeaway." loading="lazy" width="640" height="360">
+        <div><span class="id">L-24</span><h3>Text with takeaway box</h3><p>The reasoning matters but the conclusion must stand out.</p></div>
+      </button>
+      <button type="button" class="card" data-i="24">
+        <img src="thumbnails/L-25.jpg" alt="Findings and implications: Three rows: a finding on the left, an arrow, its implication on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-25</span><h3>Findings and implications</h3><p>Turning a diagnosis into consequences: what we saw, what it means.</p></div>
+      </button>
+      <button type="button" class="card" data-i="25">
+        <img src="thumbnails/L-26.jpg" alt="Problem and hypotheses: Problem statement in a grey band, three hypothesis cards below." loading="lazy" width="640" height="360">
+        <div><span class="id">L-26</span><h3>Problem and hypotheses</h3><p>Framing an analysis: the problem and the hypotheses to test.</p></div>
+      </button>
+      <button type="button" class="card" data-i="26">
+        <img src="thumbnails/L-27.jpg" alt="Text and image: Title and text on the left, a full-height picture bleeding off the right edge." loading="lazy" width="640" height="360">
+        <div><span class="id">L-27</span><h3>Text and image</h3><p>A message that a photo makes concrete: a site, a product, a team at work.</p></div>
+      </button>
+      <button type="button" class="card" data-i="27">
+        <img src="thumbnails/L-28.jpg" alt="Full image with caption box: Full-bleed picture with a white box in the lower left holding a title and a short text." loading="lazy" width="640" height="360">
+        <div><span class="id">L-28</span><h3>Full image with caption box</h3><p>Emotional or contextual moment carried by one strong picture.</p></div>
+      </button>
+      <button type="button" class="card" data-i="28">
+        <img src="thumbnails/L-29.jpg" alt="Case study: Square picture on the left; context and three result figures on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-29</span><h3>Case study</h3><p>Customer story, project reference or pilot with measurable results.</p></div>
+      </button>
+      <button type="button" class="card" data-i="29">
+        <img src="thumbnails/L-30.jpg" alt="Team of four: Four portraits in a row, each with name, role and a one-line focus." loading="lazy" width="640" height="360">
+        <div><span class="id">L-30</span><h3>Team of four</h3><p>Introducing the team, the speakers or the key contacts.</p></div>
+      </button>
+      <button type="button" class="card" data-i="30">
+        <img src="thumbnails/L-31.jpg" alt="Full visual: Title, framing line and one wide frame for a chart or diagram from the visuals library." loading="lazy" width="640" height="360">
+        <div><span class="id">L-31</span><h3>Full visual</h3><p>The visual is the message and needs all the room (roadmap, process, big chart).</p></div>
+      </button>
+      <button type="button" class="card" data-i="31">
+        <img src="thumbnails/L-32.jpg" alt="Visual and key points: Frame on the left two thirds; key points and a takeaway on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-32</span><h3>Visual and key points</h3><p>A chart that needs reading help: what to look at and what it means.</p></div>
+      </button>
+      <button type="button" class="card" data-i="32">
+        <img src="thumbnails/L-33.jpg" alt="Visual with three callouts: Three short numbered callouts in a row above a wide frame." loading="lazy" width="640" height="360">
+        <div><span class="id">L-33</span><h3>Visual with three callouts</h3><p>A visual with three things to notice, read before looking at it.</p></div>
+      </button>
+      <button type="button" class="card" data-i="33">
+        <img src="thumbnails/L-34.jpg" alt="Two visuals: Two frames side by side, each with a heading and a caption." loading="lazy" width="640" height="360">
+        <div><span class="id">L-34</span><h3>Two visuals</h3><p>Comparing two charts or diagrams: before and after, two segments, two periods.</p></div>
+      </button>
+      <button type="button" class="card" data-i="34">
+        <img src="thumbnails/L-35.jpg" alt="Visual and two figures: Frame on the left; two key figures stacked on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-35</span><h3>Visual and two figures</h3><p>A trend or breakdown with the two numbers that summarise it.</p></div>
+      </button>
+      <button type="button" class="card" data-i="35">
+        <img src="thumbnails/L-36.jpg" alt="Dashboard, four modules: Two-by-two grid of frames, each with its own small heading." loading="lazy" width="640" height="360">
+        <div><span class="id">L-36</span><h3>Dashboard, four modules</h3><p>Monitoring view: four indicators or charts read together.</p></div>
+      </button>
+      <button type="button" class="card" data-i="36">
+        <img src="thumbnails/L-37.jpg" alt="Three figures: Three large figures in columns, each with label and context, over a strong rule." loading="lazy" width="640" height="360">
+        <div><span class="id">L-37</span><h3>Three figures</h3><p>Three numbers that tell the story of a period, a project or an offer.</p></div>
+      </button>
+      <button type="button" class="card" data-i="37">
+        <img src="thumbnails/L-38.jpg" alt="Four figures on cards: Four grey cards in a row, each with a figure, its label and its variation." loading="lazy" width="640" height="360">
+        <div><span class="id">L-38</span><h3>Four figures on cards</h3><p>Four indicators of a scorecard; each needs a short comparison.</p></div>
+      </button>
+      <button type="button" class="card" data-i="38">
+        <img src="thumbnails/L-39.jpg" alt="Six figures: Three-by-two grid of compact figures with labels, separated by thin rules." loading="lazy" width="640" height="360">
+        <div><span class="id">L-39</span><h3>Six figures</h3><p>Overview of up to six indicators without charts.</p></div>
+      </button>
+      <button type="button" class="card" data-i="39">
+        <img src="thumbnails/L-40.jpg" alt="Hero figure and breakdown: Dark left panel with one big figure; four breakdown lines with values on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-40</span><h3>Hero figure and breakdown</h3><p>A total and what it is made of; a headline result and its drivers.</p></div>
+      </button>
+      <button type="button" class="card" data-i="40">
+        <img src="thumbnails/L-41.jpg" alt="Table and takeaway: Native table on the left two thirds, takeaway column on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-41</span><h3>Table and takeaway</h3><p>Detailed comparison or figures that must be read row by row, with the conclusion beside.</p></div>
+      </button>
+      <button type="button" class="card" data-i="41">
+        <img src="thumbnails/L-42.jpg" alt="Action plan: Full-width table with action, owner, due date and status columns." loading="lazy" width="640" height="360">
+        <div><span class="id">L-42</span><h3>Action plan</h3><p>Who does what by when; follow-up of decisions.</p></div>
+      </button>
+      <button type="button" class="card" data-i="42">
+        <img src="thumbnails/L-43.jpg" alt="Two options: Two equal option cards with characteristics and a verdict line." loading="lazy" width="640" height="360">
+        <div><span class="id">L-43</span><h3>Two options</h3><p>Choice between two scenarios presented neutrally.</p></div>
+      </button>
+      <button type="button" class="card" data-i="43">
+        <img src="thumbnails/L-44.jpg" alt="Recommended option: Recommended option in a large dark card, the alternative in a smaller light card." loading="lazy" width="640" height="360">
+        <div><span class="id">L-44</span><h3>Recommended option</h3><p>You recommend one option and show the alternative you discarded.</p></div>
+      </button>
+      <button type="button" class="card" data-i="44">
+        <img src="thumbnails/L-45.jpg" alt="Three options: Three option cards with characteristics and a verdict line." loading="lazy" width="640" height="360">
+        <div><span class="id">L-45</span><h3>Three options</h3><p>Choice between three scenarios (do nothing, partial, full).</p></div>
+      </button>
+      <button type="button" class="card" data-i="45">
+        <img src="thumbnails/L-46.jpg" alt="Before and after: Two columns, current state in grey and target state in black, joined by an arrow." loading="lazy" width="640" height="360">
+        <div><span class="id">L-46</span><h3>Before and after</h3><p>Transformation, as-is versus to-be, the change you propose.</p></div>
+      </button>
+      <button type="button" class="card" data-i="46">
+        <img src="thumbnails/L-47.jpg" alt="Summary and decision: Four numbered key points on the left, the decision requested in a dark box on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-47</span><h3>Summary and decision</h3><p>End of a decision deck: what to remember and what we ask for.</p></div>
+      </button>
+      <button type="button" class="card" data-i="47">
+        <img src="thumbnails/L-48.jpg" alt="Next steps: Horizontal line with four dated steps, each with its owner." loading="lazy" width="640" height="360">
+        <div><span class="id">L-48</span><h3>Next steps</h3><p>Closing with what happens next and who does it.</p></div>
+      </button>
+      <button type="button" class="card" data-i="48">
+        <img src="thumbnails/L-49.jpg" alt="Thank you and contacts: Large closing line and up to three contacts with name, role and address." loading="lazy" width="640" height="360">
+        <div><span class="id">L-49</span><h3>Thank you and contacts</h3><p>Last slide: thanks, questions, who to contact.</p></div>
+      </button>
+      <button type="button" class="card" data-i="49">
+        <img src="thumbnails/L-50.jpg" alt="Bento grid: Grid of five modules of different sizes; the main one is dark and holds a figure." loading="lazy" width="640" height="360">
+        <div><span class="id">L-50</span><h3>Bento grid</h3><p>A rich overview (offer, results, programme) where one element dominates.</p></div>
+      </button>
+      <button type="button" class="card" data-i="50">
+        <img src="thumbnails/L-51.jpg" alt="Horizontal bands: Three full-width bands alternating grey and white: label, heading and text on each." loading="lazy" width="640" height="360">
+        <div><span class="id">L-51</span><h3>Horizontal bands</h3><p>Three themes or periods read top to bottom (past, present, future).</p></div>
+      </button>
+      <button type="button" class="card" data-i="51">
+        <img src="thumbnails/L-52.jpg" alt="Story in four acts: Four acts in columns joined by a line: act number, title and short text." loading="lazy" width="640" height="360">
+        <div><span class="id">L-52</span><h3>Story in four acts</h3><p>Narrative arc: situation, complication, resolution, outcome.</p></div>
+      </button>
+      <button type="button" class="card" data-i="52">
+        <img src="thumbnails/L-53.jpg" alt="Side panel: Dark panel on the left third with title and lead; two text columns on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">L-53</span><h3>Side panel</h3><p>Dense content that needs a strong anchor; executive summaries.</p></div>
+      </button>
+      <button type="button" class="card" data-i="53">
+        <img src="thumbnails/L-54.jpg" alt="Vertical sequence: Title on the left; five numbered steps stacked on the right along a vertical line." loading="lazy" width="640" height="360">
+        <div><span class="id">L-54</span><h3>Vertical sequence</h3><p>A method, procedure or chronology of up to five steps with a line of detail each.</p></div>
+      </button>
+      <button type="button" class="card" data-i="54">
+        <img src="thumbnails/V-CMP-01.jpg" alt="Ranked bars: Horizontal bars sorted from largest to smallest, values at the end of each bar." loading="lazy" width="640" height="360">
+        <div><span class="id">V-CMP-01</span><h3>Ranked bars</h3><p>Rank items on one measure (regions, products, causes). Best with 3 to 12 items.</p></div>
+      </button>
+      <button type="button" class="card" data-i="55">
+        <img src="thumbnails/V-CMP-02.jpg" alt="Two periods: Clustered columns: previous period in grey, current period in black, values on top." loading="lazy" width="640" height="360">
+        <div><span class="id">V-CMP-02</span><h3>Two periods</h3><p>Same items measured at two moments (year on year, before and after).</p></div>
+      </button>
+      <button type="button" class="card" data-i="56">
+        <img src="thumbnails/V-CMP-03.jpg" alt="Progress to target: For each item a light bar shows the target and a dark bar over it shows the actual value." loading="lazy" width="640" height="360">
+        <div><span class="id">V-CMP-03</span><h3>Progress to target</h3><p>Achievement against objectives for several teams, projects or indicators.</p></div>
+      </button>
+      <button type="button" class="card" data-i="57">
+        <img src="thumbnails/V-CMP-04.jpg" alt="Sensitivity tornado: Bars extending left (downside) and right (upside) of a central axis, largest effect on top." loading="lazy" width="640" height="360">
+        <div><span class="id">V-CMP-04</span><h3>Sensitivity tornado</h3><p>Which assumptions move the result most: sensitivity analysis, risk drivers.</p></div>
+      </button>
+      <button type="button" class="card" data-i="58">
+        <img src="thumbnails/V-CMP-05.jpg" alt="Slope chart: Lines joining each item&#x27;s value at two moments; the slope shows who gains and who loses." loading="lazy" width="640" height="360">
+        <div><span class="id">V-CMP-05</span><h3>Slope chart</h3><p>Change in ranking or value between two dates for 3 to 7 items.</p></div>
+      </button>
+      <button type="button" class="card" data-i="59">
+        <img src="thumbnails/V-CMP-06.jpg" alt="Scored comparison: Options in columns, criteria in rows, a shaded dot per cell from light (weak) to black (strong)." loading="lazy" width="640" height="360">
+        <div><span class="id">V-CMP-06</span><h3>Scored comparison</h3><p>Compare 2 to 4 options on 3 to 6 qualitative criteria; supplier or scenario choice.</p></div>
+      </button>
+      <button type="button" class="card" data-i="60">
+        <img src="thumbnails/V-EVO-01.jpg" alt="Line with annotation: One bold line over time with a callout explaining the key moment." loading="lazy" width="640" height="360">
+        <div><span class="id">V-EVO-01</span><h3>Line with annotation</h3><p>A trend and the event that explains it (launch, crisis, policy change).</p></div>
+      </button>
+      <button type="button" class="card" data-i="61">
+        <img src="thumbnails/V-EVO-02.jpg" alt="Stacked area: Stacked areas showing how a total and its components evolve." loading="lazy" width="640" height="360">
+        <div><span class="id">V-EVO-02</span><h3>Stacked area</h3><p>Growth of a total and the changing weight of 2 to 4 components.</p></div>
+      </button>
+      <button type="button" class="card" data-i="62">
+        <img src="thumbnails/V-EVO-03.jpg" alt="Columns and line: Columns for a volume, a line on a second axis for a rate." loading="lazy" width="640" height="360">
+        <div><span class="id">V-EVO-03</span><h3>Columns and line</h3><p>Volume and ratio together: revenue and margin, users and conversion.</p></div>
+      </button>
+      <button type="button" class="card" data-i="63">
+        <img src="thumbnails/V-EVO-04.jpg" alt="Plan versus actual: Cumulative plan as a light line, actual as a bold line that stops at today." loading="lazy" width="640" height="360">
+        <div><span class="id">V-EVO-04</span><h3>Plan versus actual</h3><p>Project progress, budget burn, cumulative sales against plan (S-curve).</p></div>
+      </button>
+      <button type="button" class="card" data-i="64">
+        <img src="thumbnails/V-EVO-05.jpg" alt="Trend table: Four rows: indicator name, current value and a small trend line." loading="lazy" width="640" height="360">
+        <div><span class="id">V-EVO-05</span><h3>Trend table</h3><p>Several indicators whose direction matters more than their detail.</p></div>
+      </button>
+      <button type="button" class="card" data-i="65">
+        <img src="thumbnails/V-EVO-06.jpg" alt="Small multiples: Three small line charts on the same scale, side by side, each with its own heading." loading="lazy" width="640" height="360">
+        <div><span class="id">V-EVO-06</span><h3>Small multiples</h3><p>The same trend for several segments; avoids a tangle of lines on one chart.</p></div>
+      </button>
+      <button type="button" class="card" data-i="66">
+        <img src="thumbnails/V-COM-01.jpg" alt="Waterfall bridge: Bridge from a starting total to an ending total through increases (dark) and decreases (light)." loading="lazy" width="640" height="360">
+        <div><span class="id">V-COM-01</span><h3>Waterfall bridge</h3><p>Explain a variation: budget to actual, last year to this year, price walk.</p></div>
+      </button>
+      <button type="button" class="card" data-i="67">
+        <img src="thumbnails/V-COM-02.jpg" alt="Mix bars: 100% stacked horizontal bars showing the split of each item between components." loading="lazy" width="640" height="360">
+        <div><span class="id">V-COM-02</span><h3>Mix bars</h3><p>Compare the mix (shares) across groups: channels by region, cost structure by unit.</p></div>
+      </button>
+      <button type="button" class="card" data-i="68">
+        <img src="thumbnails/V-COM-03.jpg" alt="Donut with total: Donut chart with the total written in the centre." loading="lazy" width="640" height="360">
+        <div><span class="id">V-COM-03</span><h3>Donut with total</h3><p>Share of a total with 2 to 5 parts, when one part dominates.</p></div>
+      </button>
+      <button type="button" class="card" data-i="69">
+        <img src="thumbnails/V-COM-04.jpg" alt="Simple pie: Pie with two or three very unequal parts and their percentages." loading="lazy" width="640" height="360">
+        <div><span class="id">V-COM-04</span><h3>Simple pie</h3><p>One clear majority versus the rest (&quot;two thirds of customers...&quot;).</p></div>
+      </button>
+      <button type="button" class="card" data-i="70">
+        <img src="thumbnails/V-COM-05.jpg" alt="Funnel: Five stacked stages narrowing downwards, each with its label, value and conversion." loading="lazy" width="640" height="360">
+        <div><span class="id">V-COM-05</span><h3>Funnel</h3><p>Conversion through successive stages: marketing, sales, recruitment, validation.</p></div>
+      </button>
+      <button type="button" class="card" data-i="71">
+        <img src="thumbnails/V-COM-06.jpg" alt="Stacked columns: Columns stacked by component over a few periods." loading="lazy" width="640" height="360">
+        <div><span class="id">V-COM-06</span><h3>Stacked columns</h3><p>Total and its composition for 3 to 8 periods (revenue by product per year).</p></div>
+      </button>
+      <button type="button" class="card" data-i="72">
+        <img src="thumbnails/V-REL-01.jpg" alt="Scatter plot: Points placed by two measures, to reveal a correlation or outliers." loading="lazy" width="640" height="360">
+        <div><span class="id">V-REL-01</span><h3>Scatter plot</h3><p>Is X linked to Y? Price and volume, effort and result, size and growth.</p></div>
+      </button>
+      <button type="button" class="card" data-i="73">
+        <img src="thumbnails/V-REL-02.jpg" alt="Bubble portfolio: Bubbles placed on two axes, bubble size for a third measure (portfolio view)." loading="lazy" width="640" height="360">
+        <div><span class="id">V-REL-02</span><h3>Bubble portfolio</h3><p>Portfolio of products, projects or markets: attractiveness, position and size.</p></div>
+      </button>
+      <button type="button" class="card" data-i="74">
+        <img src="thumbnails/V-REL-03.jpg" alt="Histogram: Adjacent columns counting how many values fall in each range." loading="lazy" width="640" height="360">
+        <div><span class="id">V-REL-03</span><h3>Histogram</h3><p>How values are spread: delays, order sizes, ages, scores.</p></div>
+      </button>
+      <button type="button" class="card" data-i="75">
+        <img src="thumbnails/V-REL-04.jpg" alt="Heatmap grid: Grid of cells, rows by columns, each cell shaded by its value and showing the number." loading="lazy" width="640" height="360">
+        <div><span class="id">V-REL-04</span><h3>Heatmap grid</h3><p>Intensity across two dimensions: activity by day and hour, sales by product and region, cohort retention.</p></div>
+      </button>
+      <button type="button" class="card" data-i="76">
+        <img src="thumbnails/V-REL-05.jpg" alt="Pareto: Sorted columns with a cumulative percentage line on a second axis." loading="lazy" width="640" height="360">
+        <div><span class="id">V-REL-05</span><h3>Pareto</h3><p>Find the few causes that explain most of the effect (80/20).</p></div>
+      </button>
+      <button type="button" class="card" data-i="77">
+        <img src="thumbnails/V-KPI-01.jpg" alt="KPI cards with change: Three cards with a figure, its label and the change against a reference." loading="lazy" width="640" height="360">
+        <div><span class="id">V-KPI-01</span><h3>KPI cards with change</h3><p>A compact scorecard inside a slide that also carries text or a chart.</p></div>
+      </button>
+      <button type="button" class="card" data-i="78">
+        <img src="thumbnails/V-KPI-02.jpg" alt="Progress rings: Three rings, each filled to a percentage, with the figure in the centre and a label below." loading="lazy" width="640" height="360">
+        <div><span class="id">V-KPI-02</span><h3>Progress rings</h3><p>Completion or achievement rates (percent of target, percent done).</p></div>
+      </button>
+      <button type="button" class="card" data-i="79">
+        <img src="thumbnails/V-KPI-03.jpg" alt="Figure with trend: One large figure with its label, change and a small area chart of its recent trend." loading="lazy" width="640" height="360">
+        <div><span class="id">V-KPI-03</span><h3>Figure with trend</h3><p>The headline figure of a slide, with just enough history to show the direction.</p></div>
+      </button>
+      <button type="button" class="card" data-i="80">
+        <img src="thumbnails/V-KPI-04.jpg" alt="Status list: Rows with a status dot, an item name, a short comment and an owner." loading="lazy" width="640" height="360">
+        <div><span class="id">V-KPI-04</span><h3>Status list</h3><p>Project or programme status report (on track, at risk, late).</p></div>
+      </button>
+      <button type="button" class="card" data-i="81">
+        <img src="thumbnails/V-KPI-05.jpg" alt="Gauge: Half-ring gauge filled to a percentage, figure in the centre, scale ends below." loading="lazy" width="640" height="360">
+        <div><span class="id">V-KPI-05</span><h3>Gauge</h3><p>One rate against its maximum: capacity used, satisfaction score, budget consumed.</p></div>
+      </button>
+      <button type="button" class="card" data-i="82">
+        <img src="thumbnails/V-MAT-01.jpg" alt="Two-by-two matrix: Four named quadrants on two axes, numbered markers placed inside, and a key on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">V-MAT-01</span><h3>Two-by-two matrix</h3><p>Position up to eight items on two criteria (value and feasibility, urgency and importance).</p></div>
+      </button>
+      <button type="button" class="card" data-i="83">
+        <img src="thumbnails/V-MAT-02.jpg" alt="SWOT: Strengths, weaknesses, opportunities and threats in four blocks, internal above, external below." loading="lazy" width="640" height="360">
+        <div><span class="id">V-MAT-02</span><h3>SWOT</h3><p>Summarise a diagnosis before choosing a strategy.</p></div>
+      </button>
+      <button type="button" class="card" data-i="84">
+        <img src="thumbnails/V-MAT-03.jpg" alt="Impact and effort: Impact on the vertical axis, effort on the horizontal; quick wins, big bets, fill-ins and time sinks." loading="lazy" width="640" height="360">
+        <div><span class="id">V-MAT-03</span><h3>Impact and effort</h3><p>Choose which initiatives to launch first.</p></div>
+      </button>
+      <button type="button" class="card" data-i="85">
+        <img src="thumbnails/V-MAT-04.jpg" alt="Risk matrix: Five-by-five grid of likelihood and impact, shaded from light to dark, with numbered risks placed in it." loading="lazy" width="640" height="360">
+        <div><span class="id">V-MAT-04</span><h3>Risk matrix</h3><p>Risk register summary for a project, a programme or a decision.</p></div>
+      </button>
+      <button type="button" class="card" data-i="86">
+        <img src="thumbnails/V-MAT-05.jpg" alt="Nine-box grid: Three-by-three grid with a name and a short text in each box; darker towards the top right." loading="lazy" width="640" height="360">
+        <div><span class="id">V-MAT-05</span><h3>Nine-box grid</h3><p>Segment people, products or markets on two three-level scales (performance and potential).</p></div>
+      </button>
+      <button type="button" class="card" data-i="87">
+        <img src="thumbnails/V-MAT-06.jpg" alt="Positioning map: Two crossing axes with labelled ends; numbered markers place each player or offer." loading="lazy" width="640" height="360">
+        <div><span class="id">V-MAT-06</span><h3>Positioning map</h3><p>Competitive positioning, perception maps, where we stand against alternatives.</p></div>
+      </button>
+      <button type="button" class="card" data-i="88">
+        <img src="thumbnails/V-PRO-01.jpg" alt="Chevron process: Five chevrons in a row, the current one dark, with a short text under each." loading="lazy" width="640" height="360">
+        <div><span class="id">V-PRO-01</span><h3>Chevron process</h3><p>A linear method or phases of a project, 3 to 5 steps.</p></div>
+      </button>
+      <button type="button" class="card" data-i="89">
+        <img src="thumbnails/V-PRO-02.jpg" alt="Cycle: Four steps arranged on a circle with arrows, the centre naming the cycle." loading="lazy" width="640" height="360">
+        <div><span class="id">V-PRO-02</span><h3>Cycle</h3><p>A recurring loop: continuous improvement, planning cycle, customer lifecycle.</p></div>
+      </button>
+      <button type="button" class="card" data-i="90">
+        <img src="thumbnails/V-PRO-03.jpg" alt="Swimlane flow: Three horizontal lanes (one per actor) with process boxes and arrows passing between lanes." loading="lazy" width="640" height="360">
+        <div><span class="id">V-PRO-03</span><h3>Swimlane flow</h3><p>Who does what in a process with hand-offs: approval workflows, order to cash.</p></div>
+      </button>
+      <button type="button" class="card" data-i="91">
+        <img src="thumbnails/V-PRO-04.jpg" alt="Stage-gate: Four stages as bars separated by diamond decision gates, with criteria under each gate." loading="lazy" width="640" height="360">
+        <div><span class="id">V-PRO-04</span><h3>Stage-gate</h3><p>Development or investment process with go / no-go decisions.</p></div>
+      </button>
+      <button type="button" class="card" data-i="92">
+        <img src="thumbnails/V-PRO-05.jpg" alt="Customer journey: Journey stages in columns; rows for actions, touchpoints and pain points." loading="lazy" width="640" height="360">
+        <div><span class="id">V-PRO-05</span><h3>Customer journey</h3><p>Map an experience end to end: customer, employee or user journey.</p></div>
+      </button>
+      <button type="button" class="card" data-i="93">
+        <img src="thumbnails/V-PRO-06.jpg" alt="Double diamond: Two diamonds side by side: diverge then converge on the problem, then on the solution." loading="lazy" width="640" height="360">
+        <div><span class="id">V-PRO-06</span><h3>Double diamond</h3><p>Design or innovation method: discover, define, develop, deliver.</p></div>
+      </button>
+      <button type="button" class="card" data-i="94">
+        <img src="thumbnails/V-PRO-07.jpg" alt="Staircase: Four rising steps, darker as they climb, each with a level name and its description." loading="lazy" width="640" height="360">
+        <div><span class="id">V-PRO-07</span><h3>Staircase</h3><p>Maturity levels, capability growth, a progression plan.</p></div>
+      </button>
+      <button type="button" class="card" data-i="95">
+        <img src="thumbnails/V-TIM-01.jpg" alt="Milestone timeline: Horizontal line with six milestones alternating above and below, each with date and label." loading="lazy" width="640" height="360">
+        <div><span class="id">V-TIM-01</span><h3>Milestone timeline</h3><p>Key dates of a project, a history, a launch plan.</p></div>
+      </button>
+      <button type="button" class="card" data-i="96">
+        <img src="thumbnails/V-TIM-02.jpg" alt="Roadmap by lanes: Workstreams in rows, four periods in columns; each cell holds the work planned." loading="lazy" width="640" height="360">
+        <div><span class="id">V-TIM-02</span><h3>Roadmap by lanes</h3><p>Multi-stream roadmap over quarters or years.</p></div>
+      </button>
+      <button type="button" class="card" data-i="97">
+        <img src="thumbnails/V-TIM-03.jpg" alt="Gantt chart: Tasks as horizontal bars positioned on a time axis (native chart, editable)." loading="lazy" width="640" height="360">
+        <div><span class="id">V-TIM-03</span><h3>Gantt chart</h3><p>Detailed schedule with tasks and durations.</p></div>
+      </button>
+      <button type="button" class="card" data-i="98">
+        <img src="thumbnails/V-TIM-04.jpg" alt="Three horizons: Three overlapping blocks rising over time: core today, emerging next, future options." loading="lazy" width="640" height="360">
+        <div><span class="id">V-TIM-04</span><h3>Three horizons</h3><p>Balance short-term performance with mid- and long-term growth (portfolio, innovation).</p></div>
+      </button>
+      <button type="button" class="card" data-i="99">
+        <img src="thumbnails/V-TIM-05.jpg" alt="Now, next, later: Three columns from dark to light: what we do now, next and later, as short lists." loading="lazy" width="640" height="360">
+        <div><span class="id">V-TIM-05</span><h3>Now, next, later</h3><p>Product or programme roadmap without committed dates.</p></div>
+      </button>
+      <button type="button" class="card" data-i="100">
+        <img src="thumbnails/V-TIM-06.jpg" alt="Serpentine timeline: Eight numbered steps on a path that snakes across three rows, each with a label above and a short text below." loading="lazy" width="640" height="360">
+        <div><span class="id">V-TIM-06</span><h3>Serpentine timeline</h3><p>A long sequence that a single line would cram: a programme of six to eight phases, a history, an onboarding path.</p></div>
+      </button>
+      <button type="button" class="card" data-i="101">
+        <img src="thumbnails/V-STR-01.jpg" alt="Organisation chart: One head box, four boxes below, two sub-boxes under each, joined by elbow lines." loading="lazy" width="640" height="360">
+        <div><span class="id">V-STR-01</span><h3>Organisation chart</h3><p>Organisation, governance or team structure on three levels.</p></div>
+      </button>
+      <button type="button" class="card" data-i="102">
+        <img src="thumbnails/V-STR-02.jpg" alt="Logic tree: Question on the left, three branches, each splitting into two leaves on the right." loading="lazy" width="640" height="360">
+        <div><span class="id">V-STR-02</span><h3>Logic tree</h3><p>Break a problem or objective into its drivers (issue tree, KPI tree, decision tree).</p></div>
+      </button>
+      <button type="button" class="card" data-i="103">
+        <img src="thumbnails/V-STR-03.jpg" alt="Pyramid: Four stacked levels narrowing to the top, with a description beside each level." loading="lazy" width="640" height="360">
+        <div><span class="id">V-STR-03</span><h3>Pyramid</h3><p>Hierarchy of needs, priorities or foundations (vision to operations).</p></div>
+      </button>
+      <button type="button" class="card" data-i="104">
+        <img src="thumbnails/V-STR-04.jpg" alt="Layered architecture: Four horizontal layers with a label on the left and up to four blocks per layer." loading="lazy" width="640" height="360">
+        <div><span class="id">V-STR-04</span><h3>Layered architecture</h3><p>System, data or operating model architecture; stack of capabilities.</p></div>
+      </button>
+      <button type="button" class="card" data-i="105">
+        <img src="thumbnails/V-STR-05.jpg" alt="Hub and spoke: A central circle linked to six satellites, each with a short label." loading="lazy" width="640" height="360">
+        <div><span class="id">V-STR-05</span><h3>Hub and spoke</h3><p>Ecosystem around a core: partners, stakeholders, services around a platform.</p></div>
+      </button>
+      <button type="button" class="card" data-i="106">
+        <img src="thumbnails/V-STR-06.jpg" alt="Venn diagram: Three overlapping translucent circles with a label in each and one at the centre." loading="lazy" width="640" height="360">
+        <div><span class="id">V-STR-06</span><h3>Venn diagram</h3><p>Where three domains meet: the sweet spot, a skills profile, a value proposition.</p></div>
+      </button>
+      <button type="button" class="card" data-i="107">
+        <img src="thumbnails/V-STR-07.jpg" alt="Fishbone: Cause-and-effect diagram: a spine to the effect on the right, six cause categories as bones." loading="lazy" width="640" height="360">
+        <div><span class="id">V-STR-07</span><h3>Fishbone</h3><p>Root cause analysis of a quality, delay or performance problem.</p></div>
+      </button>
+      <button type="button" class="card" data-i="108">
+        <img src="thumbnails/V-STR-08.jpg" alt="Concentric circles: Three nested circles from the core outwards, with a label for each ring on the side." loading="lazy" width="640" height="360">
+        <div><span class="id">V-STR-08</span><h3>Concentric circles</h3><p>Scope or influence by distance: core business, adjacent, ecosystem; TAM SAM SOM.</p></div>
+      </button>
+      <button type="button" class="card" data-i="109">
+        <img src="thumbnails/V-STR-09.jpg" alt="Half-ring layers: A dark half disc at the base wrapped by three nested half rings, each layer named at its top." loading="lazy" width="640" height="360">
+        <div><span class="id">V-STR-09</span><h3>Half-ring layers</h3><p>Layers that build outwards from a core: capabilities around a product, circles of stakeholders, foundations to reach.</p></div>
+      </button>
+      <button type="button" class="card" data-i="110">
+        <img src="thumbnails/V-FRM-01.jpg" alt="Business model canvas: The nine blocks of the business model canvas in their standard arrangement." loading="lazy" width="640" height="360">
+        <div><span class="id">V-FRM-01</span><h3>Business model canvas</h3><p>Describe or compare business models.</p></div>
+      </button>
+      <button type="button" class="card" data-i="111">
+        <img src="thumbnails/V-FRM-02.jpg" alt="Five forces: Industry rivalry in the centre, the four outside forces around it with arrows pointing inwards." loading="lazy" width="640" height="360">
+        <div><span class="id">V-FRM-02</span><h3>Five forces</h3><p>Assess the attractiveness of an industry or segment.</p></div>
+      </button>
+      <button type="button" class="card" data-i="112">
+        <img src="thumbnails/V-FRM-03.jpg" alt="PESTEL: Six columns for political, economic, social, technological, environmental and legal factors." loading="lazy" width="640" height="360">
+        <div><span class="id">V-FRM-03</span><h3>PESTEL</h3><p>Scan the external environment before a strategy or a market entry.</p></div>
+      </button>
+      <button type="button" class="card" data-i="113">
+        <img src="thumbnails/V-FRM-04.jpg" alt="RACI matrix: Activities in rows, roles in columns, R, A, C or I in each cell; R and A shaded darker." loading="lazy" width="640" height="360">
+        <div><span class="id">V-FRM-04</span><h3>RACI matrix</h3><p>Clarify who is responsible, accountable, consulted and informed.</p></div>
+      </button>
+      <button type="button" class="card" data-i="114">
+        <img src="thumbnails/V-FRM-05.jpg" alt="OKR tree: One objective on top, three key results below, each with its target and progress." loading="lazy" width="640" height="360">
+        <div><span class="id">V-FRM-05</span><h3>OKR tree</h3><p>Present objectives and key results, or any goal with measurable outcomes.</p></div>
+      </button>
+      <button type="button" class="card" data-i="115">
+        <img src="thumbnails/V-FRM-06.jpg" alt="Value chain: Support activities as bars on top, five primary activities as chevrons below, margin at the end." loading="lazy" width="640" height="360">
+        <div><span class="id">V-FRM-06</span><h3>Value chain</h3><p>Where value is created in a company; locate costs, strengths or improvements.</p></div>
+      </button>
+      <button type="button" class="card" data-i="116">
+        <img src="thumbnails/V-SIG-01.jpg" alt="Meshing gears: Three meshing gears of decreasing size with a label in each hub and a short text beside each." loading="lazy" width="640" height="360">
+        <div><span class="id">V-SIG-01</span><h3>Meshing gears</h3><p>Signature metaphor, only on request or when the idea is that parts drive each other: a mechanism, teams or levers working together.</p></div>
+      </button>
+      <button type="button" class="card" data-i="117">
+        <img src="thumbnails/V-SIG-02.jpg" alt="Light bulb: An outlined light bulb with the idea written in the glass and three short labels at the ends of its rays." loading="lazy" width="640" height="360">
+        <div><span class="id">V-SIG-02</span><h3>Light bulb</h3><p>Signature metaphor, only on request or when the slide introduces one idea and its three facets: an insight, an innovation, a proposal.</p></div>
+      </button>
+      <button type="button" class="card" data-i="118">
+        <img src="thumbnails/V-SIG-03.jpg" alt="Puzzle: Four interlocking jigsaw pieces in a two by two square, each holding a label and a short text." loading="lazy" width="640" height="360">
+        <div><span class="id">V-SIG-03</span><h3>Puzzle</h3><p>Signature metaphor, only on request or when four parts must fit together to make the whole: a solution, an offer, a team.</p></div>
+      </button>
+      <button type="button" class="card" data-i="119">
+        <img src="thumbnails/V-SIG-04.jpg" alt="Winding road: A road winding from left to right with four signposts standing on it, each sign naming a milestone." loading="lazy" width="640" height="360">
+        <div><span class="id">V-SIG-04</span><h3>Winding road</h3><p>Signature metaphor, only on request or when the story is a journey: a transformation path, a programme told as a road ahead.</p></div>
+      </button>
+      <button type="button" class="card" data-i="120">
+        <img src="thumbnails/V-SIG-05.jpg" alt="Mountain and summit flag: A faceted mountain with three numbered steps up its left slope and a flag on the summit naming the goal." loading="lazy" width="640" height="360">
+        <div><span class="id">V-SIG-05</span><h3>Mountain and summit flag</h3><p>Signature metaphor, only on request or when the message is an ambition reached in stages: a target state, a long climb, a vision.</p></div>
+      </button>
+      <button type="button" class="card" data-i="121">
+        <img src="thumbnails/V-SIG-06.jpg" alt="Target: A bullseye of three rings around a dark centre holding the main label, an arrow in the centre and a leader from each ring to its label." loading="lazy" width="640" height="360">
+        <div><span class="id">V-SIG-06</span><h3>Target</h3><p>Signature metaphor, only on request or when the message is focus on one aim: the objective, the core target and what surrounds it.</p></div>
+      </button>
+    <!-- cards:end --></div>
   </div>
 </main>
 

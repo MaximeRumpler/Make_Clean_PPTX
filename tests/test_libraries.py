@@ -204,3 +204,12 @@ def test_accessibility_language_and_decorative(tmp_path):
     assert code == 0, out
     xml = etree.tostring(Presentation(spec["output"]).slides[0]._element).decode()
     assert 'lang="fr-FR"' in xml and 'lang="en-US"' not in xml
+
+
+def test_gallery_static_cards_match_catalog():
+    # docs/index.html prints every card statically for crawlers; gallery.py keeps it in sync with catalog.json.
+    catalog = json.loads((ROOT / "docs" / "catalog.json").read_text(encoding="utf-8"))
+    page = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
+    cards = re.search(r"<!-- cards:start -->(.*?)<!-- cards:end -->", page, re.S).group(1)
+    ids = re.findall(r'<span class="id">([^<]+)</span>', cards)
+    assert ids == [c["id"] for c in catalog], "run: python library/tools/gallery.py --html-only"
