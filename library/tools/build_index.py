@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Write the CSV indexes of the libraries from the generator registries.
 
-    python library/tools/build_index.py
+    python library/tools/build_index.py [--style NAME|FILE.json] [--pack-dir DIR]
 
 Reads library/out/<lib>.registry.json (written by build.js) and writes
-skills/make-clean-pptx/assets/<lib>.csv. Semicolon-separated, UTF-8, one row
+skills/make-clean-pptx/assets/<lib>.csv (or the pack folder of another style). Semicolon-separated, UTF-8, one row
 per slide (layouts) or per component (visuals). The column contract is in
 skills/make-clean-pptx/references/index-schema.md.
 """
@@ -15,8 +15,13 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _style  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT.parent / "skills" / "make-clean-pptx" / "assets"
+STYLE = _style.from_argv(sys.argv)
+RAW = STYLE["raw"]
+ASSETS = STYLE["pack"]
 
 COLUMNS = {
     "layouts": ["id", "slide", "name", "category", "style", "density", "description", "use_when", "tags", "fields"],
@@ -40,8 +45,9 @@ def field_spec(f: dict) -> str:
 
 
 def write(lib: str) -> int:
-    reg = json.loads((ROOT / "out" / f"{lib}.registry.json").read_text(encoding="utf-8"))
+    reg = json.loads((RAW / f"{lib}.registry.json").read_text(encoding="utf-8"))
     cols = COLUMNS[lib]
+    ASSETS.mkdir(parents=True, exist_ok=True)
     path = ASSETS / f"{lib}.csv"
     with open(path, "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh, delimiter=";", quoting=csv.QUOTE_MINIMAL)
@@ -53,7 +59,7 @@ def write(lib: str) -> int:
 
 
 def main() -> int:
-    out = {lib: write(lib) for lib in COLUMNS if (ROOT / "out" / f"{lib}.registry.json").exists()}
+    out = {lib: write(lib) for lib in COLUMNS if (RAW / f"{lib}.registry.json").exists()}
     print(json.dumps(out))
     return 0
 

@@ -101,7 +101,7 @@ module.exports = {
       draw(ctx) {
         chrome(ctx);
         cols(3).forEach((c, i) => {
-          text(ctx, `Callout ${i + 1} number`, String(i + 1), c.x, 1.95, 0.4, 0.5, "h3", { size: 20, follows: `Callout ${i + 1}` });
+          text(ctx, `Callout ${i + 1} number`, L.num(i + 1), c.x, 1.95, 0.4, 0.5, "h3", { size: 20, follows: `Callout ${i + 1}` });
           text(ctx, `Callout ${i + 1}`, "Thing to notice", c.x + 0.45, 2.0, c.w - 0.45, 0.65, "small", { optional: true });
         });
         frame(ctx, "Content Area", MX, 2.85, CW, 3.9);

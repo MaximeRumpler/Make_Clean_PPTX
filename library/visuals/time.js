@@ -128,7 +128,7 @@ module.exports = {
         const at = [[0, 1], [0, 3], [0, 5], [1, 4], [1, 2], [2, 1], [2, 3], [2, 5]];
         at.forEach(([row, f], i) => {
           const x = xl + (len * f) / 6, y = ys[row], d = 0.46, w = 1.7;
-          text(ctx, `Step ${i + 1} number`, String(i + 1), x - d / 2, y - d / 2, d, d, "small", {
+          text(ctx, `Step ${i + 1} number`, L.num(i + 1), x - d / 2, y - d / 2, d, d, "small", {
             shape: "ellipse", fill: "a1", line: "paper", lw: 1.5, color: "paper", bold: true, align: "center", valign: "middle", follows: `Step ${i + 1}`, limit: 2,
           });
           text(ctx, `Step ${i + 1}`, "Step", x - w / 2, y - 0.83, w, 0.5, "small", { bold: true, color: "ink", align: "center", valign: "bottom", optional: i > 5 });

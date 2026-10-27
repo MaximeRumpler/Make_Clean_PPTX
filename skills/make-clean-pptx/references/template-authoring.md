@@ -8,7 +8,8 @@ They are **generated from code** (`library/` at the root of the repository, not 
 
 ```
 library/
-  theme/tokens.json      palette (theme slots), fonts, type scale, grid
+  theme/tokens.json      palette (theme slots), type scale, grid
+  style-tokens.json      style tokens: font pair, corners, cards, background, title case, numbering
   tools/lib.js           drawing kit: text fields, shapes, frames, charts, tables, icon slots
   layouts/*.js           54 layouts, by family
   visuals/*.js           68 visuals, by family (_kit.js: legends, markers, keys, cards)

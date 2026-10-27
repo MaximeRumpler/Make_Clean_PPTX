@@ -43,7 +43,7 @@ module.exports = {
         const pts = [[0, -1], [1, 0], [0, 1], [-1, 0]];
         pts.forEach(([dx, dy], i) => {
           const x = cx + dx * r, y = cy + dy * r, d = 0.9;
-          text(ctx, `Step ${i + 1}`, String(i + 1), x - d / 2, y - d / 2, d, d, "h3", { shape: "ellipse", fill: i === 0 ? "a1" : "a4", color: i === 0 ? "paper" : "ink", align: "center", valign: "middle", limit: 3 });
+          text(ctx, `Step ${i + 1}`, L.num(i + 1), x - d / 2, y - d / 2, d, d, "h3", { shape: "ellipse", fill: i === 0 ? "a1" : "a4", color: i === 0 ? "paper" : "ink", align: "center", valign: "middle", limit: 3 });
           const tx = dx > 0 ? x + 0.55 : dx < 0 ? x - 2.75 : x + 0.55;
           const ty = dy < 0 ? y - 0.45 : dy > 0 ? y - 0.15 : y - 0.35;
           text(ctx, `Step ${i + 1} text`, "Step name and one line", tx, ty, 2.2, 0.7, "caption", { color: "ink2", align: dx < 0 ? "right" : "left", optional: true });

@@ -1,5 +1,6 @@
 // Build the raw libraries: out/<lib>.pptx + out/<lib>.registry.json
-//   node tools/build.js [layouts|visuals|all]
+//   node tools/build.js [layouts|visuals|all] [--style <name|file.json>]
+// With a style other than "default", the files go to out/styles/<name>/.
 // post.py then applies the theme, groups the visual components and copies the
 // result into the skill folder.
 const fs = require("fs");
@@ -8,7 +9,7 @@ const pptxgen = require("pptxgenjs");
 const L = require("./lib.js");
 
 const ROOT = path.resolve(__dirname, "..");
-const OUT = path.join(ROOT, "out");
+const OUT = L.STYLE.out;
 
 const LIBS = {
   layouts: ["opening", "message", "content", "data", "closing"],
@@ -40,6 +41,7 @@ function build(lib) {
       if (seen.has(entry.id)) throw new Error(`duplicate id ${entry.id}`);
       seen.add(entry.id);
       const slide = pres.addSlide({ sectionTitle: mod.family });
+      if (L.ST.background !== "paper") slide.background = { color: L.C[L.ST.background] }; // a layout may set its own
       n += 1;
       let ctx;
       if (lib === "visuals") {
@@ -53,6 +55,10 @@ function build(lib) {
       } else {
         ctx = new L.Ctx(slide);
         entry.draw(ctx);
+      }
+      const fieldNames = new Set(ctx.fields.map((f) => f.name));
+      for (const link of ctx.links) {
+        if (!fieldNames.has(link)) throw new Error(`${entry.id}: container linked to '${link}', which is not a field`);
       }
       const { draw, box, ...meta } = entry;
       registry.push(Object.assign({ slide: n, family: mod.family }, meta, { fields: ctx.fields }));
@@ -74,7 +80,7 @@ const BOX = {
 module.exports = { BOX };
 
 if (require.main === module) {
-  const which = process.argv[2] || "all";
+  const which = process.argv[2] && !process.argv[2].startsWith("--") ? process.argv[2] : "all";
   const libs = which === "all" ? Object.keys(LIBS) : [which];
   libs.reduce((p, lib) => p.then(() => build(lib)), Promise.resolve()).catch((e) => {
     console.error(e);

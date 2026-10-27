@@ -16,7 +16,7 @@ module.exports = {
         for (let i = 0; i < 4; i++) {
           const y = 2.2 + i * 1.12;
           hrule(ctx, MX, y, 7.4, { color: i ? "line" : "ink", w: i ? 0.75 : 1.25, follows: i ? `Point ${i + 1}` : undefined });
-          text(ctx, `Number ${i + 1}`, String(i + 1), MX, y + 0.18, 0.5, 0.6, "h3", { size: 22, color: "muted", follows: `Point ${i + 1}` });
+          text(ctx, `Number ${i + 1}`, L.num(i + 1), MX, y + 0.18, 0.5, 0.6, "h3", { size: 22, color: "muted", follows: `Point ${i + 1}` });
           text(ctx, `Point ${i + 1}`, "Key point to remember", MX + 0.7, y + 0.2, 6.7, 0.8, "body", { bold: true, color: "ink", optional: i > 1 });
         }
         rect(ctx, 8.6, 2.2, 4.133, 4.45, { fill: "a1" });
@@ -140,7 +140,7 @@ module.exports = {
         for (let i = 0; i < 5; i++) {
           const y = 0.7 + i * 1.2;
           L.ellipse(ctx, 5.5, y + 0.12, 0.5, 0.5, { fill: "ink", follows: `Step ${i + 1}` });
-          text(ctx, `Step ${i + 1} number`, String(i + 1), 5.5, y + 0.12, 0.5, 0.5, "h3", { size: 14, color: "paper", align: "center", valign: "middle", follows: `Step ${i + 1}` });
+          text(ctx, `Step ${i + 1} number`, L.num(i + 1), 5.5, y + 0.12, 0.5, 0.5, "h3", { size: 14, color: "paper", align: "center", valign: "middle", follows: `Step ${i + 1}` });
           text(ctx, `Step ${i + 1}`, "Step", 6.35, y + 0.1, 6.4, 0.45, "h3", { optional: i > 2 });
           text(ctx, `Step ${i + 1} detail`, "One line of detail", 6.35, y + 0.55, 6.4, 0.55, "small", { optional: true });
         }

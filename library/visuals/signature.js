@@ -227,7 +227,7 @@ module.exports = {
         const at = (f) => ({ x: L0.x + (top.x - L0.x) * f, y: L0.y + (top.y - L0.y) * f });
         [0.22, 0.48, 0.74].forEach((f, i) => {
           const m = at(f), dm = 0.42;
-          text(ctx, `Step ${i + 1} number`, String(i + 1), m.x - dm / 2, m.y - dm / 2, dm, dm, "small", {
+          text(ctx, `Step ${i + 1} number`, L.num(i + 1), m.x - dm / 2, m.y - dm / 2, dm, dm, "small", {
             shape: "ellipse", fill: "a1", line: "paper", lw: 1.5, color: "paper", bold: true, align: "center", valign: "middle", follows: `Step ${i + 1}`, limit: 2,
           });
           text(ctx, `Step ${i + 1}`, "Step on the way", m.x - 1.75, m.y - 0.9, 1.6, 0.6, "small", { bold: true, color: "ink", align: "right", valign: "bottom" });

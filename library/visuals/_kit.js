@@ -29,7 +29,7 @@ function plot(ctx, x, y, w, h, o = {}) {
 // Numbered item marker (moved with "at", tinted with "fill").
 function marker(ctx, i, cx, cy, o = {}) {
   const d = o.d || 0.42;
-  text(ctx, `Item ${i}`, String(i), cx - d / 2, cy - d / 2, d, d, "small", {
+  text(ctx, `Item ${i}`, L.num(i), cx - d / 2, cy - d / 2, d, d, "small", {
     shape: "ellipse", fill: o.fill || "a1", color: "paper", bold: true, align: "center", valign: "middle", size: 11,
     optional: true, limit: 3, keep: false,
   });
@@ -39,7 +39,7 @@ function marker(ctx, i, cx, cy, o = {}) {
 function key(ctx, n, x, y, w, o = {}) {
   const step = o.step || 0.42;
   for (let i = 1; i <= n; i++) {
-    text(ctx, `Key ${i} number`, String(i), x, y + (i - 1) * step, 0.3, 0.3, "small", { bold: true, color: "ink", valign: "middle", follows: `Key ${i}` });
+    text(ctx, `Key ${i} number`, L.num(i), x, y + (i - 1) * step, 0.3, 0.3, "small", { bold: true, color: "ink", valign: "middle", follows: `Key ${i}` });
     text(ctx, `Key ${i}`, "Item name", x + 0.35, y + (i - 1) * step, w - 0.35, 0.3, "small", { valign: "middle", optional: true });
   }
 }
