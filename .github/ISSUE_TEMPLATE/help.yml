@@ -1,0 +1,58 @@
+name: It didn't work
+description: The skill did not install, did not start, or the deck did not come out. No technical knowledge needed.
+title: "It didn't work: "
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. Answer what you can; "I don't know" is a fine answer.
+  - type: dropdown
+    id: assistant
+    attributes:
+      label: Which assistant were you using?
+      options:
+        - Claude.ai (in a browser)
+        - Claude desktop app
+        - Claude Code
+        - Codex
+        - Cursor
+        - GitHub Copilot
+        - Gemini CLI
+        - Other or I don't know
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Which computer?
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - I don't know
+    validations:
+      required: true
+  - type: dropdown
+    id: step
+    attributes:
+      label: Where did it stop?
+      options:
+        - Installing the skill
+        - The assistant did not use the skill
+        - The deck was not created
+        - The deck was created but looks wrong
+        - Something else
+  - type: textarea
+    id: request
+    attributes:
+      label: What did you ask?
+      description: Your message to the assistant. Remove anything confidential.
+      placeholder: Make a 10-slide deck from these notes for the board.
+  - type: textarea
+    id: result
+    attributes:
+      label: What happened?
+      description: Paste the assistant's reply or the error message. A screenshot works too.
+    validations:
+      required: true
