@@ -31,6 +31,10 @@ Fonts: a brand font that is neither common (Windows, macOS, Office) nor installe
 
 Without `logo`, the slots are removed like any optional field left unfilled, and the deck is the same as before the slot existed. One slide can drop the logo with `"Logo": null` in its `fill`, or take another file with `"Logo": "other.png"`. `lint_deck.py` warns when a logo overlaps text. Its contrast against the background is not checked: on the dark cover L-02, use a light version of the logo.
 
+## Skeleton
+
+`"skeleton": true` (same as `--skeleton`) builds the deck without the user's content, for the "I can't share the real content" choice (`deck-options.md`). Required fields, and optional fields named in `fill` with any non-null value, get a bracketed instruction with their limit; `null` still deletes a field; companions follow their partner; fields marked `default` keep their template text; a text given for `Footer` is kept as written, for the confidentiality label. Charts keep their number of categories and series with flat values and series named "Dummy data — replace"; tables get `[to fill]` cells; icon slots get a neutral bundled icon; picture slots get an instruction. `notes` are replaced by the list of fields and limits, `properties` are not written, `<deck>.fill-sheet.md` is written next to the deck, and the report gets `skeleton`, `fill_sheet` and `fields_to_fill`. Add `--offline` so nothing reaches the network.
+
 ## Slide
 
 | Key | Type | Meaning |

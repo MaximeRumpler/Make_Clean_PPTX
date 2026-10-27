@@ -12,6 +12,9 @@ Prints one JSON object on stdout:
   {"source": "bundled", "layouts": {"pptx": "...", "index": "..."}, "visuals": {...}}
 ("design" and "shapes" are kept as aliases of "layouts" and "visuals".)
 
+--offline (or MAKE_CLEAN_PPTX_OFFLINE=1) never opens a connection: bundled copies,
+then the cache, else a plain message.
+
 Environment overrides: MAKE_CLEAN_PPTX_REPO, _REF, _PATH, _CACHE, _TEMPLATES_DIR.
 Only the Python standard library is used here on purpose.
 """
@@ -29,7 +32,7 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
-from _common import SKILL_DIR, eprint, load_config
+from _common import SKILL_DIR, eprint, is_offline, load_config, offline_message, set_offline
 
 UA = "make-clean-pptx/1.0 (+https://github.com/MaximeRumpler/Make_Clean_PPTX)"
 
@@ -52,6 +55,8 @@ def cache_dir() -> Path:
 
 
 def _download(url: str, dest: Path) -> None:
+    if is_offline():
+        raise FetchError(offline_message("downloading the libraries", url))
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=90) as resp, open(dest, "wb") as fh:  # noqa: S310 (https only)
         shutil.copyfileobj(resp, fh)
@@ -115,11 +120,11 @@ def ensure_templates(local_dir: str | None = None, refresh: bool = False, remote
     if local_dir:
         return _with_aliases({"source": "local", **_local(Path(local_dir).expanduser(), cfg)})
     bundled = SKILL_DIR / cfg.get("assets_dir", "assets")
-    if not (remote or refresh or os.environ.get("MAKE_CLEAN_PPTX_REPO")):
+    if is_offline() or not (remote or refresh or os.environ.get("MAKE_CLEAN_PPTX_REPO")):
         try:
             return _with_aliases({"source": "bundled", **_local(bundled, cfg)})
         except FetchError:
-            eprint("warning: bundled libraries missing, trying GitHub")
+            eprint("warning: bundled libraries missing" + (", looking in the cache" if is_offline() else ", trying GitHub"))
 
     repo = os.environ.get("MAKE_CLEAN_PPTX_REPO", cfg["repo"])
     ref = os.environ.get("MAKE_CLEAN_PPTX_REF", cfg["ref"])
@@ -133,7 +138,12 @@ def ensure_templates(local_dir: str | None = None, refresh: bool = False, remote
         (root / f).is_file() and (time.time() - (root / f).stat().st_mtime) < ttl for _, _, f in wanted
     )
     source = "cache"
-    if refresh or not fresh:
+    if is_offline() and not all((root / f).is_file() for _, _, f in wanted):
+        raise FetchError(offline_message("getting the libraries (they are not bundled here)")
+                         + " Or pass --local-dir <folder> with the library files.")
+    if is_offline():
+        source = "cache" if fresh else "stale-cache"
+    elif refresh or not fresh:
         try:
             for _, _, fname in wanted:
                 _fetch_one(repo, ref, path, fname, root / fname)
@@ -160,7 +170,9 @@ def main(argv=None) -> int:
     ap.add_argument("--local-dir", help="use templates from this folder instead of GitHub")
     ap.add_argument("--remote", action="store_true", help="download from GitHub (config repo, or $MAKE_CLEAN_PPTX_REPO)")
     ap.add_argument("--refresh", action="store_true", help="with --remote: ignore the cache and download again")
+    ap.add_argument("--offline", action="store_true", help="never use the network: bundled copies or the cache only")
     args = ap.parse_args(argv)
+    set_offline(args.offline)
     try:
         print(json.dumps(ensure_templates(args.local_dir, args.refresh, args.remote), indent=2))
         return 0

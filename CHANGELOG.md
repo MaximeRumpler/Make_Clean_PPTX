@@ -4,6 +4,10 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [Unreleased]
 
+### Added
+- **Skeleton mode** for content that cannot be shared: `build_deck.py --skeleton` (or `"skeleton": true` in deck.json) fills every field used with a bracketed instruction stating its limit from the index (`[Title, max 52 characters]`, shorter forms when the box is small), gives charts flat dummy series named "Dummy data — replace", tables `[to fill]` cells and icons a neutral bundled icon, lists each field and its limit in the speaker notes, and writes `<deck>.fill-sheet.md` (slide, field, limit). Values in `fill` (except the `Footer` confidentiality label), notes and `properties` are never written. `lint_deck.py` lists the bracketed instructions and dummy series still in a deck as warnings.
+- `--offline` on `build_deck.py`, `find_icon.py`, `fetch_image.py` and `fetch_templates.py` (or `MAKE_CLEAN_PPTX_OFFLINE=1`): no network connection at all; bundled libraries, bundled Lucide icons, local files and the cache only, and a plain message when something would need the network.
+
 ## [1.1.0] - 2026-10-27
 
 ### Added

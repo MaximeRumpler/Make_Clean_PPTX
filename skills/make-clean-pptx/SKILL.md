@@ -34,7 +34,7 @@ Read what the user gave you. Work out the audience, the goal, the language (the 
   3. Length: a) about 8 slides (default)  b) shorter  c) longer
   4. Accessibility: a) standard (default)  b) extra care (alt text everywhere, readable without colour, accessibility notes)
   ```
-  Each choice changes how you build and deliver (label in the footer, no online sources, metadata, skeleton deck, accessibility care): apply `references/deck-options.md`. Do nothing extra when the user keeps the defaults.
+  Each choice changes how you build and deliver (label in the footer, no online sources, metadata, skeleton deck, accessibility care): apply `references/deck-options.md` (for d, build with `--skeleton --offline`). Do nothing extra when the user keeps the defaults.
 - If everything is clear, or your harness cannot wait for an answer, state your assumptions in one line (defaults: `.pptx`, no label, the length you inferred, standard accessibility) and go.
 - A few facts make a short deck (3 to 4 slides); only when there is a topic and no content at all, ask for the key points instead of inventing them, and offer `assets/brief-template.md` in one line as an optional way to answer.
 

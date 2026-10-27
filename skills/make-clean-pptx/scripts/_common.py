@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import re
 import sys
 from pathlib import Path
@@ -26,6 +27,29 @@ def load_config() -> dict:
 
 def eprint(*args) -> None:
     print(*args, file=sys.stderr)
+
+
+# --------------------------------------------------------------------------
+# Offline mode: --offline on a script, or MAKE_CLEAN_PPTX_OFFLINE=1
+# --------------------------------------------------------------------------
+OFFLINE_ENV = "MAKE_CLEAN_PPTX_OFFLINE"
+
+
+def set_offline(on: bool = True) -> None:
+    """Switch offline mode on for this process and the scripts it starts."""
+    if on:
+        os.environ[OFFLINE_ENV] = "1"
+
+
+def is_offline() -> bool:
+    return os.environ.get(OFFLINE_ENV, "").strip().lower() in ("1", "true", "yes", "on")
+
+
+def offline_message(what: str, url: str = "") -> str:
+    """Plain explanation for something that would need the network in offline mode."""
+    host = url.split("/")[2] if url.count("/") >= 2 else ""
+    return (f"offline mode: {what} needs the network" + (f" ({host})" if host else "")
+            + "; nothing was sent. Use the bundled Lucide icons and your own files, or run without --offline.")
 
 
 # --------------------------------------------------------------------------

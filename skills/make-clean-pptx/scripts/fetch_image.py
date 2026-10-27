@@ -16,6 +16,8 @@ and the .credits.md file.
 
 Unsplash, Pexels and Pixabay need an API key and are intentionally not used.
 
+--offline (or MAKE_CLEAN_PPTX_OFFLINE=1) searches nothing and says so.
+
 Exit codes: 0 ok, 3 network blocked / no results (JSON explains).
 """
 from __future__ import annotations
@@ -31,7 +33,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-from _common import load_config
+from _common import is_offline, load_config, offline_message, set_offline
 
 UA = "make-clean-pptx/1.0 (+https://github.com/MaximeRumpler/Make_Clean_PPTX)"
 OPENVERSE = "https://api.openverse.org/v1/images/"
@@ -43,6 +45,8 @@ class ImageError(RuntimeError):
 
 
 def _get_json(url: str) -> dict:
+    if is_offline():
+        raise ImageError(offline_message("searching photos", url))
     req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
     try:
         with urllib.request.urlopen(req, timeout=30) as r:  # noqa: S310 (https only)
@@ -145,6 +149,8 @@ def download(c: dict, out: Path, max_dim: int, max_mb: int) -> dict:
 
     if urllib.parse.urlparse(c["url"]).scheme not in ("http", "https"):
         raise ImageError("refusing non-http(s) URL")
+    if is_offline():
+        raise ImageError(offline_message("downloading a photo", c["url"]))
     req = urllib.request.Request(c["url"], headers={"User-Agent": UA})
     try:
         with urllib.request.urlopen(req, timeout=60) as r:  # noqa: S310
@@ -180,7 +186,13 @@ def main(argv=None) -> int:
     ap.add_argument("--source", choices=["auto", "openverse", "wikimedia"], default="auto")
     ap.add_argument("--pick", type=int, default=1, help="use the Nth acceptable result (default 1)")
     ap.add_argument("--list", action="store_true", help="list candidates, download nothing")
+    ap.add_argument("--offline", action="store_true", help="never use the network (photos then cannot be searched)")
     args = ap.parse_args(argv)
+    set_offline(args.offline)
+    if is_offline():
+        print(json.dumps({"error": offline_message("searching photos"),
+                          "hint": "Ask the user for their own pictures, or use bundled icons (find_icon.py)."}, indent=2))
+        return 3
 
     cands, errors = candidates(args.query, args.source, cfg["allowed_licenses"], args.orientation, args.min_width)
     if not cands:
