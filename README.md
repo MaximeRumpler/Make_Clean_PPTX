@@ -4,6 +4,8 @@
 
 *Give your AI assistant your notes. Get back a clean, professional PowerPoint.*
 
+<sub lang="fr">En français : donnez vos notes à votre assistant IA, recevez une présentation PowerPoint propre, une idée par diapositive.</sub>
+
 [![CI](https://img.shields.io/github/actions/workflow/status/MaximeRumpler/Make_Clean_PPTX/ci.yml?branch=main&style=flat-square&label=CI&color=10B981&labelColor=1C2333)](https://github.com/MaximeRumpler/Make_Clean_PPTX/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-EUPL--1.2-10B981?style=flat-square&labelColor=1C2333)](LICENSE)
 [![Gallery](https://img.shields.io/badge/Gallery-122_slides-10B981?style=flat-square&labelColor=1C2333)](https://maximerumpler.github.io/Make_Clean_PPTX/)
