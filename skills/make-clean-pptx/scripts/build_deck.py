@@ -58,7 +58,8 @@ every field used gets a bracketed instruction with its limit from the index
 ("[KPI 1 value, max 6 characters]"), charts get flat dummy series named
 "Dummy data — replace", tables "[to fill]" cells, and the speaker notes list each
 field and its limit. Values given in "fill" are ignored (only which optional
-fields to keep counts; null still deletes); "properties" are not written.
+fields to keep counts; null still deletes), except the "Footer" label
+("Confidential"); "properties" are not written.
 A <deck>.fill-sheet.md next to the deck lists slide, field and limit. The user
 types the real content locally, then runs lint_deck.py to see what is left.
 
@@ -106,6 +107,7 @@ SPEC_KEYS = {"output", "properties", "slides", "language", "theme", "theme_fonts
              "skeleton"}
 DUMMY_SERIES = "Dummy data — replace"  # lint_deck.py looks for this name
 SKELETON_ICON = "lucide:circle-dashed"
+LABEL_FIELD = "Footer"  # skeleton mode keeps its value: the confidentiality label, not content
 LOGO_FIELD = "Logo"  # the logo slot of the layouts (role=logo in the index)
 LOGO_EXT = {".png", ".jpg", ".jpeg", ".svg"}
 SLIDE_KEYS = {"source", "slide", "id", "fill", "insert", "notes", "keep_unfilled", "hidden"}
@@ -519,6 +521,11 @@ class Builder:
                     and f["follows"] in used and named.get(f["name"].strip().lower(), True) not in (None, ""):
                 used.add(f["name"])
         out = {k: v for k, v in fill.items() if v is None or v == ""}  # deletions are structure, not content
+        label = next((v for k, v in fill.items() if str(k).strip().lower() == LABEL_FIELD.lower()
+                      and isinstance(v, str) and v.strip()), None)
+        if label:  # the label chosen up front ("Confidential") goes in as written
+            out[LABEL_FIELD] = label
+            used.discard(LABEL_FIELD)
         for f in fields:
             if f["name"] in used:
                 out[f["name"]] = {"skeleton": f}

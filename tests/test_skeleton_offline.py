@@ -29,7 +29,7 @@ SECRETS = ["Northwind merger", "salary grid", "48.7", "Q4 layoffs", "speaker sec
 SLIDES = [
     {"id": "L-01", "fill": {"Title": "Northwind merger", "Subtitle": "salary grid", "Date": None},
      "notes": "speaker secret"},
-    {"id": "L-10", "fill": {"Number": "48.7", "Title": "Q4 layoffs"}},
+    {"id": "L-10", "fill": {"Number": "48.7", "Title": "Q4 layoffs", "Footer": "Confidential"}},
     {"id": "L-37", "fill": {"Title": "Codename", "KPI 1 value": "48.7", "KPI 1 detail": "salary grid"}},
     {"id": "L-20", "fill": {"Icon 1": {"icon": "lucide:rocket"}}},
     {"id": "L-42", "fill": {"Table": [["Codename", "x"]]}},
@@ -110,6 +110,8 @@ def test_skeleton_placeholders_state_the_index_limits(skeleton):
     names = {s.name for s in iter_shapes(prs.slides[2])}
     assert "KPI 1 detail" in names and "KPI 2 detail" not in names
     assert "Date" not in {s.name for s in prs.slides[0].shapes}
+    footer = next(s for s in prs.slides[1].shapes if s.name == "Footer")
+    assert footer.text_frame.text == "Confidential"  # the label chosen up front is kept
     # chart: dummy series, same shape as the template
     chart = next(s for s in iter_shapes(prs.slides[5]) if s.has_chart).chart
     assert [s.name for s in chart.plots[0].series] == ["Dummy data — replace (1)", "Dummy data — replace (2)"]
