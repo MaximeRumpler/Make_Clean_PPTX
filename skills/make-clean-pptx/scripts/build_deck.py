@@ -13,6 +13,7 @@ Deck spec (JSON)
 {
   "output": "out/deck.pptx",
   "properties": {"title": "Q3 review", "author": "Jane Doe"},
+  "theme": "brand.thmx",
   "slides": [
     {"source": "design", "slide": 1,
      "fill": {"Title": "A **bold** word", "Subtitle": "Q3 2026"},
@@ -38,6 +39,11 @@ fill values
   {"categories": [...], "series": {"Name": [...]}}   chart data
   [[...], [...]] table cells (rows are added or removed to fit)
   null or ""     delete the shape (use for optional slots you do not need)
+
+"theme" (optional) replaces the colours and fonts of the deck's theme with those
+of a .thmx, .potx, .pptx or theme .xml file (path relative to the spec file);
+"theme_fonts_fallback" names a font used when the brand font is not available.
+
 Keys are shape names; "#3" means the third top-level shape; if no shape has that
 name, "{{key}}" tokens inside text are replaced instead.
 
@@ -62,6 +68,7 @@ try:
     from _clone import SlideCloner, delete_slide
     from _common import eprint, estimate_fit, is_dark, iter_shapes, overflows, shape_kind, token_xml
     from _svg import SvgError, svg_to_shapes
+    from _theme import ThemeError, apply_theme, fallback_fonts, load_theme_source
     from fetch_templates import FetchError, ensure_templates
     from read_index import load_index, resolve
 except ImportError as _exc:  # a missing package would otherwise end in a traceback
@@ -73,7 +80,7 @@ except ImportError as _exc:  # a missing package would otherwise end in a traceb
 
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tif", ".tiff", ".webp"}
 SOURCE_ALIASES = {"design": "layouts", "shapes": "visuals"}
-SPEC_KEYS = {"output", "properties", "slides", "language"}
+SPEC_KEYS = {"output", "properties", "slides", "language", "theme", "theme_fonts_fallback"}
 SLIDE_KEYS = {"source", "slide", "id", "fill", "insert", "notes", "keep_unfilled", "hidden"}
 INSERT_KEYS = {"source", "slide", "id", "component", "into", "box", "fit", "fill", "keep_unfilled"}
 
@@ -747,6 +754,13 @@ def main(argv=None) -> int:
         spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
         if not isinstance(spec.get("slides"), list) or not spec["slides"]:
             raise SpecError("spec needs a non-empty 'slides' list")
+        theme_src = None
+        if spec.get("theme"):  # read it first: a bad theme file stops the build before any work
+            theme_path = Path(str(spec["theme"])).expanduser()
+            if not theme_path.is_absolute():
+                theme_path = Path(args.spec).resolve().parent / theme_path
+            theme_src = load_theme_source(theme_path)
+            fallback_fonts(spec.get("theme_fonts_fallback"))
 
         if args.layouts:
             paths = {"layouts": {"pptx": args.layouts, "index": args.layouts_index},
@@ -775,11 +789,17 @@ def main(argv=None) -> int:
             strict=args.strict,
         )
         b.warnings.extend(check_keys(spec))
+        if spec.get("theme_fonts_fallback") and not theme_src:
+            b.warn("spec: 'theme_fonts_fallback' is ignored without a 'theme'")
         for i, s in enumerate(spec["slides"]):
             if s.get("hidden"):
                 continue
             b.add_slide(s, i)
         b.finish(spec.get("properties"), spec.get("language"))
+        theme_report = None
+        if theme_src:
+            theme_report, theme_warnings = apply_theme(b.prs, theme_src, spec.get("theme_fonts_fallback"))
+            b.warnings.extend(theme_warnings)
 
         out.parent.mkdir(parents=True, exist_ok=True)
         b.prs.save(out)
@@ -789,9 +809,10 @@ def main(argv=None) -> int:
             "slides": len(b.prs.slides),
             "warnings": b.warnings,
             "credits_file": credits,
+            **({"theme": theme_report} if theme_report else {}),
         }, indent=2, ensure_ascii=False))
         return 0
-    except (SpecError, FetchError, FileNotFoundError, ValueError) as exc:
+    except (SpecError, ThemeError, FetchError, FileNotFoundError, ValueError) as exc:
         print(json.dumps({"error": str(exc)}, indent=2, ensure_ascii=False))
         return 2
 

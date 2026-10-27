@@ -7,9 +7,19 @@
   "output": "build/deck.pptx",
   "language": "fr-FR",
   "properties": {"title": "…", "author": "…", "subject": "…", "keywords": "…"},
+  "theme": "brand/brand.thmx",
+  "theme_fonts_fallback": "Arial",
   "slides": [ { …slide… }, { …slide… } ]
 }
 ```
+
+## Brand theme
+
+`theme` replaces the colours and fonts of the deck's theme with those of a PowerPoint theme (`.thmx`), a template (`.potx`), a presentation (`.pptx`) or a theme part (`.xml`). A relative path is read from the folder of deck.json. The slides are not touched: every colour and font in the libraries is a theme reference, so the whole deck follows. The line and effect styles of the libraries stay. If the source has a slide master, its colour map is applied too (dark themes keep `dk1` dark and swap the map). A file that is missing, damaged or not a theme stops the build with a plain error (exit 2).
+
+The theme is then checked against `references/theme-contract.md` (accent ramp, text and fill pairs): problems are **warnings**, the deck is still built. Fix the theme, not the slides, then check the deck with `lint_deck.py --contrast`.
+
+Fonts: a brand font that is neither common (Windows, macOS, Office) nor installed on this machine gives a warning; with `theme_fonts_fallback` (`"Arial"`, or `{"major": "Georgia", "minor": "Arial"}`) the theme uses the fallback instead. The character limits are measured with Arial, so after a font change run `lint_deck.py` and `render_check.py` again and shorten what overflows. The report gets a `theme` object: source, name, fonts, `dark`, `colour_map`, `contract_findings`.
 
 ## Slide
 
