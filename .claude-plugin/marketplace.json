@@ -10,7 +10,7 @@
       "name": "make-clean-pptx",
       "source": "./",
       "description": "Clean, sober PowerPoint decks from a library of layouts and visuals, with built-in checks.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "license": "EUPL-1.2",
       "keywords": [
         "pptx",

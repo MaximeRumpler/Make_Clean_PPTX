@@ -4,6 +4,8 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-27
+
 ### Added
 - **Logo slot**: deck.json `"logo"` (PNG, JPG or SVG; path next to deck.json, then the current folder) puts the logo in a top-corner `Logo` slot on the covers L-01 to L-05 and the closing slide L-49, scaled to fit with its aspect ratio kept; `"logo_alt"` gives its alt text, otherwise it is marked decorative. Without `"logo"` the slots are removed and decks are byte-identical to before. A wrong file stops the build with a plain error (exit 2). The slot is flagged `role=logo` in the index (style contract). `lint_deck.py` warns when a logo overlaps text and no longer asks for alt text on pictures marked decorative.
 - **Style contract** for style packs (and the companion skill Make_Style_PPTX), `references/style-contract.md`. Style tokens in `library/style-tokens.json` (font pair, character width, corner radius, card treatment, background, title case, numbering); the default tokens rebuild the bundled libraries byte for byte, and `library/tools/build_pack.py <style>` builds an alternative pack with the same ids and field names and its own character limits. Every shape that is not a field is now named after its role (`card#2 > Heading 2`, `panel#1 > Title`, `decoration#5`), and container fields carry a `role=` flag in the index. New `arrange` column in `layouts.csv` and `visuals.csv` (and the gallery catalogue): layouts and visuals (diagrams and timelines only) whose repeated units may be rearranged (`row:3`, `grid:4`, `column:5:ordered`). `fit_test.py --check` fills every field at its limit without rendering; CI runs it on the default libraries and on the `soft` pack.
