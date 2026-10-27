@@ -66,7 +66,12 @@ jobs:
       - run: python library/tools/build_index.py
       - run: python library/tools/build_contract.py   # theme-contract.json is measured on the libraries
       - run: git diff --exit-code -- skills/make-clean-pptx/assets/   # pptx, csv and json are byte-reproducible
-      - run: pytest tests/test_libraries.py tests/test_theme_contract.py
+      # Style packs: fill every field at its limit (no render) in the default libraries and in one
+      # alternative token set, then check roles, tokens and that the pack keeps ids and field names.
+      - run: python library/tools/fit_test.py layouts --check
+      - run: python library/tools/fit_test.py visuals --check
+      - run: python library/tools/build_pack.py soft --fit
+      - run: pytest tests/test_libraries.py tests/test_theme_contract.py tests/test_style_contract.py
       # Theme contract: the neutral libraries pass the opt-in contrast check
       - run: python skills/make-clean-pptx/scripts/lint_deck.py --contrast skills/make-clean-pptx/assets/layouts.pptx
       - run: python skills/make-clean-pptx/scripts/lint_deck.py --contrast skills/make-clean-pptx/assets/visuals.pptx

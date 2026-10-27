@@ -1,0 +1,23 @@
+{
+  "_comment": "Style tokens of the generator. 'default' builds the bundled libraries (skills/make-clean-pptx/assets/); every entry of 'styles' only lists what it changes and builds a separate pack with `python library/tools/build_pack.py <name>`. Contract and allowed values: skills/make-clean-pptx/references/style-contract.md.",
+  "default": {
+    "fonts": { "heading": "Arial", "body": "Arial" },
+    "char_em": { "heading": 0.52, "body": 0.52 },
+    "radius": 0,
+    "cards": "fill",
+    "background": "paper",
+    "title_case": "as-written",
+    "numbering": "as-designed"
+  },
+  "styles": {
+    "soft": {
+      "fonts": { "heading": "Georgia", "body": "Verdana" },
+      "char_em": { "heading": 0.55, "body": 0.6 },
+      "radius": 0.12,
+      "cards": "outline",
+      "background": "surface",
+      "title_case": "upper",
+      "numbering": "padded"
+    }
+  }
+}

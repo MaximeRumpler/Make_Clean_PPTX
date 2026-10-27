@@ -16,10 +16,10 @@ module.exports = {
         for (let i = 0; i < 4; i++) {
           const y = 2.2 + i * 1.12;
           hrule(ctx, MX, y, 7.4, { color: i ? "line" : "ink", w: i ? 0.75 : 1.25, follows: i ? `Point ${i + 1}` : undefined });
-          text(ctx, `Number ${i + 1}`, String(i + 1), MX, y + 0.18, 0.5, 0.6, "h3", { size: 22, color: "muted", follows: `Point ${i + 1}` });
+          text(ctx, `Number ${i + 1}`, L.num(i + 1), MX, y + 0.18, 0.5, 0.6, "h3", { size: 22, color: "muted", follows: `Point ${i + 1}` });
           text(ctx, `Point ${i + 1}`, "Key point to remember", MX + 0.7, y + 0.2, 6.7, 0.8, "body", { bold: true, color: "ink", optional: i > 1 });
         }
-        rect(ctx, 8.6, 2.2, 4.133, 4.45, { fill: "a1" });
+        rect(ctx, 8.6, 2.2, 4.133, 4.45, { fill: "a1", role: "callout", for: "Decision" });
         text(ctx, "Decision label", "Decision requested", 8.95, 2.5, 3.5, 0.3, "label", { color: "a4", keep: true });
         text(ctx, "Decision", "What we ask the audience to decide", 8.95, 2.95, 3.45, 3.3, "h3", { size: 20, color: "paper" });
       },
@@ -63,15 +63,16 @@ module.exports = {
       description: "Grid of five modules of different sizes; the main one is dark and holds a figure.",
       use_when: "A rich overview (offer, results, programme) where one element dominates.",
       tags: "bento grid mosaic modules overview tiles editorial modern",
+      arrange: false, // the sizes of the modules are the design: no rearranging
       draw(ctx) {
         chrome(ctx);
-        rect(ctx, MX, 2.1, 5.0, 4.65, { fill: "a1" });
+        rect(ctx, MX, 2.1, 5.0, 4.65, { fill: "a1", role: "keyfigure", for: "Main value" });
         text(ctx, "Main value", "00", MX + 0.35, 2.4, 4.3, 1.4, "display", { size: 72, color: "paper" });
         text(ctx, "Main label", "Main message of the grid", MX + 0.35, 4.0, 4.3, 1.2, "h3", { size: 20, color: "paper" });
         text(ctx, "Main detail", "Short detail", MX + 0.35, 5.3, 4.3, 1.1, "small", { color: "a4", optional: true });
         const tiles = [[5.85, 2.1, 6.883, 2.2], [5.85, 4.55, 3.29, 2.2], [9.44, 4.55, 3.293, 2.2]];
         tiles.forEach(([x, y, w, h], i) => {
-          rect(ctx, x, y, w, h, { fill: "surface" });
+          rect(ctx, x, y, w, h, { fill: "surface", role: "card", for: `Tile ${i + 1} heading` });
           text(ctx, `Tile ${i + 1} heading`, "Heading", x + 0.3, y + 0.25, w - 0.6, 0.45, "h3");
           text(ctx, `Tile ${i + 1} body`, "Short text", x + 0.3, y + 0.8, w - 0.6, h - 1.05, "small", { optional: true });
         });
@@ -86,7 +87,7 @@ module.exports = {
         chrome(ctx);
         for (let i = 0; i < 3; i++) {
           const y = 2.05 + i * 1.6;
-          if (i % 2 === 0) rect(ctx, 0, y, W, 1.6, { fill: "surface" });
+          if (i % 2 === 0) rect(ctx, 0, y, W, 1.6, { fill: "surface", role: "panel", for: `Band ${i + 1} heading` });
           text(ctx, `Band ${i + 1} label`, `Theme ${i + 1}`, MX, y + 0.3, 2.4, 0.3, "label", { color: "ink" });
           text(ctx, `Band ${i + 1} heading`, "Heading", 3.3, y + 0.25, 3.6, 1.1, "h3", { size: 18 });
           text(ctx, `Band ${i + 1} body`, "Two lines on this theme.", 7.2, y + 0.28, 5.5, 1.1, "body");
@@ -115,7 +116,7 @@ module.exports = {
       use_when: "Dense content that needs a strong anchor; executive summaries.",
       tags: "side panel dark sidebar executive summary editorial anchor",
       draw(ctx) {
-        rect(ctx, 0, 0, 4.4, H, { fill: "a1" });
+        rect(ctx, 0, 0, 4.4, H, { fill: "a1", role: "panel", for: "Title" });
         text(ctx, "Kicker", "Section", MX, 0.6, 3.4, 0.3, "label", { color: "a4", optional: true });
         text(ctx, "Title", "Slide title states the takeaway", MX, 1.0, 3.4, 2.6, "title", { color: "paper" });
         text(ctx, "Subtitle", "Framing line", MX, 3.8, 3.4, 1.4, "lead", { color: "a4", optional: true });
@@ -139,8 +140,8 @@ module.exports = {
         vrule(ctx, 5.75, 0.9, 5.6, { color: "line" });
         for (let i = 0; i < 5; i++) {
           const y = 0.7 + i * 1.2;
-          L.ellipse(ctx, 5.5, y + 0.12, 0.5, 0.5, { fill: "ink", follows: `Step ${i + 1}` });
-          text(ctx, `Step ${i + 1} number`, String(i + 1), 5.5, y + 0.12, 0.5, 0.5, "h3", { size: 14, color: "paper", align: "center", valign: "middle", follows: `Step ${i + 1}` });
+          L.ellipse(ctx, 5.5, y + 0.12, 0.5, 0.5, { fill: "ink", follows: `Step ${i + 1}`, role: "label" });
+          text(ctx, `Step ${i + 1} number`, L.num(i + 1), 5.5, y + 0.12, 0.5, 0.5, "h3", { size: 14, color: "paper", align: "center", valign: "middle", follows: `Step ${i + 1}` });
           text(ctx, `Step ${i + 1}`, "Step", 6.35, y + 0.1, 6.4, 0.45, "h3", { optional: i > 2 });
           text(ctx, `Step ${i + 1} detail`, "One line of detail", 6.35, y + 0.55, 6.4, 0.55, "small", { optional: true });
         }

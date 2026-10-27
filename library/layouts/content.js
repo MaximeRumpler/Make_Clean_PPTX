@@ -31,7 +31,7 @@ module.exports = {
       tags: "full image photo background bleed caption box visual impact",
       draw(ctx) {
         image(ctx, "Photo", 0, 0, W, H);
-        rect(ctx, MX, 3.9, 6.2, 2.9, { fill: "paper" });
+        rect(ctx, MX, 3.9, 6.2, 2.9, { fill: "paper", role: "callout", for: "Title" });
         text(ctx, "Kicker", "Section", MX + 0.4, 4.2, 5.4, 0.3, "label", { optional: true });
         text(ctx, "Title", "Title over the picture", MX + 0.4, 4.55, 5.4, 1.0, "title");
         text(ctx, "Body", "One or two lines of context.", MX + 0.4, 5.6, 5.4, 1.0, "body", { optional: true });
@@ -101,7 +101,7 @@ module.exports = {
       draw(ctx) {
         chrome(ctx);
         cols(3).forEach((c, i) => {
-          text(ctx, `Callout ${i + 1} number`, String(i + 1), c.x, 1.95, 0.4, 0.5, "h3", { size: 20, follows: `Callout ${i + 1}` });
+          text(ctx, `Callout ${i + 1} number`, L.num(i + 1), c.x, 1.95, 0.4, 0.5, "h3", { size: 20, follows: `Callout ${i + 1}` });
           text(ctx, `Callout ${i + 1}`, "Thing to notice", c.x + 0.45, 2.0, c.w - 0.45, 0.65, "small", { optional: true });
         });
         frame(ctx, "Content Area", MX, 2.85, CW, 3.9);
@@ -171,7 +171,7 @@ module.exports = {
       draw(ctx) {
         chrome(ctx, { lead: true });
         cols(4, MX, CW, 0.25).forEach((c, i) => {
-          rect(ctx, c.x, 2.3, c.w, 3.4, { fill: "surface" });
+          rect(ctx, c.x, 2.3, c.w, 3.4, { fill: "surface", role: "keyfigure", for: `KPI ${i + 1} value` });
           kpi(ctx, i + 1, c.x + 0.3, 2.6, c.w - 0.6, { size: 40, h: 0.9, detailPh: "Variation and reference" });
         });
       },
@@ -197,7 +197,7 @@ module.exports = {
       use_when: "A total and what it is made of; a headline result and its drivers.",
       tags: "hero kpi total breakdown drivers big number dark panel",
       draw(ctx) {
-        rect(ctx, 0, 0, 5.2, H, { fill: "a1" });
+        rect(ctx, 0, 0, 5.2, H, { fill: "a1", role: "panel", for: "Number" });
         text(ctx, "Kicker", "Section", MX, 0.45, 4, 0.3, "label", { color: "a4", optional: true });
         text(ctx, "Title", "Slide title states the takeaway", MX, 0.85, 4.2, 1.6, "title", { color: "paper" });
         text(ctx, "Number", "00", MX, 3.2, 4.3, 1.6, "display", { size: 88, color: "paper" });

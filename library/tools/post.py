@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Post-process the raw libraries built by build.js.
 
-    python library/tools/post.py [layouts|visuals|all]
+    python library/tools/post.py [layouts|visuals|all] [--style NAME|FILE.json] [--pack-dir DIR]
 
-1. Writes the neutral theme (colour and font schemes from theme/tokens.json).
+1. Writes the neutral theme: colour scheme from theme/tokens.json, font pair
+   from the style tokens (style-tokens.json).
 2. Rewrites every token colour as a theme reference (schemeClr + lumMod/lumOff),
    in slides and charts, so that applying another theme recolours everything.
 3. Rewrites the sentinel fonts as theme fonts (+mj-lt / +mn-lt, caps for labels).
    Data labels inside dark pie/doughnut slices switch to paper text.
 4. Visuals only: gathers the shapes named "<ID>::<field>" into one group named
    <ID>, the unit that build_deck.py inserts into a layout frame.
-5. Saves deterministic zips into skills/make-clean-pptx/assets/.
+5. Saves deterministic zips into skills/make-clean-pptx/assets/ (default style)
+   or into the pack folder of another style, with the tokens in style.json.
 """
 from __future__ import annotations
 
@@ -24,10 +26,14 @@ from pathlib import Path
 
 from lxml import etree
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _style  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 REPO = ROOT.parent
-OUT = ROOT / "out"
-ASSETS = REPO / "skills" / "make-clean-pptx" / "assets"
+STYLE = _style.from_argv(sys.argv)
+OUT = STYLE["raw"]
+ASSETS = STYLE["pack"]
 TOKENS = json.loads((ROOT / "theme" / "tokens.json").read_text(encoding="utf-8"))
 
 NS = {
@@ -49,6 +55,7 @@ FONT_MAP = {
     "MCP Heading": ("mj", False),
     "MCP Body": ("mn", False),
     "MCP Label": ("mn", True),
+    "MCP Heading Caps": ("mj", True),  # titles when the style sets title_case "upper"
     "Arial": ("mn", False),  # pptxgenjs default in chart labels
 }
 
@@ -57,6 +64,7 @@ FONT_MAP = {
 def theme_xml(xml: str) -> str:
     t = TOKENS["theme"]
     c = t["colors"]
+    fonts = STYLE["tokens"]["fonts"]
 
     def slot(tag):
         return f'<a:{tag}><a:srgbClr val="{c[tag]}"/></a:{tag}>'
@@ -69,8 +77,8 @@ def theme_xml(xml: str) -> str:
     )
     fonts = (
         f'<a:fontScheme name="{t["name"]}">'
-        f'<a:majorFont><a:latin typeface="{t["fonts"]["major"]}"/><a:ea typeface=""/><a:cs typeface=""/></a:majorFont>'
-        f'<a:minorFont><a:latin typeface="{t["fonts"]["minor"]}"/><a:ea typeface=""/><a:cs typeface=""/></a:minorFont>'
+        f'<a:majorFont><a:latin typeface="{fonts["heading"]}"/><a:ea typeface=""/><a:cs typeface=""/></a:majorFont>'
+        f'<a:minorFont><a:latin typeface="{fonts["body"]}"/><a:ea typeface=""/><a:cs typeface=""/></a:minorFont>'
         "</a:fontScheme>"
     )
     xml = re.sub(r"<a:clrScheme\b.*?</a:clrScheme>", scheme, xml, flags=re.S)
@@ -170,17 +178,26 @@ def _xfrm(shape):
     return int(off.get("x")), int(off.get("y")), int(ext.get("cx")), int(ext.get("cy"))
 
 
+# Name of a shape that is not a field: "<role>#<n>" or "<role>#<n> > <field it holds>"
+# (lib.js Ctx.roleName; contract in references/style-contract.md).
+ROLE_NAME = re.compile(r"^(card|callout|keyfigure|label|panel|frame|decoration)#\d+( > .+)?$")
 DECOR_URI = "{C183D7F6-B498-43B3-948B-1728B52AA6E4}"
 ADEC = "http://schemas.microsoft.com/office/drawing/2017/decorative"
 
 
 def mark_decorative(root) -> int:
-    """Flag rules, dots and backgrounds as decorative so screen readers skip them."""
+    """Flag rules, dots, cards and backgrounds as decorative so screen readers skip them.
+
+    These are the shapes that are not fields: role-tagged containers ("card#2 > Heading 2",
+    "decoration#5") and the marks that follow a field ("Step 1 mark"). Their text, if any,
+    lives in the field they hold, which stays readable.
+    """
     n = 0
     for c in root.iter(P + "cNvPr"):
         name = c.get("name") or ""
-        if (name.startswith("Decoration") or name.endswith(" mark") or " mark " in name or "::Decoration" in name
-                or name.split("::")[-1].endswith((" mark", " stem", " elbow"))):
+        last = name.split("::")[-1]
+        if (ROLE_NAME.match(last) or name.endswith(" mark") or " mark " in name
+                or last.endswith((" mark", " stem", " elbow"))):
             if c.find(A + "extLst") is None:
                 ext_lst = etree.SubElement(c, A + "extLst")
                 ext = etree.SubElement(ext_lst, A + "ext", uri=DECOR_URI)
@@ -288,6 +305,10 @@ def main(argv):
     which = argv[1] if len(argv) > 1 else "all"
     libs = ["layouts", "visuals"] if which == "all" else [which]
     report = [process(lib) for lib in libs if (OUT / f"{lib}.pptx").exists()]
+    if STYLE["name"] != "default":
+        # A pack says which tokens it was built with (Make_Style and people read it)
+        (ASSETS / "style.json").write_text(json.dumps({"name": STYLE["name"], **STYLE["tokens"]}, indent=2) + "\n",
+                                           encoding="utf-8")
     print(json.dumps(report, indent=2))
     return 1 if any(r["unknown_colours"] for r in report) else 0
 

@@ -16,7 +16,7 @@ function quadrants(ctx, px, py, pw, ph, names, o = {}) {
   const fills = o.fills || ["surface", "a6", "a6", "surface"];
   const qw = pw / 2, qh = ph / 2;
   [[0, 0], [1, 0], [0, 1], [1, 1]].forEach(([cx, cy], i) => {
-    rect(ctx, px + cx * qw + 0.03, py + cy * qh + 0.03, qw - 0.06, qh - 0.06, { fill: fills[i] });
+    rect(ctx, px + cx * qw + 0.03, py + cy * qh + 0.03, qw - 0.06, qh - 0.06, { fill: fills[i], role: "card", for: `Quadrant ${i + 1}` });
     text(ctx, `Quadrant ${i + 1}`, names[i], px + cx * qw + 0.18, py + cy * qh + 0.15, qw - 0.4, 0.35, "label", { color: "ink", keep: !names[i].startsWith("Quadrant") });
     if (o.texts) text(ctx, `Quadrant ${i + 1} text`, "What to do here", px + cx * qw + 0.18, py + cy * qh + 0.5, qw - 0.4, qh - 0.7, "caption", {
       optional: true, color: fills[i] === "surface" ? undefined : "ink2", // muted is too light on accent fills
@@ -63,7 +63,7 @@ module.exports = {
         names.forEach((n, i) => {
           const x = b.x + (i % 2) * (w + gap), y = b.y + Math.floor(i / 2) * (h + gap);
           const dark = fills[i] === "a1";
-          rect(ctx, x, y, w, h, { fill: fills[i] });
+          rect(ctx, x, y, w, h, { fill: fills[i], role: "card", for: `Heading ${i + 1}` });
           text(ctx, `Heading ${i + 1}`, n, x + 0.25, y + 0.18, w - 0.5, 0.4, "h3", { color: dark ? "paper" : "ink", keep: true });
           text(ctx, `Block ${i + 1}`, ["Point", "Point", "Point"], x + 0.25, y + 0.65, w - 0.5, h - 0.8, "small", { bullets: true, color: dark ? "a6" : "ink2" });
         });
@@ -127,7 +127,7 @@ module.exports = {
           const s = (2 - r) + c, i = r * 3 + c + 1;
           const fill = s >= 4 ? "a1" : s === 3 ? "a3" : s === 2 ? "a5" : "surface";
           const dark = fill === "a1";
-          rect(ctx, px + c * cw + 0.04, py + r * ch + 0.04, cw - 0.08, ch - 0.08, { fill });
+          rect(ctx, px + c * cw + 0.04, py + r * ch + 0.04, cw - 0.08, ch - 0.08, { fill, role: "card", for: `Box ${i} heading` });
           text(ctx, `Box ${i} heading`, `Box ${i}`, px + c * cw + 0.2, py + r * ch + 0.15, cw - 0.4, 0.35, "small", { bold: true, color: dark ? "paper" : "ink" });
           text(ctx, `Box ${i} text`, "Short text", px + c * cw + 0.2, py + r * ch + 0.5, cw - 0.4, ch - 0.7, "caption", { color: dark ? "a6" : fill === "a3" ? "ink" : "ink2", optional: true });
         }

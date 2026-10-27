@@ -28,6 +28,7 @@ Each library has one index: `assets/layouts.csv` and `assets/visuals.csv`. The a
 | `fill_notes` | | ✓ | how to give the data |
 | `tags` | ✓ | ✓ | search words, synonyms included |
 | `related` | | ✓ | close alternatives |
+| `arrange` | ✓ | ✓ | repeated units a style pack may rearrange (see below); empty when there are none |
 | `fields` | ✓ | ✓ | the editable fields, see below |
 
 Categories: layouts use Cover, Agenda, Divider, Statement, Text, Media, Team, Frame, KPI, Table, Decision, Closing, Editorial, Process. Visuals use Compare, Evolve, Compose, Relate, KPI, Matrix, Process, Time, Structure, Frameworks, and Signature (opt-in, last).
@@ -49,9 +50,13 @@ Title|text|56; Subtitle|text|124|optional; Number 1|text|4|default,follows=Item 
 | `Name` | exact shape name in the pptx: the key used in the spec's `fill` |
 | `type` | `text`, `bullets`, `image`, `icon`, `chart`, `table`, `frame` (receives a visual), `plot` (reference area for `at` positions), `deco` (a decoration tied to a field) |
 | limit / hint | text: maximum characters (tested by `library/tools/fit_test.py`); image or frame: aspect ratio; chart: chart type; icon: slot colour |
-| flags | `optional` (removed when not filled), `default` (template text is an acceptable value), `follows=X` (removed with X) |
+| flags | `optional` (removed when not filled), `default` (template text is an acceptable value), `follows=X` (removed with X), `role=R` (the field is also drawn as a container, see style-contract.md) |
 
-Shapes not listed are decoration and are left alone.
+Shapes not listed are decoration and are left alone. In the bundled libraries their names carry a role (`card#2 > Heading 2`, `decoration#5`); `fill` never targets them.
+
+## `arrange` syntax
+
+`kind:count[:ordered]`, e.g. `row:3`, `grid:4`, `column:5:ordered`. A unit is every field that carries the same number (`Heading 2`, `Body 2`, and the container `card#2 > Heading 2` that holds them); all units have the same fields. `kind` is how the units are laid out now (`row`, `column`, `grid`), `ordered` means their order carries meaning (steps, agenda, timeline) and must be kept by any new arrangement. Written by `build_index.py` from the geometry of the slide; a layout or visual can set it itself in the generator (`arrange: false` for a design whose sizes or positions matter). Visuals are flagged only when their `kind` is `diagram` or `timeline`: in charts, tables, matrices and illustrations the geometry is the data, the axes or the metaphor. Tools that do not know the column ignore it.
 
 ## Your own libraries
 

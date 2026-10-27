@@ -76,7 +76,7 @@ module.exports = {
       use_when: "Formal opening with a strong structure; works well for board and committee decks.",
       tags: "cover band sidebar vertical formal board committee",
       draw(ctx) {
-        rect(ctx, 0, 0, 4.2, H, { fill: "a1" });
+        rect(ctx, 0, 0, 4.2, H, { fill: "a1", role: "panel", for: "Title" });
         text(ctx, "Kicker", "Context or event", MX, 0.8, 3.0, 0.6, "label", { color: "a4", optional: true });
         text(ctx, "Date", "Date", MX, 6.45, 3.0, 0.3, "caption", { color: "a4", optional: true });
         text(ctx, "Title", "Presentation title", 4.9, 2.5, 7.8, 1.9, "hero", { valign: "bottom" });
@@ -95,7 +95,7 @@ module.exports = {
         for (let i = 0; i < 6; i++) {
           const c = cc[i % 2], y = 2.3 + Math.floor(i / 2) * 1.45;
           hrule(ctx, c.x, y, c.w, { color: "line", follows: `Item ${i + 1}` });
-          text(ctx, `Number ${i + 1}`, String(i + 1).padStart(2, "0"), c.x, y + 0.15, 0.9, 0.6, "h3", { size: 24, color: "muted", follows: `Item ${i + 1}` });
+          text(ctx, `Number ${i + 1}`, L.num(i + 1, "padded"), c.x, y + 0.15, 0.9, 0.6, "h3", { size: 24, color: "muted", follows: `Item ${i + 1}` });
           text(ctx, `Item ${i + 1}`, `Part ${i + 1} title`, c.x + 1.0, y + 0.18, c.w - 1.0, 0.4, "h3", { optional: i > 1 });
           text(ctx, `Item ${i + 1} detail`, "Short description of this part", c.x + 1.0, y + 0.62, c.w - 1.0, 0.6, "small", { optional: true });
         }

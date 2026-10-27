@@ -11,6 +11,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 6,
   "thumbnail": "thumbnails/L-01.jpg"
  },
@@ -26,6 +27,7 @@
   "objective": "",
   "frame": "",
   "style": "Bold",
+  "arrange": "",
   "fields": 5,
   "thumbnail": "thumbnails/L-02.jpg"
  },
@@ -41,6 +43,7 @@
   "objective": "",
   "frame": "",
   "style": "Editorial",
+  "arrange": "",
   "fields": 3,
   "thumbnail": "thumbnails/L-03.jpg"
  },
@@ -56,6 +59,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 6,
   "thumbnail": "thumbnails/L-04.jpg"
  },
@@ -71,6 +75,7 @@
   "objective": "",
   "frame": "",
   "style": "Bold",
+  "arrange": "",
   "fields": 5,
   "thumbnail": "thumbnails/L-05.jpg"
  },
@@ -86,6 +91,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "grid:6:ordered",
   "fields": 27,
   "thumbnail": "thumbnails/L-06.jpg"
  },
@@ -101,6 +107,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "column:6:ordered",
   "fields": 27,
   "thumbnail": "thumbnails/L-07.jpg"
  },
@@ -116,6 +123,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "column:5:ordered",
   "fields": 9,
   "thumbnail": "thumbnails/L-08.jpg"
  },
@@ -131,6 +139,7 @@
   "objective": "",
   "frame": "",
   "style": "Bold",
+  "arrange": "",
   "fields": 4,
   "thumbnail": "thumbnails/L-09.jpg"
  },
@@ -146,6 +155,7 @@
   "objective": "",
   "frame": "",
   "style": "Editorial",
+  "arrange": "",
   "fields": 5,
   "thumbnail": "thumbnails/L-10.jpg"
  },
@@ -161,6 +171,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 7,
   "thumbnail": "thumbnails/L-11.jpg"
  },
@@ -176,6 +187,7 @@
   "objective": "",
   "frame": "",
   "style": "Editorial",
+  "arrange": "",
   "fields": 3,
   "thumbnail": "thumbnails/L-12.jpg"
  },
@@ -191,6 +203,7 @@
   "objective": "",
   "frame": "",
   "style": "Editorial",
+  "arrange": "",
   "fields": 6,
   "thumbnail": "thumbnails/L-13.jpg"
  },
@@ -206,6 +219,7 @@
   "objective": "",
   "frame": "",
   "style": "Editorial",
+  "arrange": "",
   "fields": 3,
   "thumbnail": "thumbnails/L-14.jpg"
  },
@@ -221,6 +235,7 @@
   "objective": "",
   "frame": "",
   "style": "Editorial",
+  "arrange": "",
   "fields": 4,
   "thumbnail": "thumbnails/L-15.jpg"
  },
@@ -236,6 +251,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:3",
   "fields": 15,
   "thumbnail": "thumbnails/L-16.jpg"
  },
@@ -251,6 +267,7 @@
   "objective": "",
   "frame": "",
   "style": "Bold",
+  "arrange": "grid:4",
   "fields": 13,
   "thumbnail": "thumbnails/L-17.jpg"
  },
@@ -266,6 +283,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 6,
   "thumbnail": "thumbnails/L-18.jpg"
  },
@@ -281,6 +299,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:2",
   "fields": 8,
   "thumbnail": "thumbnails/L-19.jpg"
  },
@@ -296,6 +315,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:3",
   "fields": 13,
   "thumbnail": "thumbnails/L-20.jpg"
  },
@@ -311,6 +331,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:4:ordered",
   "fields": 16,
   "thumbnail": "thumbnails/L-21.jpg"
  },
@@ -326,6 +347,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "grid:4",
   "fields": 11,
   "thumbnail": "thumbnails/L-22.jpg"
  },
@@ -341,6 +363,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 6,
   "thumbnail": "thumbnails/L-23.jpg"
  },
@@ -356,6 +379,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 6,
   "thumbnail": "thumbnails/L-24.jpg"
  },
@@ -371,6 +395,7 @@
   "objective": "",
   "frame": "",
   "style": "Editorial",
+  "arrange": "column:3",
   "fields": 16,
   "thumbnail": "thumbnails/L-25.jpg"
  },
@@ -386,6 +411,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:3",
   "fields": 14,
   "thumbnail": "thumbnails/L-26.jpg"
  },
@@ -401,6 +427,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 5,
   "thumbnail": "thumbnails/L-27.jpg"
  },
@@ -416,6 +443,7 @@
   "objective": "",
   "frame": "",
   "style": "Bold",
+  "arrange": "",
   "fields": 4,
   "thumbnail": "thumbnails/L-28.jpg"
  },
@@ -431,6 +459,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:3",
   "fields": 14,
   "thumbnail": "thumbnails/L-29.jpg"
  },
@@ -446,6 +475,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:4",
   "fields": 19,
   "thumbnail": "thumbnails/L-30.jpg"
  },
@@ -461,6 +491,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 5,
   "thumbnail": "thumbnails/L-31.jpg"
  },
@@ -476,6 +507,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 7,
   "thumbnail": "thumbnails/L-32.jpg"
  },
@@ -491,6 +523,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:3",
   "fields": 10,
   "thumbnail": "thumbnails/L-33.jpg"
  },
@@ -506,6 +539,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:2",
   "fields": 9,
   "thumbnail": "thumbnails/L-34.jpg"
  },
@@ -521,6 +555,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "column:2",
   "fields": 10,
   "thumbnail": "thumbnails/L-35.jpg"
  },
@@ -536,6 +571,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "grid:4",
   "fields": 11,
   "thumbnail": "thumbnails/L-36.jpg"
  },
@@ -551,6 +587,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:3",
   "fields": 13,
   "thumbnail": "thumbnails/L-37.jpg"
  },
@@ -566,6 +603,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:4",
   "fields": 16,
   "thumbnail": "thumbnails/L-38.jpg"
  },
@@ -581,6 +619,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "grid:6",
   "fields": 21,
   "thumbnail": "thumbnails/L-39.jpg"
  },
@@ -596,6 +635,7 @@
   "objective": "",
   "frame": "",
   "style": "Bold",
+  "arrange": "column:4",
   "fields": 18,
   "thumbnail": "thumbnails/L-40.jpg"
  },
@@ -611,6 +651,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 7,
   "thumbnail": "thumbnails/L-41.jpg"
  },
@@ -626,6 +667,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 4,
   "thumbnail": "thumbnails/L-42.jpg"
  },
@@ -641,6 +683,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:2",
   "fields": 11,
   "thumbnail": "thumbnails/L-43.jpg"
  },
@@ -656,6 +699,7 @@
   "objective": "",
   "frame": "",
   "style": "Bold",
+  "arrange": "row:2",
   "fields": 11,
   "thumbnail": "thumbnails/L-44.jpg"
  },
@@ -671,6 +715,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:3",
   "fields": 15,
   "thumbnail": "thumbnails/L-45.jpg"
  },
@@ -686,6 +731,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "",
   "fields": 7,
   "thumbnail": "thumbnails/L-46.jpg"
  },
@@ -701,6 +747,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "column:4",
   "fields": 16,
   "thumbnail": "thumbnails/L-47.jpg"
  },
@@ -716,6 +763,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:4:ordered",
   "fields": 24,
   "thumbnail": "thumbnails/L-48.jpg"
  },
@@ -731,6 +779,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "row:3",
   "fields": 12,
   "thumbnail": "thumbnails/L-49.jpg"
  },
@@ -746,6 +795,7 @@
   "objective": "",
   "frame": "",
   "style": "Bold",
+  "arrange": "",
   "fields": 12,
   "thumbnail": "thumbnails/L-50.jpg"
  },
@@ -761,6 +811,7 @@
   "objective": "",
   "frame": "",
   "style": "Editorial",
+  "arrange": "column:3",
   "fields": 12,
   "thumbnail": "thumbnails/L-51.jpg"
  },
@@ -776,6 +827,7 @@
   "objective": "",
   "frame": "",
   "style": "Editorial",
+  "arrange": "row:4:ordered",
   "fields": 19,
   "thumbnail": "thumbnails/L-52.jpg"
  },
@@ -791,6 +843,7 @@
   "objective": "",
   "frame": "",
   "style": "Bold",
+  "arrange": "row:2",
   "fields": 8,
   "thumbnail": "thumbnails/L-53.jpg"
  },
@@ -806,6 +859,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
+  "arrange": "column:5:ordered",
   "fields": 24,
   "thumbnail": "thumbnails/L-54.jpg"
  },
@@ -821,6 +875,7 @@
   "objective": "Compare",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-CMP-01.jpg"
  },
@@ -836,6 +891,7 @@
   "objective": "Compare",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-CMP-02.jpg"
  },
@@ -851,6 +907,7 @@
   "objective": "Track performance",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-CMP-03.jpg"
  },
@@ -866,6 +923,7 @@
   "objective": "Assess risk",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-CMP-04.jpg"
  },
@@ -881,6 +939,7 @@
   "objective": "Compare",
   "frame": "half",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-CMP-05.jpg"
  },
@@ -896,6 +955,7 @@
   "objective": "Decide",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 35,
   "thumbnail": "thumbnails/V-CMP-06.jpg"
  },
@@ -911,6 +971,7 @@
   "objective": "Show change",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 3,
   "thumbnail": "thumbnails/V-EVO-01.jpg"
  },
@@ -926,6 +987,7 @@
   "objective": "Show change",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-EVO-02.jpg"
  },
@@ -941,6 +1003,7 @@
   "objective": "Show change",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-EVO-03.jpg"
  },
@@ -956,6 +1019,7 @@
   "objective": "Track performance",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-EVO-04.jpg"
  },
@@ -971,6 +1035,7 @@
   "objective": "Track performance",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 19,
   "thumbnail": "thumbnails/V-EVO-05.jpg"
  },
@@ -986,6 +1051,7 @@
   "objective": "Show change",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 7,
   "thumbnail": "thumbnails/V-EVO-06.jpg"
  },
@@ -1001,6 +1067,7 @@
   "objective": "Break down",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-COM-01.jpg"
  },
@@ -1016,6 +1083,7 @@
   "objective": "Break down",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-COM-02.jpg"
  },
@@ -1031,6 +1099,7 @@
   "objective": "Break down",
   "frame": "half",
   "style": "",
+  "arrange": "",
   "fields": 4,
   "thumbnail": "thumbnails/V-COM-03.jpg"
  },
@@ -1046,6 +1115,7 @@
   "objective": "Break down",
   "frame": "half",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-COM-04.jpg"
  },
@@ -1061,6 +1131,7 @@
   "objective": "Break down",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 20,
   "thumbnail": "thumbnails/V-COM-05.jpg"
  },
@@ -1076,6 +1147,7 @@
   "objective": "Break down",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-COM-06.jpg"
  },
@@ -1091,6 +1163,7 @@
   "objective": "Show relationship",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-REL-01.jpg"
  },
@@ -1106,6 +1179,7 @@
   "objective": "Prioritise",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-REL-02.jpg"
  },
@@ -1121,6 +1195,7 @@
   "objective": "Show distribution",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-REL-03.jpg"
  },
@@ -1136,6 +1211,7 @@
   "objective": "Show distribution",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 42,
   "thumbnail": "thumbnails/V-REL-04.jpg"
  },
@@ -1151,6 +1227,7 @@
   "objective": "Prioritise",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-REL-05.jpg"
  },
@@ -1166,6 +1243,7 @@
   "objective": "Track performance",
   "frame": "wide",
   "style": "",
+  "arrange": "row:3",
   "fields": 9,
   "thumbnail": "thumbnails/V-KPI-01.jpg"
  },
@@ -1181,6 +1259,7 @@
   "objective": "Track performance",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 9,
   "thumbnail": "thumbnails/V-KPI-02.jpg"
  },
@@ -1196,6 +1275,7 @@
   "objective": "Track performance",
   "frame": "half",
   "style": "",
+  "arrange": "",
   "fields": 4,
   "thumbnail": "thumbnails/V-KPI-03.jpg"
  },
@@ -1211,6 +1291,7 @@
   "objective": "Track performance",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 34,
   "thumbnail": "thumbnails/V-KPI-04.jpg"
  },
@@ -1226,6 +1307,7 @@
   "objective": "Track performance",
   "frame": "half",
   "style": "",
+  "arrange": "",
   "fields": 3,
   "thumbnail": "thumbnails/V-KPI-05.jpg"
  },
@@ -1241,6 +1323,7 @@
   "objective": "Prioritise",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 26,
   "thumbnail": "thumbnails/V-MAT-01.jpg"
  },
@@ -1256,6 +1339,7 @@
   "objective": "Diagnose",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 8,
   "thumbnail": "thumbnails/V-MAT-02.jpg"
  },
@@ -1271,6 +1355,7 @@
   "objective": "Prioritise",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 27,
   "thumbnail": "thumbnails/V-MAT-03.jpg"
  },
@@ -1286,6 +1371,7 @@
   "objective": "Assess risk",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 19,
   "thumbnail": "thumbnails/V-MAT-04.jpg"
  },
@@ -1301,6 +1387,7 @@
   "objective": "Segment",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 20,
   "thumbnail": "thumbnails/V-MAT-05.jpg"
  },
@@ -1316,6 +1403,7 @@
   "objective": "Compare",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 21,
   "thumbnail": "thumbnails/V-MAT-06.jpg"
  },
@@ -1331,6 +1419,7 @@
   "objective": "Describe a process",
   "frame": "full",
   "style": "",
+  "arrange": "row:5:ordered",
   "fields": 10,
   "thumbnail": "thumbnails/V-PRO-01.jpg"
  },
@@ -1346,6 +1435,7 @@
   "objective": "Describe a process",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 9,
   "thumbnail": "thumbnails/V-PRO-02.jpg"
  },
@@ -1361,6 +1451,7 @@
   "objective": "Describe a process",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 15,
   "thumbnail": "thumbnails/V-PRO-03.jpg"
  },
@@ -1376,6 +1467,7 @@
   "objective": "Describe a process",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 14,
   "thumbnail": "thumbnails/V-PRO-04.jpg"
  },
@@ -1391,6 +1483,7 @@
   "objective": "Describe a process",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 23,
   "thumbnail": "thumbnails/V-PRO-05.jpg"
  },
@@ -1406,6 +1499,7 @@
   "objective": "Describe a process",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 12,
   "thumbnail": "thumbnails/V-PRO-06.jpg"
  },
@@ -1421,6 +1515,7 @@
   "objective": "Show maturity",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 8,
   "thumbnail": "thumbnails/V-PRO-07.jpg"
  },
@@ -1436,6 +1531,7 @@
   "objective": "Plan",
   "frame": "full",
   "style": "",
+  "arrange": "grid:6:ordered",
   "fields": 24,
   "thumbnail": "thumbnails/V-TIM-01.jpg"
  },
@@ -1451,6 +1547,7 @@
   "objective": "Plan",
   "frame": "full",
   "style": "",
+  "arrange": "row:4:ordered",
   "fields": 24,
   "thumbnail": "thumbnails/V-TIM-02.jpg"
  },
@@ -1466,6 +1563,7 @@
   "objective": "Plan",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 2,
   "thumbnail": "thumbnails/V-TIM-03.jpg"
  },
@@ -1481,6 +1579,7 @@
   "objective": "Plan",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 8,
   "thumbnail": "thumbnails/V-TIM-04.jpg"
  },
@@ -1496,6 +1595,7 @@
   "objective": "Plan",
   "frame": "full",
   "style": "",
+  "arrange": "row:3:ordered",
   "fields": 6,
   "thumbnail": "thumbnails/V-TIM-05.jpg"
  },
@@ -1511,6 +1611,7 @@
   "objective": "Plan",
   "frame": "full",
   "style": "",
+  "arrange": "grid:8:ordered",
   "fields": 24,
   "thumbnail": "thumbnails/V-TIM-06.jpg"
  },
@@ -1526,6 +1627,7 @@
   "objective": "Describe a structure",
   "frame": "full",
   "style": "",
+  "arrange": "row:4",
   "fields": 33,
   "thumbnail": "thumbnails/V-STR-01.jpg"
  },
@@ -1541,6 +1643,7 @@
   "objective": "Diagnose",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 19,
   "thumbnail": "thumbnails/V-STR-02.jpg"
  },
@@ -1556,6 +1659,7 @@
   "objective": "Describe a structure",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 8,
   "thumbnail": "thumbnails/V-STR-03.jpg"
  },
@@ -1571,6 +1675,7 @@
   "objective": "Describe a structure",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 20,
   "thumbnail": "thumbnails/V-STR-04.jpg"
  },
@@ -1586,6 +1691,7 @@
   "objective": "Show relationship",
   "frame": "wide",
   "style": "",
+  "arrange": "grid:6",
   "fields": 13,
   "thumbnail": "thumbnails/V-STR-05.jpg"
  },
@@ -1601,6 +1707,7 @@
   "objective": "Show relationship",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 4,
   "thumbnail": "thumbnails/V-STR-06.jpg"
  },
@@ -1616,6 +1723,7 @@
   "objective": "Diagnose",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 25,
   "thumbnail": "thumbnails/V-STR-07.jpg"
  },
@@ -1631,6 +1739,7 @@
   "objective": "Describe a structure",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 6,
   "thumbnail": "thumbnails/V-STR-08.jpg"
  },
@@ -1646,6 +1755,7 @@
   "objective": "Describe a structure",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 9,
   "thumbnail": "thumbnails/V-STR-09.jpg"
  },
@@ -1661,6 +1771,7 @@
   "objective": "Describe a structure",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 18,
   "thumbnail": "thumbnails/V-FRM-01.jpg"
  },
@@ -1676,6 +1787,7 @@
   "objective": "Diagnose",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 10,
   "thumbnail": "thumbnails/V-FRM-02.jpg"
  },
@@ -1691,6 +1803,7 @@
   "objective": "Diagnose",
   "frame": "full",
   "style": "",
+  "arrange": "row:6:ordered",
   "fields": 18,
   "thumbnail": "thumbnails/V-FRM-03.jpg"
  },
@@ -1706,6 +1819,7 @@
   "objective": "Describe a structure",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 42,
   "thumbnail": "thumbnails/V-FRM-04.jpg"
  },
@@ -1721,6 +1835,7 @@
   "objective": "Track performance",
   "frame": "full",
   "style": "",
+  "arrange": "row:3",
   "fields": 14,
   "thumbnail": "thumbnails/V-FRM-05.jpg"
  },
@@ -1736,6 +1851,7 @@
   "objective": "Describe a process",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 10,
   "thumbnail": "thumbnails/V-FRM-06.jpg"
  },
@@ -1751,6 +1867,7 @@
   "objective": "Set the tone",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 9,
   "thumbnail": "thumbnails/V-SIG-01.jpg"
  },
@@ -1766,6 +1883,7 @@
   "objective": "Set the tone",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 7,
   "thumbnail": "thumbnails/V-SIG-02.jpg"
  },
@@ -1781,6 +1899,7 @@
   "objective": "Set the tone",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 8,
   "thumbnail": "thumbnails/V-SIG-03.jpg"
  },
@@ -1796,6 +1915,7 @@
   "objective": "Set the tone",
   "frame": "full",
   "style": "",
+  "arrange": "",
   "fields": 16,
   "thumbnail": "thumbnails/V-SIG-04.jpg"
  },
@@ -1811,6 +1931,7 @@
   "objective": "Set the tone",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 8,
   "thumbnail": "thumbnails/V-SIG-05.jpg"
  },
@@ -1826,6 +1947,7 @@
   "objective": "Set the tone",
   "frame": "wide",
   "style": "",
+  "arrange": "",
   "fields": 13,
   "thumbnail": "thumbnails/V-SIG-06.jpg"
  }

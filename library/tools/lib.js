@@ -3,19 +3,31 @@
 // Every editable element is drawn with a name and recorded as a *field*, so the
 // same code produces the .pptx and the index: the two cannot drift apart.
 // Colours and fonts are drawn with the token values from theme/tokens.json;
-// post.py then turns them into theme references.
+// post.py then turns them into theme references. The style tokens
+// (style-tokens.json, chosen with --style) change corners, card treatment,
+// background, title case, numbering and the character width behind the limits.
 const tokens = require("../theme/tokens.json");
+const { STYLE } = require("./style.js");
+const ST = STYLE.tokens;
 
 const C = Object.fromEntries(Object.entries(tokens.colors).map(([k, v]) => [k, v.hex]));
 C.none = "FEFEFE"; // invisible fill (waterfall and Gantt bases), removed by post.py
-const FONT = { heading: tokens.fonts.heading.draw, body: tokens.fonts.body.draw, label: "MCP Label" };
+const FONT = { heading: tokens.fonts.heading.draw, body: tokens.fonts.body.draw, label: "MCP Label", headingCaps: "MCP Heading Caps" };
 const TYPE = tokens.type;
 const G = tokens.grid;
 const W = G.slide.w, H = G.slide.h, MX = G.margin.x, CW = W - 2 * MX, GUT = G.gutter;
 const SERIES = [C.a1, C.a3, C.a5, C.a2, C.a4, C.a6];
 
-// Same constants as skills/make-clean-pptx/scripts/_common.py (estimate_fit)
-const AVG_CHAR_EM = 0.52, LINE_EM = 1.2;
+// Same constants as skills/make-clean-pptx/scripts/_common.py (estimate_fit) in the
+// default style; a style pack sets its own average character width per font
+// (char_em), so each pack has its own character limits.
+const LINE_EM = 1.2;
+const CAPS_EM = 1.2; // capitals are about a fifth wider than mixed case
+// Containers whose corners and treatment follow the style tokens.
+const SOFT_ROLES = new Set(["card", "callout", "keyfigure", "label"]);
+
+// Roles of the shapes, for the restyler of style packs (references/style-contract.md).
+const ROLES = ["card", "callout", "keyfigure", "label", "panel", "frame", "decoration"];
 
 let pres = null;
 function init(p) { pres = p; }
@@ -27,20 +39,27 @@ class Ctx {
     this.prefix = prefix || "";
     this.fields = [];
     this.names = new Set();
-    this.deco = 0;
+    this.roles = {};
+    this.links = [];
   }
   name(n) {
     if (this.names.has(n)) throw new Error(`duplicate shape name '${n}' on ${this.prefix || "slide"}`);
     this.names.add(n);
     return this.prefix ? `${this.prefix}::${n}` : n;
   }
-  decoName() { this.deco += 1; return this.prefix ? `${this.prefix}::Decoration ${this.deco}` : `Decoration ${this.deco}`; }
+  // Name of a shape that is not a field: "<role>#<n>", plus " > <field>" for the text it holds.
+  roleName(role, link) {
+    if (!ROLES.includes(role)) throw new Error(`unknown role '${role}' on ${this.prefix || "slide"}`);
+    if (link) this.links.push(link); // checked against the fields once the slide is drawn
+    this.roles[role] = (this.roles[role] || 0) + 1;
+    return this.name(`${role}#${this.roles[role]}${link ? " > " + link : ""}`);
+  }
   field(f) { this.fields.push(f); }
 }
 
-function charLimit(w, h, size, inset) {
+function charLimit(w, h, size, inset, em = ST.char_em.body) {
   const wPt = (w - 2 * inset) * 72, hPt = (h - 2 * inset) * 72;
-  const perLine = Math.max(1, Math.floor(wPt / (size * AVG_CHAR_EM)));
+  const perLine = Math.max(1, Math.floor(wPt / (size * em)));
   const lines = Math.max(1, Math.floor(hPt / (size * LINE_EM)));
   return { limit: Math.max(4, Math.floor(perLine * lines * 0.85)), lines, perLine };
 }
@@ -53,10 +72,33 @@ function styleOf(style, o) {
   return t;
 }
 
-function textOpts(t, o) {
+// Slide and cover titles take the title case of the style.
+const upperTitle = (style) => ST.title_case === "upper" && (style === "title" || style === "hero");
+
+function charEm(t, style) {
+  const em = ST.char_em[t.font] || ST.char_em.body;
+  return upperTitle(style) ? em * CAPS_EM : em; // labels keep their measured limits (capped at 40)
+}
+
+// Background "surface" swaps the two light fills, so cards stay visible on the tinted slide.
+function tone(fill) {
+  if (ST.background === "surface") {
+    if (fill === "surface") return "paper";
+    if (fill === "paper") return "surface";
+  }
+  return fill;
+}
+
+// Numbers drawn as placeholders ("1", "01"): kept as designed or forced by the style.
+function num(n, designed = "plain") {
+  const how = ST.numbering === "as-designed" ? designed : ST.numbering;
+  return how === "padded" ? String(n).padStart(2, "0") : String(n);
+}
+
+function textOpts(t, o, style) {
   const color = C[t.color] || t.color;
   return {
-    fontFace: t.caps ? FONT.label : FONT[t.font],
+    fontFace: t.caps ? FONT.label : upperTitle(style) ? FONT.headingCaps : FONT[t.font],
     fontSize: t.size,
     bold: !!t.bold,
     italic: !!o.italic,
@@ -75,13 +117,19 @@ function textOpts(t, o) {
 // it describes the slot and never contains invented content.
 function text(ctx, name, ph, x, y, w, h, style = "body", o = {}) {
   const t = styleOf(style, o);
-  const opts = Object.assign(textOpts(t, o), { x, y, w, h, objectName: ctx.name(name) });
-  if (o.fill) opts.fill = { color: C[o.fill] || o.fill };
+  const opts = Object.assign(textOpts(t, o, style), { x, y, w, h, objectName: ctx.name(name) });
+  if (o.fill) opts.fill = { color: C[tone(o.fill)] || o.fill };
   if (o.line) opts.line = { color: C[o.line] || o.line, width: o.lw || 0.75 };
   if (o.shape) opts.shape = o.shape;
+  // A text field drawn with its own fill or outline is also a container (a badge, a tile, a pill).
+  const role = o.fill || o.line || o.shape ? (o.role || "label") : undefined;
+  if (role && SOFT_ROLES.has(role) && ST.radius > 0 && !o.shape) {
+    opts.shape = "roundRect";
+    opts.rectRadius = Math.min(ST.radius, w / 2, h / 2);
+  }
   if (o.rotate) opts.rotate = o.rotate;
   const inset = o.inset || 0;
-  const fit = charLimit(w, h, t.size, inset);
+  const fit = charLimit(w, h, t.size, inset, charEm(t, style));
   let body = ph;
   if (o.bullets) {
     const items = Array.isArray(ph) ? ph : [ph];
@@ -97,28 +145,44 @@ function text(ctx, name, ph, x, y, w, h, style = "body", o = {}) {
   ctx.field({
     name, type: o.bullets ? "bullets" : "text", limit, lines: fit.lines,
     style, size: t.size, x, y, w, h, placeholder: Array.isArray(ph) ? ph.join(" / ") : ph,
-    optional: !!o.optional, default: o.keep === false ? false : !!(o.keep || numbering), follows: o.follows,
+    optional: !!o.optional, default: o.keep === false ? false : !!(o.keep || numbering), follows: o.follows, role,
   });
   return opts;
 }
 
 // ---------------------------------------------------------------- shapes
+// Every shape that is not a field carries a role (o.role, default "decoration")
+// and, with o.for, the field it holds: see references/style-contract.md.
 function rect(ctx, x, y, w, h, o = {}) {
+  const role = o.role || "decoration";
+  let fill = o.fill ? tone(o.fill) : undefined, line = o.line, lw = o.lw, shape = o.shape, radius = o.radius;
+  if (SOFT_ROLES.has(role) && !o.points) {
+    // Card treatment: light containers are filled (default), outlined, or both. Never a shadow.
+    if (fill === tone("surface") && ST.cards !== "fill") {
+      line = line || "line";
+      lw = lw || 0.75;
+      if (ST.cards === "outline") fill = undefined;
+    }
+    if (ST.radius > 0 && (!shape || shape === "rect")) {
+      shape = "roundRect";
+      radius = Math.min(ST.radius, w / 2, h / 2);
+    }
+  }
   const opts = {
     x, y, w, h,
-    fill: o.fill ? { color: C[o.fill] || o.fill, transparency: o.transparency || 0 } : { type: "none" },
-    line: o.line ? { color: C[o.line] || o.line, width: o.lw || 0.75, dashType: o.dash || "solid" } : { type: "none" },
-    objectName: o.name ? ctx.name(o.name) : o.follows ? ctx.name(`${o.follows} mark${o.markN || ""}`) : ctx.decoName(),
+    fill: fill ? { color: C[fill] || fill, transparency: o.transparency || 0 } : { type: "none" },
+    line: line ? { color: C[line] || line, width: lw || 0.75, dashType: o.dash || "solid" } : { type: "none" },
+    objectName: o.name ? ctx.name(o.name) : o.follows ? ctx.name(`${o.follows} mark${o.markN || ""}`) : ctx.roleName(role, o.for),
   };
-  if (o.follows && !o.name) ctx.field({ name: `${o.follows} mark${o.markN || ""}`, type: "deco", follows: o.follows, x, y, w, h, optional: true });
-  if (o.radius) opts.rectRadius = o.radius;
+  if (o.follows && !o.name) ctx.field({ name: `${o.follows} mark${o.markN || ""}`, type: "deco", follows: o.follows, x, y, w, h, optional: true, role });
+  if (radius) opts.rectRadius = radius;
   if (o.rotate) opts.rotate = o.rotate;
   if (o.flipH) opts.flipH = true;
   if (o.flipV) opts.flipV = true;
   if (o.angleRange) opts.angleRange = o.angleRange;
   if (o.arcThicknessRatio) opts.arcThicknessRatio = o.arcThicknessRatio;
   if (o.points) opts.points = o.points;
-  ctx.s.addShape(o.points ? "custGeom" : o.shape || "rect", opts);
+  ctx.s.addShape(o.points ? "custGeom" : shape || "rect", opts);
   return opts;
 }
 const ellipse = (ctx, x, y, w, h, o = {}) => rect(ctx, x, y, w, h, Object.assign({ shape: "ellipse" }, o));
@@ -143,9 +207,9 @@ function line(ctx, x1, y1, x2, y2, o = {}) {
     x: Math.min(x1, x2), y: Math.min(y1, y2), w: Math.abs(x2 - x1) || 0.0001, h: Math.abs(y2 - y1) || 0.0001,
     line: { color: C[o.color || "line"] || o.color, width: o.w || 0.75, dashType: o.dash || "solid",
             beginArrowType: o.begin, endArrowType: o.end },
-    objectName: o.name ? ctx.name(o.name) : o.follows ? ctx.name(`${o.follows} mark${o.markN || ""}`) : ctx.decoName(),
+    objectName: o.name ? ctx.name(o.name) : o.follows ? ctx.name(`${o.follows} mark${o.markN || ""}`) : ctx.roleName("decoration"),
   };
-  if (o.follows && !o.name) ctx.field({ name: `${o.follows} mark${o.markN || ""}`, type: "deco", follows: o.follows, optional: true });
+  if (o.follows && !o.name) ctx.field({ name: `${o.follows} mark${o.markN || ""}`, type: "deco", follows: o.follows, optional: true, role: "decoration" });
   if ((x2 < x1) !== (y2 < y1) && x1 !== x2 && y1 !== y2) opts.flipV = true;
   ctx.s.addShape("line", opts);
 }
@@ -154,9 +218,9 @@ const vrule = (ctx, x, y, h, o = {}) => line(ctx, x, y, x, y + h, o);
 
 // An empty area where a visual from the visuals library is inserted (spec: "into").
 function frame(ctx, name, x, y, w, h, o = {}) {
-  rect(ctx, x, y, w, h, { fill: o.dark ? "a2" : "surface", name });
+  rect(ctx, x, y, w, h, { fill: o.dark ? "a2" : "surface", name, role: "frame" });
   ctx.field({ name, type: "frame", hint: `${(w / h).toFixed(2)}:1`, x, y, w, h,
-    placeholder: "Insert a visual", optional: !!o.optional });
+    placeholder: "Insert a visual", optional: !!o.optional, role: "frame" });
   // the label is a separate, deletable caption so that the frame stays a clean box
 }
 
@@ -243,7 +307,7 @@ function footer(ctx, dark) {
 function background(ctx, color) { ctx.s.background = { color: C[color] || color }; }
 
 module.exports = {
-  C, FONT, TYPE, G, W, H, MX, CW, GUT, SERIES, init, Ctx, charLimit,
+  C, FONT, TYPE, G, W, H, MX, CW, GUT, SERIES, ST, STYLE, ROLES, init, Ctx, charLimit, num, tone,
   text, rect, ellipse, path, line, hrule, vrule, frame, image, icon, chart, series, cats, table, chrome, footer, background,
   get pres() { return pres; },
 };

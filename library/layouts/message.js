@@ -66,7 +66,7 @@ module.exports = {
         const cc = cols(3);
         cc.forEach((c, i) => {
           hrule(ctx, c.x, 2.6, c.w, { color: "ink", w: 1.25, follows: `Argument ${i + 1}` });
-          text(ctx, `Number ${i + 1}`, String(i + 1), c.x, 2.8, 1, 0.8, "display", { size: 40, follows: `Argument ${i + 1}` });
+          text(ctx, `Number ${i + 1}`, L.num(i + 1), c.x, 2.8, 1, 0.8, "display", { size: 40, follows: `Argument ${i + 1}` });
           text(ctx, `Argument ${i + 1}`, "Argument in a few words", c.x, 3.75, c.w, 0.75, "h3");
           text(ctx, `Argument ${i + 1} detail`, "Evidence or explanation for this argument.", c.x, 4.55, c.w, 1.9, "body", { optional: true });
         });
@@ -96,7 +96,7 @@ module.exports = {
       draw(ctx) {
         chrome(ctx, { lead: true });
         text(ctx, "Body", "Main text. Keep it to one paragraph that supports the title.", MX, 2.3, 7.6, 4.2, "body", { size: 16 });
-        vrule(ctx, 8.8, 2.3, 2.5, { color: "line", name: "Side rule" });
+        vrule(ctx, 8.8, 2.3, 2.5, { color: "line" });
         text(ctx, "Side note", "Optional note, definition or source", 9.1, 2.3, 3.6, 2.5, "small", { color: "muted", optional: true });
       },
     },
@@ -137,7 +137,7 @@ module.exports = {
         chrome(ctx, { lead: true });
         cols(4).forEach((c, i) => {
           if (i) vrule(ctx, c.x - L.GUT / 2, 2.35, 4.1, { color: "line" });
-          text(ctx, `Number ${i + 1}`, String(i + 1).padStart(2, "0"), c.x, 2.35, c.w, 0.6, "h3", { size: 24, color: "muted", follows: `Heading ${i + 1}` });
+          text(ctx, `Number ${i + 1}`, L.num(i + 1, "padded"), c.x, 2.35, c.w, 0.6, "h3", { size: 24, color: "muted", follows: `Heading ${i + 1}` });
           text(ctx, `Heading ${i + 1}`, "Heading", c.x, 3.05, c.w, 0.75, "h3");
           text(ctx, `Body ${i + 1}`, "Short text for this column.", c.x, 3.85, c.w, 2.6, "small");
         });
@@ -153,7 +153,7 @@ module.exports = {
         const cc = cols(2, MX, CW, 0.25);
         for (let i = 0; i < 4; i++) {
           const c = cc[i % 2], y = 2.2 + Math.floor(i / 2) * 2.35;
-          rect(ctx, c.x, y, c.w, 2.15, { fill: "surface" });
+          rect(ctx, c.x, y, c.w, 2.15, { fill: "surface", role: "card", for: `Heading ${i + 1}` });
           text(ctx, `Heading ${i + 1}`, "Card heading", c.x + 0.3, y + 0.25, c.w - 0.6, 0.45, "h3");
           text(ctx, `Body ${i + 1}`, "Two or three lines that explain the card.", c.x + 0.3, y + 0.8, c.w - 0.6, 1.2, "body");
         }
@@ -167,7 +167,7 @@ module.exports = {
       draw(ctx) {
         chrome(ctx, { titleW: 7.9 });
         text(ctx, "Body", "Main text that develops the title in a few short paragraphs.", MX, 2.2, 7.6, 4.3, "body", { size: 16 });
-        rect(ctx, 8.9, 0, W - 8.9, 7.5, { fill: "surface" });
+        rect(ctx, 8.9, 0, W - 8.9, 7.5, { fill: "surface", role: "panel", for: "Sidebar" });
         text(ctx, "Sidebar label", "Key points", 9.3, 2.2, 3.4, 0.3, "label", { keep: true });
         text(ctx, "Sidebar", ["Key point", "Key point", "Key point"], 9.3, 2.65, 3.4, 3.8, "body", { bullets: true });
       },
@@ -180,7 +180,7 @@ module.exports = {
       draw(ctx) {
         chrome(ctx, { titleW: 7.6 });
         text(ctx, "Body", ["Supporting point", "Supporting point", "Supporting point"], MX, 2.3, 7.1, 4.2, "body", { bullets: true, size: 16 });
-        rect(ctx, 8.4, 2.3, 4.333, 3.9, { fill: "a1" });
+        rect(ctx, 8.4, 2.3, 4.333, 3.9, { fill: "a1", role: "callout", for: "Takeaway" });
         text(ctx, "Takeaway label", "Takeaway", 8.75, 2.6, 3.6, 0.3, "label", { color: "a4", keep: true });
         text(ctx, "Takeaway", "The conclusion in one or two sentences", 8.75, 3.05, 3.65, 2.9, "h3", { size: 20, color: "paper" });
       },
@@ -210,7 +210,7 @@ module.exports = {
       tags: "problem hypotheses framing issue analysis plan test",
       draw(ctx) {
         chrome(ctx);
-        rect(ctx, MX, 2.2, CW, 1.15, { fill: "surface" });
+        rect(ctx, MX, 2.2, CW, 1.15, { fill: "surface", role: "callout", for: "Problem" });
         text(ctx, "Problem label", "Problem", MX + 0.3, 2.38, 2, 0.3, "label", { keep: true });
         text(ctx, "Problem", "The problem in one sentence", MX + 0.3, 2.7, CW - 0.6, 0.55, "h3", { size: 18 });
         cols(3).forEach((c, i) => {

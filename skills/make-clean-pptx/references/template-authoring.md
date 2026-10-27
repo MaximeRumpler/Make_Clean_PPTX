@@ -8,7 +8,8 @@ They are **generated from code** (`library/` at the root of the repository, not 
 
 ```
 library/
-  theme/tokens.json      palette (theme slots), fonts, type scale, grid
+  theme/tokens.json      palette (theme slots), type scale, grid
+  style-tokens.json      style tokens: font pair, corners, cards, background, title case, numbering
   tools/lib.js           drawing kit: text fields, shapes, frames, charts, tables, icon slots
   layouts/*.js           54 layouts, by family
   visuals/*.js           68 visuals, by family (_kit.js: legends, markers, keys, cards)
@@ -41,7 +42,9 @@ pytest
 - **Fonts are theme fonts** (`+mj-lt` headings, `+mn-lt` body). The neutral theme uses Arial (Liberation Sans in LibreOffice, same metrics).
 - **One grid**: 13.333 × 7.5 in, 0.6 in side margins, kicker / title / lead / content / footer bands (`tokens.grid`).
 - **Placeholders, never content.** A field's text describes the slot ("Slide title states the takeaway", "Short text", "00"). No names, figures, dates or quotes. Charts use round placeholder numbers and generic labels ("Category 1").
-- **Every editable element is a named field.** Decorations need no name. A visual is one group named after its id.
+- **Every editable element is a named field.** A visual is one group named after its id.
+- **Every other shape has a role.** Give containers `role` (`card`, `callout`, `keyfigure`, `label`, `panel`, `frame`) and `for` (the field they hold): `rect(ctx, x, y, w, h, { fill: "surface", role: "card", for: "Heading 1" })` is named `card#1 > Heading 1`. Rules, dots and ornaments default to `decoration`. A text field drawn with its own fill or outline is its own container (`role` option, default `label`), written in the index as `role=…`. Style packs restyle shapes by role: see `style-contract.md`.
+- **Style through tokens, not by hand.** Corners, card treatment, background, title case, numbering (`L.num(i)` for number placeholders) and the font pair come from `library/style-tokens.json`; a layout never sets them itself, so every style pack keeps the same ids and fields.
 
 ## Adding a layout
 

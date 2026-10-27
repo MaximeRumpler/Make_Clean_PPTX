@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write skills/make-clean-pptx/assets/theme-contract.json from the built libraries.
 
-    python library/tools/build_contract.py
+    python library/tools/build_contract.py [--style NAME|FILE.json] [--pack-dir DIR]
 
 The contract tells a theme author (a person, or the Make_Colors skill) what
 each theme slot does in the libraries and which colour pairs must stay
@@ -24,8 +24,11 @@ from pptx import Presentation
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT.parent / "skills" / "make-clean-pptx"
-ASSETS = SKILL / "assets"
 sys.path.insert(0, str(SKILL / "scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _style  # noqa: E402
+
+ASSETS = _style.from_argv(sys.argv)["pack"]
 
 from _common import TOKENS  # noqa: E402
 from _contrast import DEFAULT_CLRMAP, LARGE_MIN, SLOTS, TEXT_MIN, Palette, ratio, read_theme  # noqa: E402

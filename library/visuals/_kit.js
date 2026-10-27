@@ -22,15 +22,15 @@ function legend(ctx, labels, x, y, colors, o = {}) {
 
 // Area used to position items with {"at": [x%, y%]} (0,0 = bottom left).
 function plot(ctx, x, y, w, h, o = {}) {
-  rect(ctx, x, y, w, h, { fill: o.fill, line: o.line, name: "Plot Area" });
-  ctx.field({ name: "Plot Area", type: "plot", x, y, w, h, placeholder: "Reference for item positions", optional: true });
+  rect(ctx, x, y, w, h, { fill: o.fill, line: o.line, name: "Plot Area", role: "frame" });
+  ctx.field({ name: "Plot Area", type: "plot", x, y, w, h, placeholder: "Reference for item positions", optional: true, role: "frame" });
 }
 
 // Numbered item marker (moved with "at", tinted with "fill").
 function marker(ctx, i, cx, cy, o = {}) {
   const d = o.d || 0.42;
-  text(ctx, `Item ${i}`, String(i), cx - d / 2, cy - d / 2, d, d, "small", {
-    shape: "ellipse", fill: o.fill || "a1", color: "paper", bold: true, align: "center", valign: "middle", size: 11,
+  text(ctx, `Item ${i}`, L.num(i), cx - d / 2, cy - d / 2, d, d, "small", {
+    shape: "ellipse", fill: o.fill || "a1", role: "label", color: "paper", bold: true, align: "center", valign: "middle", size: 11,
     optional: true, limit: 3, keep: false,
   });
 }
@@ -39,7 +39,7 @@ function marker(ctx, i, cx, cy, o = {}) {
 function key(ctx, n, x, y, w, o = {}) {
   const step = o.step || 0.42;
   for (let i = 1; i <= n; i++) {
-    text(ctx, `Key ${i} number`, String(i), x, y + (i - 1) * step, 0.3, 0.3, "small", { bold: true, color: "ink", valign: "middle", follows: `Key ${i}` });
+    text(ctx, `Key ${i} number`, L.num(i), x, y + (i - 1) * step, 0.3, 0.3, "small", { bold: true, color: "ink", valign: "middle", follows: `Key ${i}` });
     text(ctx, `Key ${i}`, "Item name", x + 0.35, y + (i - 1) * step, w - 0.35, 0.3, "small", { valign: "middle", optional: true });
   }
 }
@@ -48,7 +48,7 @@ const arrow = (ctx, x1, y1, x2, y2, o = {}) => line(ctx, x1, y1, x2, y2, Object.
 
 // Box with a heading and a text, used by diagrams and frameworks.
 function card(ctx, prefix, x, y, w, h, o = {}) {
-  rect(ctx, x, y, w, h, { fill: o.fill || "surface", line: o.line });
+  rect(ctx, x, y, w, h, { fill: o.fill || "surface", line: o.line, role: "card", for: `${prefix} heading` });
   const dark = o.fill === "a1" || o.fill === "ink" || o.fill === "a2";
   text(ctx, `${prefix} heading`, o.heading || "Heading", x + 0.15, y + 0.12, w - 0.3, o.headH || 0.35, o.headStyle || "small",
     { bold: true, color: dark ? "paper" : "ink", align: o.align, optional: o.optional, keep: !!o.heading });
