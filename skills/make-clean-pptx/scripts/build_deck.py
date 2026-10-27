@@ -162,6 +162,8 @@ def load_logo(spec: dict, spec_dir: Path) -> dict | None:
         path = Path(resolve_input(value, spec_dir, "logo"))
     except FileNotFoundError as exc:
         raise SpecError(str(exc)) from exc
+    if not path.is_file():  # an absolute path is returned as given
+        raise SpecError(f"logo not found: '{value}'")
     if path.suffix.lower() == ".svg":
         try:
             parse_svg(path.read_text(encoding="utf-8"))
