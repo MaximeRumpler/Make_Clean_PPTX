@@ -34,9 +34,9 @@ Nothing is drawn from scratch: the slides already exist and are cloned, so spaci
 
 ## Inside the libraries
 
-| **Layouts** (54) | **Visuals** (60) |
+| **Layouts** (54) | **Visuals** (68) |
 |:---|:---|
-| Cover 5 · Agenda 3 · Divider 3 · Statement 6 · Text 9 · Media 3 · Team 1 · Frame 6 · KPI 4 · Table 2 · Decision 4 · Closing 3 · Editorial 4 · Process 1 | Compare 6 · Evolve 6 · Compose 6 · Relate 5 · KPI 5 · Matrix 6 · Process 7 · Time 5 · Structure 8 · Frameworks 6 |
+| Cover 5 · Agenda 3 · Divider 3 · Statement 6 · Text 9 · Media 3 · Team 1 · Frame 6 · KPI 4 · Table 2 · Decision 4 · Closing 3 · Editorial 4 · Process 1 | Compare 6 · Evolve 6 · Compose 6 · Relate 5 · KPI 5 · Matrix 6 · Process 7 · Time 6 · Structure 9 · Frameworks 6 · Signature 6 (opt-in) |
 | Chosen by what the message *is*: one figure, a stance and three reasons, a choice between options, a chart that needs commentary. Frames receive visuals. | Chosen by what the data *does*: compare, evolve, break down, relate, prioritise, plan, structure. Every quantitative visual is a native, editable chart. |
 
 Each row of the index (`skills/make-clean-pptx/assets/*.csv`) describes the slide, when to use it, its tags, and every editable field with its character limit. The agent searches the index instead of opening slides:
@@ -51,7 +51,7 @@ python3 skills/make-clean-pptx/scripts/read_index.py visuals -q "budget to actua
 
 ## Make it yours
 
-| **Rebrand in one click** | **Bring your own slides** | **Extend the libraries** |
+| **Rebrand with your theme** | **Bring your own slides** | **Extend the libraries** |
 |:---|:---|:---|
 | Every colour is a theme colour and every font a theme font. In PowerPoint, *Design → Themes* (or *Variants → Colors / Fonts*); in LibreOffice, the master slide. Greys become your brand palette. | Point the skill at your own pptx files and CSV indexes with `--local-dir` or `MAKE_CLEAN_PPTX_TEMPLATES_DIR`. Name the editable shapes; `inspect_template.py` drafts the index. | The libraries are generated from code in [`library/`](../library/README.md): add a layout or a visual as a small JavaScript entry, rebuild, and the pptx, the index and the gallery follow. |
 
@@ -95,8 +95,6 @@ docs/                       GitHub Pages gallery
 examples/                   a sample brief and a full deck spec
 tests/                      pytest suite: engine, libraries contract, SVG conversion
 ```
-
-Run the tests: `pip install -r requirements-dev.txt && pytest`
 
 Run the tests: `pip install -r requirements-dev.txt && pytest`. Behaviour checks for agents live in [`evals/`](../evals/README.md).
 

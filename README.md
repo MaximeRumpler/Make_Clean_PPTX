@@ -1,6 +1,6 @@
 <div align="center">
 
-[![Make_Clean_PPTX](docs/banner.svg)](https://maximerumpler.github.io/Make_Clean_PPTX/)
+[![Make Clean PPTX, agent skill that turns notes into PowerPoint decks: 54 layouts, 68 charts and diagrams](docs/banner.svg)](https://maximerumpler.github.io/Make_Clean_PPTX/)
 
 *Give your AI assistant your notes. Get back a clean, professional PowerPoint.*
 
@@ -21,7 +21,7 @@
 
 ## What it does
 
-Make Clean PPTX is a *skill*, a set of instructions and tools that teaches an AI assistant such as Claude or Codex to make presentations.
+Make Clean PPTX is a *skill*: a folder of instructions and small tools that an AI assistant such as Claude or Codex uses to make presentations.
 
 You give it your notes, a report or a few figures, in English or French. It writes one message per slide, takes a matching slide design and chart from its library, and checks the file before handing it over. It never makes up numbers.
 
@@ -31,11 +31,13 @@ The slides are black, grey and white. Apply your company's PowerPoint theme and 
 
 ## Install
 
-| **Claude Code** | **Claude.ai and Claude desktop** | **Other AI assistants** |
+| **Claude.ai or Claude desktop** | **Claude Code** | **Codex, Cursor, Copilot, Gemini CLI and others** |
 |:---|:---|:---|
-| `/plugin marketplace add MaximeRumpler/Make_Clean_PPTX`<br>then `/plugin install make-clean-pptx@make-clean-pptx` | Download [`make-clean-pptx.zip`](https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest), then *Settings → Capabilities → Skills → Upload skill* | `npx skills add MaximeRumpler/Make_Clean_PPTX` |
+| 1. Download [**make-clean-pptx.zip**](https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest/download/make-clean-pptx.zip)<br>2. *Settings → Capabilities*: turn on *Code execution and file creation*<br>3. *Skills → Upload skill*, choose the zip | `/plugin marketplace add MaximeRumpler/Make_Clean_PPTX`<br>then `/plugin install make-clean-pptx@make-clean-pptx` | `npx skills add MaximeRumpler/Make_Clean_PPTX`<br>It asks which assistant you use. Needs [Node.js](https://nodejs.org). |
 
-Works the same on Windows, macOS and Linux. The skill needs Python, which most assistants already have. If something is missing, it tells you what to install.
+**Not sure which one?** If you talk to Claude in a browser or in the Claude app, use the first column: nothing to install on your computer. Without step 2, Claude can read the skill but cannot build the file. First time with a skill? The [Get started guide](https://github.com/MaximeRumpler/Make_PPTX/blob/main/docs/get-started.md) walks you through it.
+
+Works on Windows, macOS and Linux. The second and third columns need Python on your computer; the skill tells you if it, or anything else, is missing. Other ways (manual copy, `install.sh`): [docs/how-it-works.md](docs/how-it-works.md#manual-install-and-requirements).
 
 **Update**: Claude Code, `/plugin marketplace update MaximeRumpler/Make_Clean_PPTX`; Claude.ai, upload the new zip; other assistants, run the `npx skills add` line again.
 
@@ -65,7 +67,7 @@ Browse them in the [gallery](https://maximerumpler.github.io/Make_Clean_PPTX/), 
 
 Part of [**Make PPTX**](https://github.com/MaximeRumpler/Make_PPTX), a set of three skills from your notes to a finished deck.
 
-*From your content, first Make_Clean, then add your style and your colours.*
+*Start with Make Clean for the structure. Add a style and your brand colours when you need them.*
 
 | **Make_Clean_PPTX** | **Make_Style_PPTX** | **Make_Colors_PPTX** |
 |:---|:---|:---|
@@ -78,7 +80,7 @@ Each one works on its own; Make_Clean_PPTX is all you need to start.
 
 ## License
 
-[EUPL-1.2](LICENSE), the open source licence of the European Union: free to use; if you share an improved version, share it under the same licence. **The presentations you make are yours**, with no obligation ([NOTICE](NOTICE)). Contributions are welcome: [CONTRIBUTING.md](CONTRIBUTING.md).
+[EUPL-1.2](LICENSE), the open source licence of the European Union: free to use; if you share an improved version, share it under the same licence. **You own the decks you make.** The EUPL does not apply to them and no attribution is required ([NOTICE](NOTICE)). Contributions are welcome: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 <div align="center">
 

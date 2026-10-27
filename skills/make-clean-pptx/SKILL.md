@@ -36,7 +36,7 @@ Read what the user gave you. Work out the audience, the goal, the language (the 
   ```
   Each choice changes how you build and deliver (label in the footer, no online sources, metadata, skeleton deck, accessibility care): apply `references/deck-options.md`. Do nothing extra when the user keeps the defaults.
 - If everything is clear, or your harness cannot wait for an answer, state your assumptions in one line (defaults: `.pptx`, no label, the length you inferred, standard accessibility) and go.
-- A few facts make a short deck (3 to 4 slides); only when there is a topic and no content at all, ask for the key points instead of inventing them.
+- A few facts make a short deck (3 to 4 slides); only when there is a topic and no content at all, ask for the key points instead of inventing them, and offer `assets/brief-template.md` in one line as an optional way to answer.
 
 ### 2. Plan the story, then choose
 Read `references/layout-rules.md` (storytelling, density, rhythm) before planning. Write the outline for yourself: one line per slide with **the message as a full sentence**, then for each message:
@@ -116,6 +116,7 @@ When the user asks to review, clean up or "make professional" a deck they alread
 | Chart or table won't fill | Value type must match: `{"categories","series"}` for charts, a list of rows for tables. |
 | Icon not found / host unreachable | `find_icon.py` with the bundled set (`--source lucide`) works offline. |
 | `fetch_image.py` exits 3 | Hosts blocked or nothing matched: broaden the query, try `--orientation any`, else go without a photo. |
+| No file appears (Claude.ai, Claude desktop) | Tell the user to turn on **Settings → Capabilities → Code execution and file creation**, then ask again. |
 | Need the user's own libraries | `--local-dir <folder>` or `MAKE_CLEAN_PPTX_TEMPLATES_DIR`; see `references/template-authoring.md`. |
 
 ## Reference files
