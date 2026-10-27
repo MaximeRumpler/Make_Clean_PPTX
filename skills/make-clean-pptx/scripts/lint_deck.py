@@ -7,6 +7,9 @@ Catches what the eyes of a tired reviewer miss: leftover template text,
 empty placeholders, text that probably overflows, text or pictures outside the
 slide, overlapping text boxes, a logo over text, pictures without alt text,
 too many fonts.
+Skeleton decks (build_deck.py --skeleton): bracketed instructions still to replace
+("[Title, max 52 characters]", "[to fill]") and charts still holding the dummy
+series are listed as warnings, so the user sees what is left to type.
 Run render_check.py as well: this linter cannot see the actual rendering.
 
 --contrast (opt-in) also checks colours against the deck's own theme: every
@@ -32,6 +35,9 @@ from _common import SKILL_DIR, abs_box, estimate_fit, has_text, is_decorative, i
 LOGO = "Logo"  # name of the logo slot, and of the logo build_deck.py puts in it
 
 CONTRACT = SKILL_DIR / "assets" / "theme-contract.json"
+
+SKELETON_TEXT = re.compile(r"\[[^\[\]\n]*\b(?:max \d+|to fill)\b[^\[\]\n]*\]")
+DUMMY_SERIES = "Dummy data — replace"  # series name written by build_deck.py --skeleton
 
 LEFTOVER = re.compile(
     r"lorem ipsum|click to (add|edit)|your (text|title|name|logo)( here)?|insert (text|title|image)|"
@@ -128,8 +134,11 @@ def lint(path: str, max_fonts: int = 3, min_font: float = 10.0, check_contrast: 
                     m = LEFTOVER.search(full)
                     if m:
                         add("error", n, name, f"leftover template text: '{m.group(0)}'")
+                    todo = SKELETON_TEXT.search(full)
+                    if todo:
+                        add("warning", n, name, f"still to fill: '{todo.group(0)}'")
                     fit = estimate_fit(shp, paras)
-                    if overflows(fit):
+                    if overflows(fit) and not todo:
                         add("warning", n, name,
                             f"text probably overflows (~{fit['needed_lines']} lines needed, ~{fit['avail_lines']} fit at {fit['font_pt']}pt)")
                     for p in shp.text_frame.paragraphs:
@@ -148,11 +157,23 @@ def lint(path: str, max_fonts: int = 3, min_font: float = 10.0, check_contrast: 
                     add("warning", n, name, "picture has no alt text")
 
             if kind == "table":
+                todo = 0
                 for row in shp.table.rows:
                     for cell in row.cells:
                         m = LEFTOVER.search(cell.text_frame.text)
                         if m:
                             add("error", n, name, f"leftover template text in table: '{m.group(0)}'")
+                        todo += bool(SKELETON_TEXT.search(cell.text_frame.text))
+                if todo:
+                    add("warning", n, name, f"still to fill: {todo} table cell{'s' if todo > 1 else ''}")
+
+            if kind == "chart":
+                try:
+                    dummy = any(DUMMY_SERIES in (s.name or "") for p in shp.chart.plots for s in p.series)
+                except Exception:  # noqa: BLE001 - an unusual chart must not stop the lint
+                    dummy = False
+                if dummy:
+                    add("warning", n, name, "chart still holds dummy data; replace it with your figures")
 
         for i in range(len(text_boxes)):
             for j in range(i + 1, len(text_boxes)):

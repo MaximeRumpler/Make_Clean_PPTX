@@ -2,7 +2,7 @@
 """Build a .pptx by cloning slides from the design / shapes templates and filling them.
 
     build_deck.py --spec deck.json [--out deck.pptx] [--local-dir DIR]
-                  [--design PPTX --shapes PPTX] [--strict]
+                  [--design PPTX --shapes PPTX] [--strict] [--skeleton] [--offline]
 
 Why cloning: the templates already *are* the design. Re-drawing slides from
 scratch can only approximate them, cloning reproduces them exactly (theme,
@@ -53,6 +53,18 @@ the spec file, then to the current folder); "logo_alt" is its alt text, usually
 the brand name (without it the logo is marked decorative). Without "logo" the
 slots are removed, as any optional field left unfilled.
 
+"skeleton": true (or --skeleton) builds a deck without any of the user's content:
+every field used gets a bracketed instruction with its limit from the index
+("[KPI 1 value, max 6 characters]"), charts get flat dummy series named
+"Dummy data — replace", tables "[to fill]" cells, and the speaker notes list each
+field and its limit. Values given in "fill" are ignored (only which optional
+fields to keep counts; null still deletes); "properties" are not written.
+A <deck>.fill-sheet.md next to the deck lists slide, field and limit. The user
+types the real content locally, then runs lint_deck.py to see what is left.
+
+--offline never uses the network: bundled libraries and Lucide icons, local
+files and the cache only; anything else is reported in plain words.
+
 Keys are shape names; "#3" means the third top-level shape; if no shape has that
 name, "{{key}}" tokens inside text are replaced instead.
 
@@ -75,7 +87,8 @@ try:
     from pptx.oxml.ns import qn
 
     from _clone import SlideCloner, delete_slide
-    from _common import eprint, estimate_fit, is_dark, iter_shapes, mark_decorative, overflows, shape_kind, token_xml
+    from _common import (eprint, estimate_fit, is_dark, iter_shapes, mark_decorative, overflows, set_offline,
+                         shape_kind, token_xml)
     from _svg import SvgError, parse_svg, svg_to_shapes
     from _theme import ThemeError, apply_theme, fallback_fonts, load_theme_source
     from fetch_templates import FetchError, ensure_templates
@@ -89,7 +102,10 @@ except ImportError as _exc:  # a missing package would otherwise end in a traceb
 
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tif", ".tiff", ".webp"}
 SOURCE_ALIASES = {"design": "layouts", "shapes": "visuals"}
-SPEC_KEYS = {"output", "properties", "slides", "language", "theme", "theme_fonts_fallback", "logo", "logo_alt"}
+SPEC_KEYS = {"output", "properties", "slides", "language", "theme", "theme_fonts_fallback", "logo", "logo_alt",
+             "skeleton"}
+DUMMY_SERIES = "Dummy data — replace"  # lint_deck.py looks for this name
+SKELETON_ICON = "lucide:circle-dashed"
 LOGO_FIELD = "Logo"  # the logo slot of the layouts (role=logo in the index)
 LOGO_EXT = {".png", ".jpg", ".jpeg", ".svg"}
 SLIDE_KEYS = {"source", "slide", "id", "fill", "insert", "notes", "keep_unfilled", "hidden"}
@@ -188,8 +204,10 @@ def load_logo(spec: dict, spec_dir: Path) -> dict | None:
 
 class Builder:
     def __init__(self, design_path: str, shapes_path: str | None, design_index=None, shapes_index=None, strict=False,
-                 logo: dict | None = None, spec_dir: Path | None = None):
+                 logo: dict | None = None, spec_dir: Path | None = None, skeleton: bool = False):
         self.prs = Presentation(design_path)
+        self.skeleton = skeleton
+        self.sheet: list[dict] = []  # skeleton mode: one row per field to fill
         self.logo = logo
         self.logos_placed = 0
         self.spec_dir = spec_dir or Path.cwd()
@@ -249,6 +267,9 @@ class Builder:
         label = f"slide {pos + 1} ({src_name}#{n})"
 
         fill = dict(spec.get("fill") or {})
+        if self.skeleton:
+            fill = self._skeleton_fill(resolve(index, slide=n), fill, {c.get("into") for c in spec.get("insert") or []},
+                                       pos + 1)
         if (self.logo and not any(str(k).strip().lower() == LOGO_FIELD.lower() for k in fill)
                 and any(s.name == LOGO_FIELD for s in slide.shapes)):
             fill[LOGO_FIELD] = dict(self.logo)  # the deck's logo goes in every logo slot
@@ -262,7 +283,7 @@ class Builder:
         if not spec.get("keep_unfilled"):
             self._clear_unfilled(list(slide.shapes), resolve(index, slide=n), used, label)
 
-        notes = spec.get("notes")
+        notes = self._skeleton_notes(pos + 1) if self.skeleton else spec.get("notes")
         credit_lines = [c["credit"] for c in self.credits if c.get("slide") == pos + 1 and c.get("credit")]
         if credit_lines:
             notes = ((notes + "\n\n") if notes else "") + "Image credits: " + " | ".join(credit_lines)
@@ -339,11 +360,13 @@ class Builder:
 
         scope = [shp] + (list(iter_shapes(shp)) if shape_kind(shp) == "group" else [])
         cfill = comp.get("fill") or {}
+        entry = resolve(index, id_=comp["id"]) if comp.get("id") else None
+        entry = entry or next((e for e in index if e["slide"] == n and e["name"] == name), None) \
+            or next((e for e in index if e["slide"] == n), None)
+        if self.skeleton:
+            cfill = self._skeleton_fill(entry, cfill, set(), int(re.search(r"slide (\d+)", label).group(1)))
         self._fill(slide, scope, None, cfill, label)
         if not comp.get("keep_unfilled"):
-            entry = resolve(index, id_=comp["id"]) if comp.get("id") else None
-            entry = entry or next((e for e in index if e["slide"] == n and e["name"] == name), None) \
-                or next((e for e in index if e["slide"] == n), None)
             self._clear_unfilled(scope, entry, set(cfill), label)
 
     # ------------------------------------------------------------------ fill
@@ -387,6 +410,9 @@ class Builder:
         kind = shape_kind(shp)
         if value is None or value == "":
             shp._element.getparent().remove(shp._element)
+            return
+        if isinstance(value, dict) and "skeleton" in value:
+            self._fill_skeleton(slide, shp, value["skeleton"], label)
             return
         if shp.name == LOGO_FIELD and isinstance(value, str) and Path(value).suffix.lower() in LOGO_EXT:
             value = {"path": value}
@@ -464,6 +490,71 @@ class Builder:
             if not alive(partner):
                 for t in alive(f["name"]):
                     t._element.getparent().remove(t._element)
+
+    # -------------------------------------------------------------- skeleton
+    def _skeleton_fill(self, entry: dict | None, fill: dict, frames: set, slide_no: int) -> dict:
+        """The fill of a skeleton slide: an instruction for every field used, none of the user's values.
+
+        Used = required fields, plus optional ones the spec names with a value
+        (null still deletes); companions follow their partner; fields whose
+        template text is acceptable ("default"), decorations and frames that
+        receive a visual are left as they are.
+        """
+        if not entry:
+            return {k: v for k, v in fill.items() if v is None or v == ""}
+        named = {str(k).strip().lower(): v for k, v in fill.items()}
+        fields = entry.get("field_list", [])
+        used = set()
+        for f in fields:
+            low = f["name"].strip().lower()
+            if f["type"] in ("plot", "deco", "frame") or f.get("default") or f["name"] in frames or f.get("follows"):
+                continue
+            if low in named:
+                if named[low] not in (None, ""):
+                    used.add(f["name"])
+            elif not f["optional"]:
+                used.add(f["name"])
+        for f in fields:  # companions (a label that goes with a value) are used when their partner is
+            if f.get("follows") and f["type"] not in ("plot", "deco") and not f.get("default") \
+                    and f["follows"] in used and named.get(f["name"].strip().lower(), True) not in (None, ""):
+                used.add(f["name"])
+        out = {k: v for k, v in fill.items() if v is None or v == ""}  # deletions are structure, not content
+        for f in fields:
+            if f["name"] in used:
+                out[f["name"]] = {"skeleton": f}
+                self.sheet.append({"slide": slide_no, "field": f["name"], "limit": _limit_text(f)})
+        return out
+
+    def _skeleton_notes(self, slide_no: int) -> str:
+        rows = [r for r in self.sheet if r["slide"] == slide_no]
+        lines = ["Skeleton slide: replace each bracketed text with your own, in PowerPoint or LibreOffice."]
+        if rows:
+            lines.append("Fields to fill:")
+            lines += [f"- {r['field']}: {r['limit']}" for r in rows]
+        return "\n".join(lines)
+
+    def _fill_skeleton(self, slide, shp, f: dict, label: str) -> None:
+        kind = shape_kind(shp)
+        if f["type"] == "chart" or kind == "chart":
+            if kind != "chart":
+                raise ValueError("the index says chart but the shape is not a chart")
+            _dummy_chart(shp)
+        elif f["type"] == "table" or kind == "table":
+            if kind != "table":
+                raise ValueError("the index says table but the shape is not a table")
+            for row in shp.table.rows:
+                for cell in row.cells:
+                    set_text_frame(cell.text_frame, "[to fill]")
+        elif f["type"] == "icon":
+            self._fill_svg(slide, shp, {"icon": SKELETON_ICON, "alt": ""}, label)
+        elif getattr(shp, "has_text_frame", False):
+            forms = _placeholder_forms(f)
+            for text in forms:  # the most explicit form that fits the box
+                set_text_frame(shp.text_frame, text)
+                if not overflows(estimate_fit(shp, [text])):
+                    break
+        else:
+            raise ValueError(f"shape is a {kind}; skeleton mode cannot mark it")
 
     # ------------------------------------------------------------ rich text
     def _fill_rich(self, slide, shp, value: dict, label: str) -> None:
@@ -665,6 +756,41 @@ class Builder:
 # --------------------------------------------------------------------------
 # Charts, colours, scaling
 # --------------------------------------------------------------------------
+def _limit_text(f: dict) -> str:
+    if f["type"] == "chart":
+        return "dummy data, replace with your figures"
+    if f["type"] == "table":
+        return "table" + (f", {f['hint']}" if f.get("hint") else "")
+    if f["type"] == "icon":
+        return "icon, pick your own (or delete it)"
+    if f["type"] == "image":
+        return "picture" + (f", ratio {f['hint']}" if f.get("hint") else "") + ", insert your own"
+    return f"max {f['limit']} characters" if f.get("limit") else "free length"
+
+
+def _placeholder_forms(f: dict) -> list:
+    """Bracketed instructions, from the most explicit to the shortest; each states the limit."""
+    name, limit = f["name"], f.get("limit")
+    if f["type"] == "image":
+        return [f"[{name}: insert your picture" + (f", ratio {f['hint']}" if f.get("hint") else "") + ", to fill]",
+                f"[{name}, to fill]", "[to fill]"]
+    if limit:
+        return [f"[{name}, max {limit} characters]", f"[{name}, max {limit}]", f"[max {limit}]"]
+    return [f"[{name}, to fill]", "[to fill]"]
+
+
+def _dummy_chart(shp) -> None:
+    """Keep the chart's shape (number of categories and series), replace its data with flat dummy values."""
+    plots = list(shp.chart.plots)
+    n_cat = max(1, len(list(plots[0].categories)) if plots else 3)
+    n_ser = max(1, sum(len(list(p.series)) for p in plots))
+    cd = CategoryChartData()
+    cd.categories = [f"Category {i + 1}" for i in range(n_cat)]
+    for k in range(n_ser):
+        cd.add_series(DUMMY_SERIES + (f" ({k + 1})" if n_ser > 1 else ""), [10] * n_cat)
+    shp.chart.replace_data(cd)
+
+
 def set_language(prs, language: str) -> None:
     """Tag every text run with the deck language (screen readers, spell check)."""
     if not re.match(r"^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*$", language):
@@ -879,6 +1005,18 @@ def write_credits(out: Path, credits: list[dict]) -> str | None:
     return str(path)
 
 
+def write_fill_sheet(out: Path, rows: list[dict]) -> str:
+    """<deck>.fill-sheet.md: what to type where, for a skeleton deck."""
+    path = out.with_suffix(".fill-sheet.md")
+    lines = ["# Fill sheet", "",
+             f"Open {out.name} in PowerPoint or LibreOffice and replace each bracketed text with your own, "
+             "within its limit. Then run lint_deck.py on it to see what is left.", "",
+             "| Slide | Field | Limit |", "|---|---|---|"]
+    lines += [f"| {r['slide']} | {r['field']} | {r['limit']} |" for r in rows]
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return str(path)
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--spec", required=True, help="deck spec JSON")
@@ -889,7 +1027,11 @@ def main(argv=None) -> int:
     ap.add_argument("--layouts-index", "--design-index", dest="layouts_index", help="layouts index (.csv or .xlsx)")
     ap.add_argument("--visuals-index", "--shapes-index", dest="visuals_index", help="visuals index (.csv or .xlsx)")
     ap.add_argument("--strict", action="store_true", help="fail instead of warn on unknown shape names")
+    ap.add_argument("--skeleton", action="store_true",
+                    help="no user content: bracketed instructions with limits, dummy chart data, a fill sheet")
+    ap.add_argument("--offline", action="store_true", help="never use the network (bundled libraries and icons only)")
     args = ap.parse_args(argv)
+    set_offline(args.offline)
 
     try:
         spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
@@ -902,6 +1044,7 @@ def main(argv=None) -> int:
             theme_src = load_theme_source(theme_path)
             fallback_fonts(spec.get("theme_fonts_fallback"))
         logo = load_logo(spec, spec_dir)  # same: a wrong logo file stops the build first
+        skeleton = bool(args.skeleton or spec.get("skeleton") is True)
 
         if args.layouts:
             paths = {"layouts": {"pptx": args.layouts, "index": args.layouts_index},
@@ -930,6 +1073,7 @@ def main(argv=None) -> int:
             strict=args.strict,
             logo=logo,
             spec_dir=spec_dir,
+            skeleton=skeleton,
         )
         b.base_dir = Path(args.spec).resolve().parent
         b.warnings.extend(check_keys(spec))
@@ -941,7 +1085,7 @@ def main(argv=None) -> int:
             if s.get("hidden"):
                 continue
             b.add_slide(s, i)
-        b.finish(spec.get("properties"), spec.get("language"))
+        b.finish(None if skeleton else spec.get("properties"), spec.get("language"))
         theme_report = None
         if theme_src:
             theme_report, theme_warnings = apply_theme(b.prs, theme_src, spec.get("theme_fonts_fallback"))
@@ -950,11 +1094,13 @@ def main(argv=None) -> int:
         out.parent.mkdir(parents=True, exist_ok=True)
         b.prs.save(out)
         credits = write_credits(out, b.credits)
+        sheet = write_fill_sheet(out, b.sheet) if skeleton else None
         print(json.dumps({
             "output": str(out),
             "slides": len(b.prs.slides),
             "warnings": b.warnings,
             "credits_file": credits,
+            **({"skeleton": True, "fill_sheet": sheet, "fields_to_fill": len(b.sheet)} if skeleton else {}),
             **({"theme": theme_report} if theme_report else {}),
         }, indent=2, ensure_ascii=False))
         return 0

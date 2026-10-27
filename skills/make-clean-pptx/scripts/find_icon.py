@@ -17,6 +17,9 @@ Sources
   local     SVG files in the folders listed in config.json "icons.local_dirs" or
             $MAKE_CLEAN_PPTX_ICON_DIRS (e.g. downloaded Open Doodles or unDraw illustrations)
 
+--offline (or MAKE_CLEAN_PPTX_OFFLINE=1): no network at all; online sources answer with a
+plain message unless their catalogue or icon is already in the cache.
+
 Prints JSON. Exit codes: 0 ok, 1 nothing found, 2 bad arguments, 3 network or source error.
 """
 from __future__ import annotations
@@ -30,7 +33,7 @@ import time
 import urllib.request
 from pathlib import Path
 
-from _common import SKILL_DIR, eprint, load_config
+from _common import SKILL_DIR, eprint, is_offline, load_config, offline_message, set_offline
 
 UA = "make-clean-pptx/1.1 (+https://github.com/MaximeRumpler/Make_Clean_PPTX)"
 LUCIDE_JSON = SKILL_DIR / "assets" / "icons" / "lucide.json"
@@ -63,6 +66,8 @@ MAX_DOWNLOAD = 25 * 1024 * 1024  # catalogues are a few MB, icons a few KB
 
 
 def _http(url: str, timeout: int = 20) -> bytes:
+    if is_offline():
+        raise IconError(offline_message("this icon source", url))
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:  # noqa: S310 (fixed https hosts)
@@ -78,7 +83,7 @@ def _http(url: str, timeout: int = 20) -> bytes:
 
 def _cached(name: str, url: str, ttl_days: int = 30) -> bytes:
     p = _cache_dir() / name
-    if p.exists() and time.time() - p.stat().st_mtime < ttl_days * 86400:
+    if p.exists() and (is_offline() or time.time() - p.stat().st_mtime < ttl_days * 86400):
         return p.read_bytes()
     data = _http(url)
     p.write_bytes(data)
@@ -205,7 +210,9 @@ def main(argv=None) -> int:
     ap.add_argument("--top", type=int, default=12)
     ap.add_argument("--get", metavar="REF", help="download one icon by ref and print its SVG path")
     ap.add_argument("--out", help="where to write the SVG for --get")
+    ap.add_argument("--offline", action="store_true", help="never use the network: bundled Lucide, local folders and the cache only")
     args = ap.parse_args(argv)
+    set_offline(args.offline)
 
     if args.get:
         try:
