@@ -100,6 +100,54 @@ def test_image_replace_cover_crop_and_alt(fx, tmp_path):
     assert "Me, CC0" in notes
 
 
+def test_relative_input_paths_deck_folder_first_then_working_dir(fx, tmp_path):
+    """Images, SVG files and local icons: folder of deck.json first, then the working directory."""
+    from PIL import Image
+    spec_dir, cwd = tmp_path / "spec", tmp_path / "cwd"
+    (spec_dir / "img").mkdir(parents=True)
+    (cwd / "img").mkdir(parents=True)
+    Image.new("RGB", (400, 400), (10, 120, 200)).save(spec_dir / "img" / "a.png")   # next to deck.json
+    Image.new("RGB", (400, 400), (200, 20, 20)).save(cwd / "img" / "b.png")        # only in the working dir
+    Image.new("RGB", (400, 400), (0, 0, 0)).save(cwd / "img" / "a.png")            # same name: must lose
+    svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h20v20H2z"/></svg>'
+    (spec_dir / "img" / "logo.svg").write_text(svg, encoding="utf-8")
+    absolute = tmp_path / "abs.png"
+    Image.new("RGB", (400, 400), (0, 200, 0)).save(absolute)
+    spec = {"output": str(tmp_path / "deck.pptx"), "slides": [
+        {"slide": 3, "fill": {"Title": "a", "Body": "t", "Photo": {"path": "img/a.png", "alt": "x"}}},
+        {"slide": 3, "fill": {"Title": "b", "Body": "t", "Photo": {"path": "img/b.png", "alt": "x"}}},
+        {"slide": 3, "fill": {"Title": "abs", "Body": {"svg": "img/logo.svg"},
+                              "Photo": {"path": str(absolute), "alt": "x"}}},
+        {"slide": 3, "fill": {"Title": "icon", "Body": {"icon": "local:img/logo.svg"}, "Photo": None}},
+    ]}
+    (spec_dir / "deck.json").write_text(json.dumps(spec))
+    p = subprocess.run([sys.executable, str(SCRIPTS / "build_deck.py"), "--spec", str(spec_dir / "deck.json"),
+                        "--design", fx["design"], "--shapes", fx["shapes"], "--design-index", fx["design_index"],
+                        "--shapes-index", fx["shapes_index"]], capture_output=True, encoding="utf-8", cwd=str(cwd))
+    rep = json.loads(p.stdout)
+    assert p.returncode == 0 and rep["warnings"] == [], rep
+    slides = Presentation(rep["output"]).slides
+    colours = []
+    for i in range(3):
+        pic = {s.name: s for s in slides[i].shapes}["Photo"]
+        from io import BytesIO
+        colours.append(Image.open(BytesIO(pic.image.blob)).convert("RGB").getpixel((5, 5)))
+    assert colours == [(10, 120, 200), (200, 20, 20), (0, 200, 0)]
+    assert not any(s.name == "Body" and s.has_text_frame and s.text_frame.text == "t" for s in slides[2].shapes)
+
+
+def test_missing_relative_input_names_both_folders(fx, tmp_path):
+    code, rep, _ = build(fx, tmp_path, {"slides": [
+        {"slide": 3, "fill": {"Title": "x", "Body": "t", "Photo": {"path": "nowhere/x.png", "alt": "x"}}},
+        {"slide": 3, "fill": {"Title": "y", "Body": "t", "Photo": {"path": "https://example.org/x.png", "alt": "x"}}},
+    ]})
+    assert code == 0
+    missing, url = [w for w in rep["warnings"] if "could not fill 'Photo'" in w]
+    assert "nowhere/x.png" in missing and str(tmp_path) in missing and "the folder of deck.json" in missing
+    assert "the working directory" in missing and str(Path.cwd()) in missing
+    assert "https://example.org/x.png" in url and "folder of deck.json" not in url  # URLs are not rewritten
+
+
 def test_table_rows_grow_and_shrink(fx, tmp_path):
     code, rep, _ = build(fx, tmp_path, {"slides": [
         {"slide": 5, "fill": {"Title": "T", "Table": [["a", "b"], ["c", "d"], ["e", "f"], ["g", "h"], ["i", "j"]]}},
