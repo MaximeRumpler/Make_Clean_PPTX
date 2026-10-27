@@ -227,7 +227,16 @@ function frame(ctx, name, x, y, w, h, o = {}) {
 // An image slot: a grey box replaced by the picture (cover crop).
 function image(ctx, name, x, y, w, h, o = {}) {
   rect(ctx, x, y, w, h, { fill: o.fill || "a5", name });
-  ctx.field({ name, type: "image", hint: `${(w / h).toFixed(2)}:1`, x, y, w, h, placeholder: "Image", optional: !!o.optional });
+  ctx.field({ name, type: "image", hint: `${(w / h).toFixed(2)}:1`, x, y, w, h, placeholder: "Image", optional: !!o.optional, role: o.role });
+}
+
+// The brand logo slot of covers and closing slides: always optional, filled from the
+// deck's "logo" key (scale to fit, aspect ratio kept), removed when the deck has none.
+// Drawn last on the slide, so the other shapes keep their ids. Corner: "left", "right", "center".
+const LOGO = { w: 1.6, h: 0.5, y: 0.5 };
+function logo(ctx, corner = "left") {
+  const x = corner === "right" ? W - MX - LOGO.w : corner === "center" ? (W - LOGO.w) / 2 : MX;
+  image(ctx, "Logo", x, LOGO.y, LOGO.w, LOGO.h, { fill: "a6", optional: true, role: "logo" });
 }
 
 // An icon slot: a square whose outline colour is the colour the icon will take.
@@ -308,6 +317,6 @@ function background(ctx, color) { ctx.s.background = { color: C[color] || color 
 
 module.exports = {
   C, FONT, TYPE, G, W, H, MX, CW, GUT, SERIES, ST, STYLE, ROLES, init, Ctx, charLimit, num, tone,
-  text, rect, ellipse, path, line, hrule, vrule, frame, image, icon, chart, series, cats, table, chrome, footer, background,
+  text, rect, ellipse, path, line, hrule, vrule, frame, image, logo, LOGO, icon, chart, series, cats, table, chrome, footer, background,
   get pres() { return pres; },
 };

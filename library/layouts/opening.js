@@ -22,7 +22,7 @@ module.exports = {
       use_when: "Default opening for reports, reviews and proposals.",
       tags: "cover title opening first slide intro report",
       draw(ctx) {
-        L.image(ctx, "Logo", MX, 0.5, 1.6, 0.5, { fill: "a6", optional: true });
+        L.logo(ctx); // first on this slide since v1.0: kept there so its ids do not change
         text(ctx, "Kicker", "Context or event", MX, 2.3, 8, 0.3, "label", { optional: true });
         text(ctx, "Title", "Presentation title", MX, 2.7, 9.2, 1.9, "hero", { valign: "bottom" });
         text(ctx, "Subtitle", "What this presentation is about, in one line", MX, 4.75, 8.5, 0.7, "lead", { optional: true });
@@ -42,6 +42,7 @@ module.exports = {
         text(ctx, "Subtitle", "What this presentation is about, in one line", MX, 4.75, 8.5, 0.7, "lead", { color: "a5", optional: true });
         hrule(ctx, MX, 6.3, CW, { color: "a2", w: 0.75 });
         coverMeta(ctx, 6.45, true);
+        L.logo(ctx);
       },
     },
     {
@@ -55,6 +56,7 @@ module.exports = {
         text(ctx, "Subtitle", "One line that sets the scene", MX + 2, 4.75, CW - 4, 0.6, "lead", { align: "center", optional: true });
         hrule(ctx, MX, 5.6, CW, { color: "ink", w: 1 });
         text(ctx, "Date", "Date", MX, 6.6, CW, 0.3, "caption", { align: "center", optional: true });
+        L.logo(ctx, "center");
       },
     },
     {
@@ -68,6 +70,7 @@ module.exports = {
         text(ctx, "Title", "Presentation title", MX, 2.6, 5.5, 2.2, "hero", { valign: "bottom" });
         text(ctx, "Subtitle", "What this presentation is about", MX, 4.9, 5.3, 0.8, "lead", { optional: true });
         coverMeta(ctx, 6.45);
+        L.logo(ctx);
       },
     },
     {
@@ -82,6 +85,7 @@ module.exports = {
         text(ctx, "Title", "Presentation title", 4.9, 2.5, 7.8, 1.9, "hero", { valign: "bottom" });
         text(ctx, "Subtitle", "What this presentation is about, in one line", 4.9, 4.55, 7.2, 0.7, "lead", { optional: true });
         text(ctx, "Author", "Author or team", 4.9, 6.45, 6, 0.3, "caption", { optional: true });
+        L.logo(ctx, "right");
       },
     },
     {
