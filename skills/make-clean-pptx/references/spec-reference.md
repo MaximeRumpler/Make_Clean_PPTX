@@ -7,9 +7,19 @@
   "output": "build/deck.pptx",
   "language": "fr-FR",
   "properties": {"title": "…", "author": "…", "subject": "…", "keywords": "…"},
+  "logo": "brand/logo.png",
+  "logo_alt": "Brand name",
   "slides": [ { …slide… }, { …slide… } ]
 }
 ```
+
+## Logo
+
+`logo` (optional) puts the user's logo on the covers (L-01 to L-05) and the closing slide (L-49), in their `Logo` slot: a 1.6 × 0.5 in box in a top corner, clear of titles and footers. The logo is scaled to fit and keeps its aspect ratio; it sits on the slot's side (left margin, right margin, or centred on the typographic cover). Accepted files: PNG, JPG, and SVG (converted to native shapes in its own colours; gradients, embedded pictures and text in an SVG are skipped with a warning, so prefer a PNG for those). A relative path is read next to deck.json first, then in the current folder. A missing or unreadable file, or another format, stops the build with a plain error (exit 2).
+
+`logo_alt` is the alt text, normally the brand name. Without it the logo is marked decorative, so screen readers skip it and the lint does not ask for alt text.
+
+Without `logo`, the slots are removed like any optional field left unfilled, and the deck is the same as before the slot existed. One slide can drop the logo with `"Logo": null` in its `fill`, or take another file with `"Logo": "other.png"`. `lint_deck.py` warns when a logo overlaps text. Its contrast against the background is not checked: on the dark cover L-02, use a light version of the logo.
 
 ## Slide
 

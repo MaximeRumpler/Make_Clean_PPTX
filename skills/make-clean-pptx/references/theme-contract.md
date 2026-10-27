@@ -28,13 +28,15 @@ Each colour slot of the theme, what the libraries use it for, and how many times
 | `accent3` | middle step, third series; muted text on dark slides | `8C8C8C` | 4 | 25 | 14 | 8 | 23 |
 | `accent4` | reference series, light fills; kickers on dark slides | `B3B3B3` | 15 | 26 | 16 | 8 | 29 |
 | `accent5` | light fills, levels; subtitles on dark slides | `D0D0D0` | 6 | 43 | 2 | 6 | 31 |
-| `accent6` | faintest fill (quadrants, logo slot); captions on dark fills | `E6E6E6` | 8 | 26 | 0 | 6 | 22 |
+| `accent6` | faintest fill (quadrants, logo slots); captions on dark fills | `E6E6E6` | 8 | 31 | 0 | 6 | 27 |
 | `hlink` | hyperlinks (none in the libraries; links people add) | `404040` | 0 | 0 | 0 | 0 | 0 |
 | `folHlink` | visited hyperlinks | `8C8C8C` | 0 | 0 | 0 | 0 | 0 |
 
 Fonts: the **major** font (`+mj`) sets headings, titles and big numbers (227 runs on 68 slides); the **minor** font (`+mn`) sets everything else, including table and chart text (1,386 runs on all 122 slides). The libraries' character limits are measured with Arial metrics: a much wider brand font makes text overflow sooner, so check the render.
 
 Chart series take the accents in the order `accent1, accent3, accent5, accent2, accent4, accent6`, so that neighbouring series are far apart on the ramp.
+
+A brand is colours, fonts and a logo. The theme carries the first two; the logo is not part of the theme: a brand tool gives it to the deck with the `"logo"` key of deck.json (`spec-reference.md`), which fills the `Logo` slot of the covers and the closing slide. Its contrast with the slide is not checked: provide a light variant for dark covers.
 
 ## Ramp order
 

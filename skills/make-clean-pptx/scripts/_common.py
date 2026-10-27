@@ -207,3 +207,27 @@ def is_dark(name: str) -> bool:
 
 def slugify(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+
+
+# Screen readers skip shapes flagged decorative (Office 2019+; ignored elsewhere).
+ADEC = "http://schemas.microsoft.com/office/drawing/2017/decorative"
+DECOR_URI = "{C183D7F6-B498-43B3-948B-1728B52AA6E4}"
+_A = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
+
+
+def mark_decorative(cnvpr) -> None:
+    """Flag a shape (its p:cNvPr element) as decorative, with an empty alt text."""
+    from lxml import etree
+
+    if is_decorative(cnvpr):
+        return
+    cnvpr.set("descr", "")
+    ext_lst = cnvpr.find(_A + "extLst")
+    if ext_lst is None:
+        ext_lst = etree.SubElement(cnvpr, _A + "extLst")
+    ext = etree.SubElement(ext_lst, _A + "ext", uri=DECOR_URI)
+    etree.SubElement(ext, "{%s}decorative" % ADEC, nsmap={"adec": ADEC}).set("val", "1")
+
+
+def is_decorative(cnvpr) -> bool:
+    return any(el.get("val") in ("1", "true") for el in cnvpr.iter("{%s}decorative" % ADEC))

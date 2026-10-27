@@ -80,7 +80,7 @@ Write the deck spec and run `python3 scripts/build_deck.py --spec build/deck.jso
   ]
 }
 ```
-`language` is the language tag of the content (screen readers and spell check rely on it). Keys in `fill` are the field names from the index. Optional fields you do not fill are removed automatically; required ones you forget are reported. Every value type (text, bullets, charts, waterfall and Gantt shortcuts, tables, images, icons, shading with `fill`, positions with `at`) is in `references/spec-reference.md`. **Treat every warning in the JSON report as a to-do.**
+`language` is the language tag of the content (screen readers and spell check rely on it). Keys in `fill` are the field names from the index. Optional fields you do not fill are removed automatically; required ones you forget are reported. Every value type (text, bullets, charts, waterfall and Gantt shortcuts, tables, images, icons, shading with `fill`, positions with `at`) is in `references/spec-reference.md`, as is the optional `"logo"` key when the user gives a logo file. **Treat every warning in the JSON report as a to-do.**
 
 ### 5. Check, then fix
 ```bash

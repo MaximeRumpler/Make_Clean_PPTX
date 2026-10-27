@@ -38,6 +38,12 @@ fill values
   {"categories": [...], "series": {"Name": [...]}}   chart data
   [[...], [...]] table cells (rows are added or removed to fit)
   null or ""     delete the shape (use for optional slots you do not need)
+
+"logo" (optional) puts a PNG, JPG or SVG file in the "Logo" slot of the covers
+and the closing slide, scaled to fit with its aspect ratio kept (path relative to
+the spec file, then to the current folder); "logo_alt" is its alt text, usually
+the brand name (without it the logo is marked decorative). Without "logo" the
+slots are removed, as any optional field left unfilled.
 Keys are shape names; "#3" means the third top-level shape; if no shape has that
 name, "{{key}}" tokens inside text are replaced instead.
 
@@ -60,8 +66,8 @@ try:
     from pptx.oxml.ns import qn
 
     from _clone import SlideCloner, delete_slide
-    from _common import eprint, estimate_fit, is_dark, iter_shapes, overflows, shape_kind, token_xml
-    from _svg import SvgError, svg_to_shapes
+    from _common import eprint, estimate_fit, is_dark, iter_shapes, mark_decorative, overflows, shape_kind, token_xml
+    from _svg import SvgError, parse_svg, svg_to_shapes
     from fetch_templates import FetchError, ensure_templates
     from read_index import load_index, resolve
 except ImportError as _exc:  # a missing package would otherwise end in a traceback
@@ -73,7 +79,9 @@ except ImportError as _exc:  # a missing package would otherwise end in a traceb
 
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tif", ".tiff", ".webp"}
 SOURCE_ALIASES = {"design": "layouts", "shapes": "visuals"}
-SPEC_KEYS = {"output", "properties", "slides", "language"}
+SPEC_KEYS = {"output", "properties", "slides", "language", "logo", "logo_alt"}
+LOGO_FIELD = "Logo"  # the logo slot of the layouts (role=logo in the index)
+LOGO_EXT = {".png", ".jpg", ".jpeg", ".svg"}
 SLIDE_KEYS = {"source", "slide", "id", "fill", "insert", "notes", "keep_unfilled", "hidden"}
 INSERT_KEYS = {"source", "slide", "id", "component", "into", "box", "fit", "fill", "keep_unfilled"}
 
@@ -98,6 +106,8 @@ def check_keys(spec: dict) -> list:
                 if isinstance(c, dict):
                     unknown(c, INSERT_KEYS, f"slides[{i}].insert[{k}]")
     return out
+
+
 MIN_SCALED_PT = 8
 
 
@@ -105,9 +115,58 @@ class SpecError(ValueError):
     pass
 
 
+def spec_path(value, spec_dir: Path) -> Path:
+    """A file named in the spec: a relative path is looked up next to the spec file, then in the current folder."""
+    p = Path(str(value)).expanduser()
+    if p.is_absolute():
+        return p
+    for base in (spec_dir, Path.cwd()):
+        if (base / p).exists():
+            return base / p
+    return spec_dir / p
+
+
+def load_logo(spec: dict, spec_dir: Path) -> dict | None:
+    """Check the deck's "logo" before any work: a wrong file stops the build with a plain message."""
+    value = spec.get("logo")
+    if value in (None, ""):
+        return None
+    if not isinstance(value, str):
+        raise SpecError("'logo' must be the path of a PNG, JPG or SVG file")
+    path = spec_path(value, spec_dir)
+    if path.suffix.lower() not in LOGO_EXT:
+        raise SpecError(f"logo '{value}': use a PNG, JPG or SVG file (got '{path.suffix or 'no extension'}')")
+    if not path.is_file():
+        raise SpecError(f"logo '{value}' not found (looked in {spec_dir} and in the current folder)")
+    if path.suffix.lower() == ".svg":
+        try:
+            parse_svg(path.read_text(encoding="utf-8"))
+        except (SvgError, UnicodeDecodeError) as exc:
+            raise SpecError(f"logo '{value}' is not a usable SVG ({exc}); export it as PNG instead") from exc
+    else:
+        from PIL import Image
+
+        try:
+            with Image.open(path) as im:
+                fmt = im.format
+                im.verify()
+        except Exception as exc:  # noqa: BLE001 - Pillow raises many kinds of errors on bad files
+            raise SpecError(f"logo '{value}' is not a readable image ({exc.__class__.__name__})") from exc
+        if fmt not in ("PNG", "JPEG"):
+            raise SpecError(f"logo '{value}' is a {fmt} file; use a PNG, JPG or SVG file")
+    alt = spec.get("logo_alt") or ""
+    if not isinstance(alt, str):
+        raise SpecError("'logo_alt' must be text (the brand name)")
+    return {"path": str(path), "alt": alt.strip()}
+
+
 class Builder:
-    def __init__(self, design_path: str, shapes_path: str | None, design_index=None, shapes_index=None, strict=False):
+    def __init__(self, design_path: str, shapes_path: str | None, design_index=None, shapes_index=None, strict=False,
+                 logo: dict | None = None, spec_dir: Path | None = None):
         self.prs = Presentation(design_path)
+        self.logo = logo
+        self.logos_placed = 0
+        self.spec_dir = spec_dir or Path.cwd()
         self.shapes_prs = Presentation(shapes_path) if shapes_path else None
         self.design_index = design_index or []
         self.shapes_index = shapes_index or []
@@ -162,7 +221,10 @@ class Builder:
         slide = self.cloner.clone_slide(src_slide)
         label = f"slide {pos + 1} ({src_name}#{n})"
 
-        fill = spec.get("fill") or {}
+        fill = dict(spec.get("fill") or {})
+        if (self.logo and not any(str(k).strip().lower() == LOGO_FIELD.lower() for k in fill)
+                and any(s.name == LOGO_FIELD for s in slide.shapes)):
+            fill[LOGO_FIELD] = dict(self.logo)  # the deck's logo goes in every logo slot
         self._fill(slide, list(iter_shapes(slide)), list(slide.shapes), fill, label)
 
         used = set(fill)
@@ -194,6 +256,8 @@ class Builder:
         cp.comments = props.get("comments", "")
         cp.last_modified_by = props.get("author", "")
         self.warnings.extend(self.cloner.warnings)
+        if self.logo and not self.logos_placed:
+            self.warn("spec: 'logo' is not shown: no slide has a logo slot (covers L-01 to L-05, closing L-49)")
 
     # ---------------------------------------------------------------- insert
     def _insert_component(self, slide, comp: dict, label: str) -> None:
@@ -296,6 +360,11 @@ class Builder:
         kind = shape_kind(shp)
         if value is None or value == "":
             shp._element.getparent().remove(shp._element)
+            return
+        if shp.name == LOGO_FIELD and isinstance(value, str) and Path(value).suffix.lower() in LOGO_EXT:
+            value = {"path": value}
+        if shp.name == LOGO_FIELD and isinstance(value, dict) and "path" in value:
+            self._fill_logo(slide, shp, value, label)
             return
         if isinstance(value, dict) and ("icon" in value or "svg" in value):
             self._fill_svg(slide, shp, value, label)
@@ -437,6 +506,34 @@ class Builder:
         if meta.get("attribution_required"):
             self.credits.append({"slide": int(re.search(r"slide (\d+)", label).group(1)), "credit": meta["credit"], "path": meta.get("ref", "")})
 
+    # ---------------------------------------------------------------- logo
+    def _fill_logo(self, slide, shp, value: dict, label: str) -> None:
+        """The logo, whole, in its slot: scaled to fit, aspect ratio kept, aligned on the slot's side.
+
+        Alt text is the brand name; without one the logo is marked decorative (it repeats
+        what the slide already says). The result keeps the name "Logo" so tools can find it.
+        """
+        path = spec_path(value["path"], self.spec_dir)
+        if path.suffix.lower() not in LOGO_EXT:
+            raise ValueError(f"logo: use a PNG, JPG or SVG file, not {path.name}")
+        if not path.is_file():
+            raise FileNotFoundError(f"logo not found: {path}")
+        alt = str(value.get("alt") or "").strip()
+        slot = (shp.left, shp.top, shp.width, shp.height)
+        parent = shp._element.getparent()
+        at = parent.index(shp._element)
+        if path.suffix.lower() == ".svg":
+            self._fill_svg(slide, shp, {"svg": str(path), "mode": value.get("mode", "keep"), "alt": alt}, label)
+        else:
+            self._fill_image(slide, shp, {"path": str(path), "fit": "contain", "alt": alt, "decorative": not alt}, label)
+        new = parent[at]
+        cnvpr = new[0].find(qn("p:cNvPr"))  # nvSpPr, nvPicPr or nvGrpSpPr
+        cnvpr.set("name", LOGO_FIELD)
+        if not alt:
+            mark_decorative(cnvpr)
+        _align_in_slot(new, slot, self.prs.slide_width)
+        self.logos_placed += 1
+
     @staticmethod
     def _replace_token(scope, key, value) -> bool:
         token = "{{" + key + "}}"
@@ -492,7 +589,7 @@ class Builder:
             parent.remove(el)
 
         pic._element.xpath(".//p:cNvPr")[0].set("descr", alt)
-        if not alt:
+        if not alt and not spec.get("decorative"):
             self.warn(f"{label}: image for '{shp.name}' has no 'alt' text (accessibility).")
         if spec.get("credit"):
             self.credits.append({"slide": int(re.search(r"slide (\d+)", label).group(1)), "credit": spec["credit"],
@@ -710,6 +807,23 @@ def _apply_crop(pic, iw, ih, fw, fh, fit):
         pic.crop_top = pic.crop_bottom = c
 
 
+def _align_in_slot(el, slot, slide_w) -> None:
+    """Move a contained picture or shape group to the side of its slot: a logo in a left
+    corner sits on the left margin, in a right corner on the right one, centred otherwise."""
+    xfrm = el.find(".//" + qn("a:xfrm"))
+    off, ext = xfrm.find(qn("a:off")), xfrm.find(qn("a:ext"))
+    left, _, width, _ = slot
+    w = int(ext.get("cx"))
+    centre = left + width / 2
+    if centre < slide_w / 3:
+        x = left
+    elif centre > slide_w * 2 / 3:
+        x = left + width - w
+    else:
+        x = left + (width - w) // 2
+    off.set("x", str(int(x)))
+
+
 def _contain(pic, left, top, fw, fh, iw, ih):
     scale = min(fw / iw, fh / ih)
     w, h = int(iw * scale), int(ih * scale)
@@ -747,6 +861,8 @@ def main(argv=None) -> int:
         spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
         if not isinstance(spec.get("slides"), list) or not spec["slides"]:
             raise SpecError("spec needs a non-empty 'slides' list")
+        spec_dir = Path(args.spec).resolve().parent
+        logo = load_logo(spec, spec_dir)  # read it first: a wrong file stops the build before any work
 
         if args.layouts:
             paths = {"layouts": {"pptx": args.layouts, "index": args.layouts_index},
@@ -773,8 +889,12 @@ def main(argv=None) -> int:
             _idx(paths["layouts"].get("index")),
             _idx(paths["visuals"].get("index")),
             strict=args.strict,
+            logo=logo,
+            spec_dir=spec_dir,
         )
         b.warnings.extend(check_keys(spec))
+        if spec.get("logo_alt") and not logo:
+            b.warn("spec: 'logo_alt' is ignored without a 'logo'")
         for i, s in enumerate(spec["slides"]):
             if s.get("hidden"):
                 continue

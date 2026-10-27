@@ -50,7 +50,7 @@ Title|text|56; Subtitle|text|124|optional; Number 1|text|4|default,follows=Item 
 | `Name` | exact shape name in the pptx: the key used in the spec's `fill` |
 | `type` | `text`, `bullets`, `image`, `icon`, `chart`, `table`, `frame` (receives a visual), `plot` (reference area for `at` positions), `deco` (a decoration tied to a field) |
 | limit / hint | text: maximum characters (tested by `library/tools/fit_test.py`); image or frame: aspect ratio; chart: chart type; icon: slot colour |
-| flags | `optional` (removed when not filled), `default` (template text is an acceptable value), `follows=X` (removed with X), `role=R` (the field is also drawn as a container, see style-contract.md) |
+| flags | `optional` (removed when not filled), `default` (template text is an acceptable value), `follows=X` (removed with X), `role=R` (the field is also drawn as a container, or `role=logo` for the logo slot; see style-contract.md) |
 
 Shapes not listed are decoration and are left alone. In the bundled libraries their names carry a role (`card#2 > Heading 2`, `decoration#5`); `fill` never targets them.
 

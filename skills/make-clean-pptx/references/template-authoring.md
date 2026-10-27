@@ -64,8 +64,9 @@ pytest
    },
    ```
 2. `text()` options worth knowing: `optional` (removed when not filled), `keep` (placeholder is a valid default), `follows: "Item 2"` (removed with Item 2), `limit` (override the computed character limit), `bullets`.
-3. Frames for visuals: `L.frame(ctx, "Content Area", x, y, w, h)`; match one of the visual sizes (full 12.13 × 4.55, wide 7.9 × 4.55, half 5.9 × 4.2) so visuals fit without shrinking.
-4. Rebuild, run the fit test, look at the render, regenerate the gallery.
+3. Logo: a new cover or closing layout calls `L.logo(ctx, "left" | "right" | "center")` last in `draw` (a top corner clear of the title; drawn last so the other shapes keep their ids). It is filled from deck.json `"logo"` and removed when the deck has none.
+4. Frames for visuals: `L.frame(ctx, "Content Area", x, y, w, h)`; match one of the visual sizes (full 12.13 × 4.55, wide 7.9 × 4.55, half 5.9 × 4.2) so visuals fit without shrinking.
+5. Rebuild, run the fit test, look at the render, regenerate the gallery.
 
 ## Adding a visual
 

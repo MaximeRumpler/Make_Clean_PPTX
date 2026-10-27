@@ -56,6 +56,7 @@ module.exports = {
           text(ctx, `Contact ${i + 1} details`, "Email or phone", c.x, 5.45, c.w, 0.6, "small", { optional: true });
         });
         footer(ctx);
+        L.logo(ctx);
       },
     },
     {
