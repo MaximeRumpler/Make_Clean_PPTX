@@ -30,7 +30,7 @@ def test_skill_md_frontmatter_and_size():
 
 def test_referenced_files_exist():
     text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-    for rel in set(re.findall(r"`((?:references|scripts)/[\w./-]+)`", text)):
+    for rel in set(re.findall(r"`((?:references|scripts|assets)/[\w./-]+)`", text)):
         assert (SKILL / rel).exists(), f"SKILL.md mentions {rel} but it does not exist"
 
 

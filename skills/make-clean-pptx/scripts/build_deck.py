@@ -13,6 +13,7 @@ Deck spec (JSON)
 {
   "output": "out/deck.pptx",
   "properties": {"title": "Q3 review", "author": "Jane Doe"},
+  "theme": "brand.thmx",
   "slides": [
     {"source": "design", "slide": 1,
      "fill": {"Title": "A **bold** word", "Subtitle": "Q3 2026"},
@@ -38,6 +39,14 @@ fill values
   {"categories": [...], "series": {"Name": [...]}}   chart data
   [[...], [...]] table cells (rows are added or removed to fit)
   null or ""     delete the shape (use for optional slots you do not need)
+
+"theme" (optional) replaces the colours and fonts of the deck's theme with those
+of a .thmx, .potx, .pptx or theme .xml file;
+"theme_fonts_fallback" names a font used when the brand font is not available.
+
+Relative file paths (images, svg, local: icons, theme) are looked up next to the
+spec file first, then in the working directory.
+
 Keys are shape names; "#3" means the third top-level shape; if no shape has that
 name, "{{key}}" tokens inside text are replaced instead.
 
@@ -62,6 +71,7 @@ try:
     from _clone import SlideCloner, delete_slide
     from _common import eprint, estimate_fit, is_dark, iter_shapes, overflows, shape_kind, token_xml
     from _svg import SvgError, svg_to_shapes
+    from _theme import ThemeError, apply_theme, fallback_fonts, load_theme_source
     from fetch_templates import FetchError, ensure_templates
     from read_index import load_index, resolve
 except ImportError as _exc:  # a missing package would otherwise end in a traceback
@@ -73,7 +83,7 @@ except ImportError as _exc:  # a missing package would otherwise end in a traceb
 
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tif", ".tiff", ".webp"}
 SOURCE_ALIASES = {"design": "layouts", "shapes": "visuals"}
-SPEC_KEYS = {"output", "properties", "slides", "language"}
+SPEC_KEYS = {"output", "properties", "slides", "language", "theme", "theme_fonts_fallback"}
 SLIDE_KEYS = {"source", "slide", "id", "fill", "insert", "notes", "keep_unfilled", "hidden"}
 INSERT_KEYS = {"source", "slide", "id", "component", "into", "box", "fit", "fill", "keep_unfilled"}
 
@@ -105,6 +115,29 @@ class SpecError(ValueError):
     pass
 
 
+def resolve_input(value, base: Path | None, what: str = "file") -> str:
+    """Path of an input file named in deck.json.
+
+    A relative path is looked up in the folder of deck.json first, then in the
+    working directory (where earlier versions looked), so existing specs keep
+    working. Absolute paths and URLs are returned untouched.
+    """
+    s = str(value)
+    if re.match(r"^[A-Za-z][A-Za-z0-9+.-]*://", s):
+        return s
+    p = Path(s).expanduser()
+    if p.is_absolute() or base is None:
+        return str(p)
+    for cand in (base / p, p):
+        if cand.exists():
+            return str(cand)
+    cwd = Path.cwd()
+    if base.resolve() == cwd.resolve():
+        raise FileNotFoundError(f"{what} not found: '{s}' is not in {base} (the folder of deck.json)")
+    raise FileNotFoundError(f"{what} not found: '{s}' is neither in {base} (the folder of deck.json) "
+                            f"nor in {cwd} (the working directory)")
+
+
 class Builder:
     def __init__(self, design_path: str, shapes_path: str | None, design_index=None, shapes_index=None, strict=False):
         self.prs = Presentation(design_path)
@@ -112,6 +145,7 @@ class Builder:
         self.design_index = design_index or []
         self.shapes_index = shapes_index or []
         self.strict = strict
+        self.base_dir: Path | None = None  # folder of deck.json, for relative input paths
         self.cloner = SlideCloner(self.prs)
         self.warnings: list[str] = []
         self.credits: list[dict] = []
@@ -401,15 +435,21 @@ class Builder:
         """
         meta = {}
         if "icon" in value:
-            from find_icon import IconError, get_svg
+            from find_icon import SOURCES, IconError, get_svg
 
+            ref = str(value["icon"])
+            prefix, _, rest = ref.partition(":")
+            if prefix == "local":
+                ref = "local:" + resolve_input(rest, self.base_dir, "icon file")
+            elif (":" not in ref and ref.lower().endswith(".svg")) or (":" in ref and prefix not in SOURCES):
+                ref = "local:" + resolve_input(ref, self.base_dir, "icon file")
             try:
-                text, meta = get_svg(str(value["icon"]))
+                text, meta = get_svg(ref)
             except IconError as exc:
                 raise ValueError(str(exc)) from exc
             mode = value.get("mode", "mono")
         else:
-            path = Path(str(value["svg"])).expanduser()
+            path = Path(resolve_input(value["svg"], self.base_dir, "svg file"))
             if path.suffix.lower() != ".svg":
                 raise ValueError(f"'svg' expects an .svg file, got {path.name}")
             if not path.is_file():
@@ -458,7 +498,10 @@ class Builder:
     def _fill_image(self, slide, shp, spec: dict, label: str) -> None:
         from PIL import Image
 
-        path = Path(spec["path"]).expanduser()
+        src = resolve_input(spec["path"], self.base_dir, "image")
+        if "://" in src:
+            raise ValueError(f"'{src}' is a web address; save the image first (fetch_image.py) and give its file path")
+        path = Path(src)
         if not path.is_file():
             raise FileNotFoundError(f"image not found: {path}")
         with Image.open(path) as im:
@@ -747,6 +790,11 @@ def main(argv=None) -> int:
         spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
         if not isinstance(spec.get("slides"), list) or not spec["slides"]:
             raise SpecError("spec needs a non-empty 'slides' list")
+        theme_src = None
+        if spec.get("theme"):  # read it first: a bad theme file stops the build before any work
+            theme_path = resolve_input(spec["theme"], Path(args.spec).resolve().parent, "theme file")
+            theme_src = load_theme_source(theme_path)
+            fallback_fonts(spec.get("theme_fonts_fallback"))
 
         if args.layouts:
             paths = {"layouts": {"pptx": args.layouts, "index": args.layouts_index},
@@ -774,12 +822,19 @@ def main(argv=None) -> int:
             _idx(paths["visuals"].get("index")),
             strict=args.strict,
         )
+        b.base_dir = Path(args.spec).resolve().parent
         b.warnings.extend(check_keys(spec))
+        if spec.get("theme_fonts_fallback") and not theme_src:
+            b.warn("spec: 'theme_fonts_fallback' is ignored without a 'theme'")
         for i, s in enumerate(spec["slides"]):
             if s.get("hidden"):
                 continue
             b.add_slide(s, i)
         b.finish(spec.get("properties"), spec.get("language"))
+        theme_report = None
+        if theme_src:
+            theme_report, theme_warnings = apply_theme(b.prs, theme_src, spec.get("theme_fonts_fallback"))
+            b.warnings.extend(theme_warnings)
 
         out.parent.mkdir(parents=True, exist_ok=True)
         b.prs.save(out)
@@ -789,9 +844,10 @@ def main(argv=None) -> int:
             "slides": len(b.prs.slides),
             "warnings": b.warnings,
             "credits_file": credits,
+            **({"theme": theme_report} if theme_report else {}),
         }, indent=2, ensure_ascii=False))
         return 0
-    except (SpecError, FetchError, FileNotFoundError, ValueError) as exc:
+    except (SpecError, ThemeError, FetchError, FileNotFoundError, ValueError) as exc:
         print(json.dumps({"error": str(exc)}, indent=2, ensure_ascii=False))
         return 2
 

@@ -71,6 +71,10 @@ Graphics: `accent1`, `accent2` and `accent3` on `paper` need 3:1 (lines, markers
 
 The tightest pairs in the neutral theme are `muted` on `surface` (4.5:1), `a5` on `a2` (4.5:1) and `a3` on `a1` (4.9:1): a brand theme has little room there, so check them first. Text over semi-transparent stacked fills (Venn-type visuals) depends on the overlap and is checked on the actual deck only.
 
+## Applying a theme
+
+Add `"theme": "brand.thmx"` to deck.json (`.potx`, `.pptx` and theme `.xml` work too): `build_deck.py` replaces the colours and fonts of the deck's theme in one pass, applies the source master's colour map if it has one (dark themes), and prints this contract's findings as warnings without failing the build. Details and the font fallback: `spec-reference.md`, "Brand theme".
+
 ## Checking a theme
 
 ```bash

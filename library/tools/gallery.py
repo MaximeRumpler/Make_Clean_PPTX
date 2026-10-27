@@ -1,24 +1,27 @@
 #!/usr/bin/env python3
 """Render thumbnails and the human catalogues of both libraries.
 
-    python library/tools/gallery.py
+    python library/tools/gallery.py              # everything (needs LibreOffice)
+    python library/tools/gallery.py --html-only  # only refresh the static part of docs/index.html
 
 Writes
   docs/thumbnails/<id>.jpg   one image per layout and per visual
   docs/catalog.json          data for the GitHub Pages gallery (docs/index.html)
+  docs/index.html            static cards, counts and heading between the <!-- x:start/end -->
+                             markers, so crawlers and readers without JavaScript see the gallery
   CATALOG.md                 the same catalogue, readable on GitHub
   docs/preview.jpg           a mosaic used in the README
-Needs LibreOffice and poppler (same as render_check.py).
+Needs LibreOffice and poppler (same as render_check.py), except with --html-only.
 """
 from __future__ import annotations
 
+import html
 import json
+import re
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
-
-from PIL import Image
 
 REPO = Path(__file__).resolve().parents[2]
 ASSETS = REPO / "skills" / "make-clean-pptx" / "assets"
@@ -31,7 +34,37 @@ THUMB_W = 640
 PREVIEW = ["L-01", "L-13", "L-32", "L-44", "V-COM-01", "V-MAT-03", "V-PRO-01", "V-TIM-02", "L-50"]
 
 
+def _fill(page: str, marker: str, content: str) -> str:
+    pattern = re.compile(rf"(<!-- {marker}:start -->).*?(<!-- {marker}:end -->)", re.S)
+    if not pattern.search(page):
+        raise SystemExit(f"docs/index.html: marker '{marker}' not found")
+    return pattern.sub(lambda m: m.group(1) + content + m.group(2), page)
+
+
+def write_static_html(catalog: list) -> None:
+    """Print the cards, counts and heading into docs/index.html; the page script replaces them on load."""
+    def e(v) -> str:
+        return html.escape(str(v), quote=True)
+
+    n = {lib: sum(c["lib"] == lib for c in catalog) for lib in ("layouts", "visuals")}
+    cats = len({c["lib"] + c["category"] for c in catalog})
+    stats = "".join(f"<div><b>{v}</b><span>{label}</span></div>" for v, label in
+                    ((n["layouts"], "layouts"), (n["visuals"], "visuals"), (cats, "categories"), ("1,900", "bundled icons")))
+    cards = "".join(
+        f'\n      <button type="button" class="card" data-i="{i}">'
+        f'\n        <img src="{e(c["thumbnail"])}" alt="{e(c["name"])}: {e(c["description"])}" loading="lazy" width="640" height="360">'
+        f'\n        <div><span class="id">{e(c["id"])}</span><h3>{e(c["name"])}</h3><p>{e(c["use_when"])}</p></div>'
+        f'\n      </button>' for i, c in enumerate(catalog)) + "\n    "
+    path = DOCS / "index.html"
+    page = path.read_text(encoding="utf-8")
+    page = _fill(page, "stats", stats)
+    page = _fill(page, "heading", f'{n["layouts"]} slide layouts and {n["visuals"]} charts and diagrams')
+    page = _fill(page, "cards", cards)
+    path.write_text(page, encoding="utf-8")
+
+
 def render(lib: str) -> dict:
+    from PIL import Image
     with tempfile.TemporaryDirectory() as tmp:
         subprocess.run([sys.executable, str(REPO / "skills/make-clean-pptx/scripts/render_check.py"), str(ASSETS / f"{lib}.pptx"),
                         "--out-dir", tmp, "--dpi", "110"], check=True, capture_output=True)
@@ -44,6 +77,10 @@ def render(lib: str) -> dict:
 
 
 def main() -> int:
+    if "--html-only" in sys.argv[1:]:
+        write_static_html(json.loads((DOCS / "catalog.json").read_text(encoding="utf-8")))
+        return 0
+    from PIL import Image
     THUMBS.mkdir(parents=True, exist_ok=True)
     catalog, images = [], {}
     for lib in ("layouts", "visuals"):
@@ -63,6 +100,7 @@ def main() -> int:
                 "arrange": e.get("arrange", ""), "fields": len(e["field_list"]), "thumbnail": rel,
             })
     (DOCS / "catalog.json").write_text(json.dumps(catalog, indent=1, ensure_ascii=False), encoding="utf-8")
+    write_static_html(catalog)
 
     # README mosaic: 3 x 3
     tiles = [images[i] for i in PREVIEW if i in images]
