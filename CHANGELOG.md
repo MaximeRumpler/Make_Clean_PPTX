@@ -5,6 +5,9 @@ All notable changes to this project are documented here. Format based on [Keep a
 ## [Unreleased]
 
 ### Added
+- README install: direct link to the zip, the *Code execution and file creation* step for Claude.ai and Claude desktop, Node.js note for `npx skills`, link to the Make PPTX Get started guide. Same steps in the gallery.
+- Gallery: title, description, canonical link, Open Graph tags and JSON-LD; every card, the counts and a heading are now printed in the HTML (`gallery.py --html-only` refreshes them, a test checks they match `catalog.json`); `sitemap.xml`; link to the Make PPTX set.
+- Issue form "It didn't work" (assistant, operating system, what happened) and `config.yml` pointing questions to Discussions.
 - Deck options settled up front in one short choice message (format, confidentiality, length, accessibility), with defaults that add nothing (`.pptx`, no label) when the user does not choose or the harness cannot ask. New `references/deck-options.md`: confidentiality label in the footer, no online icon or photo searches for confidential content, minimal file properties, and a skeleton deck with bracketed instructions when the user cannot share the real content.
 - SKILL.md guides non-technical users: one short message of questions for what cannot be inferred (purpose, length, PowerPoint `.pptx` or LibreOffice `.odp`), with a proposed default; plain-language delivery (how to open the file, skipped visual check).
 - `render_check.py --odp`: also saves an OpenDocument copy of the deck for LibreOffice users (the skill already triggered on `.odp`).
