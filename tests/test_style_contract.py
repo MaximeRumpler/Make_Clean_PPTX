@@ -138,10 +138,11 @@ def test_pack_keeps_ids_and_field_names(pack):
     assert json.loads((pack / "style.json").read_text(encoding="utf-8"))["name"] == pack.parent.name
 
 
-def test_arrangement_flags_match_the_fields():
+@pytest.mark.parametrize("lib,minimum", [("layouts", 20), ("visuals", 8)])
+def test_arrangement_flags_match_the_fields(lib, minimum):
     """`arrange` = kind:count[:ordered]; the count is the number of numbered units in `fields`."""
     flagged = 0
-    for e in load_index(ASSETS / "layouts.csv"):
+    for e in load_index(ASSETS / f"{lib}.csv"):
         value = e.get("arrange") or ""
         if not value:
             continue
@@ -150,4 +151,15 @@ def test_arrangement_flags_match_the_fields():
         assert kind in ("row", "column", "grid") and rest in ([], ["ordered"]), f"{e['id']}: {value}"
         numbers = {int(m.group(1)) for f in e["field_list"] for m in [re.search(r"\b(\d+)\b", f["name"])] if m}
         assert set(range(1, int(n) + 1)) <= numbers, f"{e['id']}: {value} but fields {sorted(numbers)}"
-    assert flagged >= 20
+        if lib == "visuals":
+            assert e["kind"] in ("diagram", "timeline"), f"{e['id']}: a {e['kind']} keeps its geometry"
+    assert flagged >= minimum
+
+
+def test_arrange_column_is_searchable(tmp_path):
+    """Third-party indexes may carry the column too; read_index keeps it like any extra column."""
+    csv_path = tmp_path / "own.csv"
+    csv_path.write_text("slide;id;name;category;arrange;fields\n1;X-1;Cards;Text;grid:4;Title|text|60\n"
+                        "2;X-2;Quote;Text;;Quote|text|90\n", encoding="utf-8")
+    rows = load_index(csv_path)
+    assert rows[0]["arrange"] == "grid:4" and not rows[1].get("arrange")

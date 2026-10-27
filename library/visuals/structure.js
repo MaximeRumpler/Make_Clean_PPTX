@@ -45,6 +45,7 @@ module.exports = {
       use_when: "Break a problem or objective into its drivers (issue tree, KPI tree, decision tree).",
       limits: "Branches must not overlap and together cover the question (MECE).",
       tags: "logic tree issue tree driver tree decomposition mece problem solving kpi tree",
+      arrange: false, // branches follow the tree
       related: "V-STR-01 V-STR-07",
       fill_notes: "Root, Branch n, Leaf n.m.",
       draw(ctx, b) {
@@ -70,6 +71,7 @@ module.exports = {
       use_when: "Hierarchy of needs, priorities or foundations (vision to operations).",
       limits: "Four levels; the top holds the most important or the rarest.",
       tags: "pyramid levels hierarchy foundations layers priorities vision",
+      arrange: false, // level widths carry the hierarchy
       related: "V-STR-04 V-PRO-07",
       fill_notes: "Level n, Level n text.",
       draw(ctx, b) {
@@ -92,6 +94,7 @@ module.exports = {
       use_when: "System, data or operating model architecture; stack of capabilities.",
       limits: "Delete unused blocks with null.",
       tags: "architecture layers stack system platform capabilities operating model technology",
+      arrange: false, // layers stack in order
       related: "V-STR-03 V-STR-01",
       fill_notes: "Layer n, Block n.m.",
       draw(ctx, b) {
@@ -135,6 +138,7 @@ module.exports = {
       use_when: "Where three domains meet: the sweet spot, a skills profile, a value proposition.",
       limits: "Three sets; the centre label is the point of the slide.",
       tags: "venn overlap intersection sweet spot three circles sets",
+      arrange: false, // overlaps carry the meaning
       related: "V-STR-05 V-STR-08",
       fill_notes: "Set n, Centre.",
       draw(ctx, b) {
@@ -152,6 +156,7 @@ module.exports = {
       use_when: "Root cause analysis of a quality, delay or performance problem.",
       limits: "Six categories with two causes each.",
       tags: "fishbone ishikawa cause effect root cause quality analysis 6m",
+      arrange: false, // bones hang on the spine
       related: "V-STR-02 V-REL-05",
       fill_notes: "Effect, Category n, Cause n.m.",
       draw(ctx, b) {
@@ -177,6 +182,7 @@ module.exports = {
       use_when: "Scope or influence by distance: core business, adjacent, ecosystem; TAM SAM SOM.",
       limits: "Three rings.",
       tags: "concentric circles core rings scope tam sam som influence layers",
+      arrange: false, // rings nest by design
       related: "V-STR-05 V-STR-03",
       fill_notes: "Ring n, Ring n text.",
       draw(ctx, b) {
@@ -200,6 +206,7 @@ module.exports = {
       use_when: "Layers that build outwards from a core: capabilities around a product, circles of stakeholders, foundations to reach.",
       limits: "A core and three rings (the outer ring can be deleted with null); a few words per layer.",
       tags: "half ring radial layers semicircle arch core onion nested levels foundations rainbow",
+      arrange: false, // rings nest by design
       related: "V-STR-08 V-STR-03",
       fill_notes: "Layer 1 is the core, Layer 4 the outer ring; Layer n text (optional).",
       draw(ctx, b) {

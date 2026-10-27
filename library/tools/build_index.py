@@ -27,7 +27,7 @@ ASSETS = STYLE["pack"]
 COLUMNS = {
     "layouts": ["id", "slide", "name", "category", "style", "density", "description", "use_when", "tags", "arrange", "fields"],
     "visuals": ["id", "slide", "name", "category", "kind", "frame", "objective", "data_type", "dimensions", "complexity",
-                "description", "use_when", "limits", "fill_notes", "tags", "related", "fields"],
+                "description", "use_when", "limits", "fill_notes", "tags", "related", "arrange", "fields"],
 }
 
 
@@ -52,15 +52,22 @@ ORDERED_WORDS = re.compile(r"\b(step|stage|act|date|milestone|phase|chapter|sess
 ORDERED_TAGS = {"timeline", "process", "steps", "sequence", "roadmap", "agenda", "numbered", "chronology"}
 
 
-def arrange(entry: dict) -> str:
+# Visuals whose geometry encodes data, axes or a metaphor are never rearranged.
+ARRANGEABLE_KINDS = {"diagram", "timeline"}
+
+
+def arrange(entry: dict, lib: str = "layouts") -> str:
     """Repeated units a restyler may rearrange: 'row:3', 'grid:4', 'column:5', ':ordered' when order matters.
 
     A unit is every field carrying the same number ("Heading 2", "Body 2", "card#2 > Heading 2"
     holds it). Units must be identical apart from that number. An entry can set "arrange"
-    itself in the generator (a string, or false to opt out).
+    itself in the generator (a string, or false to opt out). Visuals are flagged only when
+    their kind is a diagram or a timeline.
     """
     if "arrange" in entry:
         return entry["arrange"] or ""
+    if lib == "visuals" and entry.get("kind") not in ARRANGEABLE_KINDS:
+        return ""
     units: dict = {}
     for f in entry["fields"]:
         m = NUMBERED.match(f["name"])
@@ -90,7 +97,7 @@ def write(lib: str) -> int:
         for e in reg:
             row = dict(e, fields="; ".join(field_spec(f) for f in e["fields"]))
             if "arrange" in cols:
-                row["arrange"] = arrange(e)
+                row["arrange"] = arrange(e, lib)
             w.writerow([row.get(c, "") for c in cols])
     return len(reg)
 

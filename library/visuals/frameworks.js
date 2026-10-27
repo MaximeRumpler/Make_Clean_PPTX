@@ -13,6 +13,7 @@ module.exports = {
       use_when: "Describe or compare business models.",
       limits: "A few words per block; the canvas is dense by nature.",
       tags: "business model canvas bmc value proposition segments revenue costs osterwalder",
+      arrange: false, // the canvas positions are the framework
       related: "V-FRM-06 V-STR-04",
       fill_notes: "Block n text (headings are the standard block names).",
       draw(ctx, b) {
@@ -34,6 +35,7 @@ module.exports = {
       use_when: "Assess the attractiveness of an industry or segment.",
       limits: "Rate each force in its text (low, medium, high).",
       tags: "five forces porter industry rivalry suppliers buyers substitutes entrants competition",
+      arrange: false, // the forces have fixed places
       related: "V-MAT-02 V-FRM-03",
       fill_notes: "Force n text (headings are the standard forces).",
       draw(ctx, b) {
@@ -54,6 +56,7 @@ module.exports = {
       use_when: "Scan the external environment before a strategy or a market entry.",
       limits: "Two or three factors per column.",
       tags: "pestel pestle macro environment political economic social technological environmental legal",
+      arrange: "row:6:ordered", // the letters spell the acronym
       related: "V-MAT-02 V-FRM-02",
       fill_notes: "Factor n (bullets).",
       draw(ctx, b) {

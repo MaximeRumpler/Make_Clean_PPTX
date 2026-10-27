@@ -73,6 +73,7 @@ module.exports = {
       use_when: "Balance short-term performance with mid- and long-term growth (portfolio, innovation).",
       limits: "Three horizons; a few words per block.",
       tags: "three horizons h1 h2 h3 innovation growth portfolio future core",
+      arrange: false, // positions show the horizons
       related: "V-TIM-05 V-STR-08",
       fill_notes: "Horizon n, Horizon n text, X axis, Y axis.",
       draw(ctx, b) {

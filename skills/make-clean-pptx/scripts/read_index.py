@@ -16,7 +16,7 @@ Examples
 
 "layouts" and "visuals" resolve to the bundled indexes (or to your own, see
 fetch_templates.py). Header names are matched loosely (see ALIASES); extra
-columns are kept and can be used with --where. Contract: references/index-schema.md.
+columns are kept and can be used with --where (e.g. --where arrange=row). Contract: references/index-schema.md.
 """
 from __future__ import annotations
 

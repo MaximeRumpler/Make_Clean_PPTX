@@ -65,7 +65,7 @@ Every shape of the libraries is either a **field** (named in the index, filled b
 
 ## Arrangements
 
-The `arrange` column of `layouts.csv` marks the layouts whose content is a set of identical units: `row:3`, `grid:4`, `column:5:ordered` (syntax in `index-schema.md`). A unit is every field with the same number plus the role-tagged container that holds them. A restyler may lay the units out differently (stagger, arc, cascade, constellation…) as long as it keeps every unit together, keeps the order when the value ends with `ordered`, and keeps the units inside the content band of the grid. Layouts with an empty `arrange` keep their arrangement. Visuals are not flagged yet.
+The `arrange` column of `layouts.csv` and `visuals.csv` marks the layouts and visuals whose content is a set of identical units: `row:3`, `grid:4`, `column:5:ordered` (syntax in `index-schema.md`). A unit is every field with the same number plus the role-tagged container that holds them. A restyler may lay the units out differently (stagger, arc, cascade, constellation…) as long as it keeps every unit together, keeps the order when the value ends with `ordered`, and keeps the units inside the content band of the grid. Rows with an empty `arrange` keep their arrangement. Visuals are flagged only for diagrams and timelines, and not when the position is the meaning (cycle, pyramid, concentric rings, Venn, canvas, five forces, trees, stacked layers); inside a visual the units stay within the component's box.
 
 ## What a restyler must keep
 

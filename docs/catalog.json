@@ -1243,7 +1243,7 @@
   "objective": "Track performance",
   "frame": "wide",
   "style": "",
-  "arrange": "",
+  "arrange": "row:3",
   "fields": 9,
   "thumbnail": "thumbnails/V-KPI-01.jpg"
  },
@@ -1419,7 +1419,7 @@
   "objective": "Describe a process",
   "frame": "full",
   "style": "",
-  "arrange": "",
+  "arrange": "row:5:ordered",
   "fields": 10,
   "thumbnail": "thumbnails/V-PRO-01.jpg"
  },
@@ -1531,7 +1531,7 @@
   "objective": "Plan",
   "frame": "full",
   "style": "",
-  "arrange": "",
+  "arrange": "grid:6:ordered",
   "fields": 24,
   "thumbnail": "thumbnails/V-TIM-01.jpg"
  },
@@ -1547,7 +1547,7 @@
   "objective": "Plan",
   "frame": "full",
   "style": "",
-  "arrange": "",
+  "arrange": "row:4:ordered",
   "fields": 24,
   "thumbnail": "thumbnails/V-TIM-02.jpg"
  },
@@ -1595,7 +1595,7 @@
   "objective": "Plan",
   "frame": "full",
   "style": "",
-  "arrange": "",
+  "arrange": "row:3:ordered",
   "fields": 6,
   "thumbnail": "thumbnails/V-TIM-05.jpg"
  },
@@ -1611,7 +1611,7 @@
   "objective": "Plan",
   "frame": "full",
   "style": "",
-  "arrange": "",
+  "arrange": "grid:8:ordered",
   "fields": 24,
   "thumbnail": "thumbnails/V-TIM-06.jpg"
  },
@@ -1627,7 +1627,7 @@
   "objective": "Describe a structure",
   "frame": "full",
   "style": "",
-  "arrange": "",
+  "arrange": "row:4",
   "fields": 33,
   "thumbnail": "thumbnails/V-STR-01.jpg"
  },
@@ -1691,7 +1691,7 @@
   "objective": "Show relationship",
   "frame": "wide",
   "style": "",
-  "arrange": "",
+  "arrange": "grid:6",
   "fields": 13,
   "thumbnail": "thumbnails/V-STR-05.jpg"
  },
@@ -1803,7 +1803,7 @@
   "objective": "Diagnose",
   "frame": "full",
   "style": "",
-  "arrange": "",
+  "arrange": "row:6:ordered",
   "fields": 18,
   "thumbnail": "thumbnails/V-FRM-03.jpg"
  },
@@ -1835,7 +1835,7 @@
   "objective": "Track performance",
   "frame": "full",
   "style": "",
-  "arrange": "",
+  "arrange": "row:3",
   "fields": 14,
   "thumbnail": "thumbnails/V-FRM-05.jpg"
  },

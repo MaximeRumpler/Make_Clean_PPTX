@@ -34,6 +34,7 @@ module.exports = {
       use_when: "A recurring loop: continuous improvement, planning cycle, customer lifecycle.",
       limits: "Four steps; for six, use two cycles or a chevron process.",
       tags: "cycle loop circular recurring continuous improvement pdca lifecycle",
+      arrange: false, // the circle is the message
       related: "V-PRO-01 V-STR-05",
       fill_notes: "Centre, Step n, Step n text.",
       draw(ctx, b) {
@@ -159,6 +160,7 @@ module.exports = {
       use_when: "Maturity levels, capability growth, a progression plan.",
       limits: "Four levels; mark where we are by shading a step.",
       tags: "staircase maturity levels progression steps growth capability ladder",
+      arrange: false, // step heights carry the levels
       related: "V-FRM-05 V-PRO-01",
       fill_notes: "Level n, Level n text.",
       draw(ctx, b) {
