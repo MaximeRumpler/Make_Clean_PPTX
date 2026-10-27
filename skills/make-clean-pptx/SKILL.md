@@ -5,7 +5,7 @@ license: EUPL-1.2. Complete terms in LICENSE.txt; decks you create are yours (NO
 compatibility: Needs Python 3.9+ with python-pptx, openpyxl and Pillow (see requirements.txt). Optional LibreOffice and poppler for the visual check. Works offline with the bundled libraries; online sources (icons, images) are optional. Works in any agent harness that can run Python and read files (Claude Code, Claude.ai, Codex, other Agent Skills clients).
 metadata:
   repository: https://github.com/MaximeRumpler/Make_Clean_PPTX
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Make Clean PPTX
