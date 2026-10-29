@@ -1,7 +1,7 @@
 {
   "name": "make-clean-pptx",
   "version": "1.2.0",
-  "description": "Clean, sober PowerPoint decks from a library of 54 layouts and 68 visuals: plan, choose, fill, lint, render and review. Theme-ready, icons included, no invented content.",
+  "description": "Clean, sober PowerPoint decks from a library of 54 layouts and 81 visuals: plan, choose, fill, lint, render and review. Theme-ready, icons included, no invented content.",
   "author": {
     "name": "Maxime Rumpler",
     "url": "https://github.com/MaximeRumpler"

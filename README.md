@@ -1,6 +1,6 @@
 <div align="center">
 
-[![Make Clean PPTX, agent skill that turns notes into PowerPoint decks: 54 layouts, 68 charts and diagrams](docs/banner.svg)](https://maximerumpler.github.io/Make_Clean_PPTX/)
+[![Make Clean PPTX, agent skill that turns notes into PowerPoint decks: 54 layouts, 81 charts and diagrams](docs/banner.svg)](https://maximerumpler.github.io/Make_Clean_PPTX/)
 
 *Give your AI assistant your notes. Get back a clean, professional PowerPoint.*
 
@@ -57,7 +57,7 @@ Review my-deck.pptx and make it look professional.
 
 ## What's inside
 
-| **54 slide designs** | **68 charts and diagrams** | **1,900 icons** |
+| **54 slide designs** | **81 charts and diagrams** | **1,900 icons** |
 |:---:|:---:|:---:|
 | covers, key messages, figures, options, next steps | bars, waterfalls, matrices, timelines, org charts | bundled, plus free online icons and photos |
 

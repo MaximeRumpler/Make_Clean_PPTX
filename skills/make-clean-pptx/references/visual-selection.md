@@ -95,3 +95,12 @@ The **Signature** family (`V-SIG-*`: meshing gears, light bulb, puzzle, winding 
 - **One metaphor per deck**: never two different ones (no gears on slide 3 and a puzzle on slide 9). Reuse the same one if a second is needed.
 - **Never for figures or data**: the labels are words. A real plan goes on a timeline (V-TIM-01), real scopes on concentric circles (V-STR-08).
 - Prefer the ordinary visual whenever it says the same thing: the signature is a seasoning, not the meal.
+
+## 7. Expressive compositions: one strong shape, on request
+
+The **Expressive** family holds compositions with a strong shape, for the one slide that should stand out. The first is the **orbital diagram**: a centre and the things that revolve around it (`V-ORB-01-<n>` one orbit with 3 to 8 satellites, `V-ORB-02-<inner>x<outer>` two orbits for a close and a wider circle, `V-ORB-03-<n>` a half orbit for a half frame). They are opt-in like the signature visuals (`read_index.py visuals --category expressive`).
+
+- **Only when** the user asks for it, or when there is a real centre and satellites (an ecosystem, stakeholders around a product, capabilities around a core). Items that are merely parallel go in a list or a grid.
+- **Pick the variant for the exact count**: positions are computed for it, so there is no satellite to delete. Satellites read clockwise from 12 o'clock.
+- **Short words only**: labels of 16 characters, a text of 40 beside each satellite. Denser text goes to V-STR-05 (hub and spoke); more than 8 items go to a list layout.
+- **One per deck** at most.

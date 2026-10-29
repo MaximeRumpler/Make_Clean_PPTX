@@ -33,9 +33,9 @@ Each library has one index: `assets/layouts.csv` and `assets/visuals.csv`. The a
 
 Categories: layouts use Cover, Agenda, Divider, Statement, Text, Media, Team, Frame, KPI, Table, Decision, Closing, Editorial, Process. Visuals use Compare, Evolve, Compose, Relate, KPI, Matrix, Process, Time, Structure, Frameworks, and Signature (opt-in, last).
 
-## Opt-in rows (tag `signature`)
+## Opt-in rows (tags `signature` and `expressive`)
 
-Some rows must never be picked by default: the **Signature** visuals (`V-SIG-*`, gears, light bulb, puzzle, road, mountain, target) are metaphor illustrations that set the tone of a deck, and one too many makes it look like clip art. They are marked by the word `signature` in `tags` (and `objective` = `Set the tone`, `kind` = `illustration`). `read_index.py` leaves every row tagged `signature` out of searches and listings unless the request names it (`-q "signature …"`, `--category signature`, `--where tags=signature`); `--id` and `--slide` always work. Use the same tag to make rows of your own libraries opt-in. When to use them: visual-selection.md.
+Some rows must never be picked by default: the **Signature** visuals (`V-SIG-*`, gears, light bulb, puzzle, road, mountain, target) are metaphor illustrations that set the tone of a deck, and one too many makes it look like clip art. They are marked by the word `signature` in `tags` (and `objective` = `Set the tone`, `kind` = `illustration`). `read_index.py` leaves every row tagged `signature` out of searches and listings unless the request names it (`-q "signature …"`, `--category signature`, `--where tags=signature`); `--id` and `--slide` always work. The **Expressive** compositions (`V-ORB-*`, orbital diagrams) are opt-in the same way with the tag `expressive` (`--category expressive`, `-q "expressive …"`). Use either tag to make rows of your own libraries opt-in. When to use them: visual-selection.md.
 
 ## `fields` syntax
 

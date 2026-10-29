@@ -44,7 +44,7 @@ Every tool also takes `--style <name|file.json>` (or `MAKE_CLEAN_STYLE`) and `--
 | `tools/build_pack.py` | builds a whole pack for one style, optionally with the fit check |
 | `tools/lib.js` | drawing kit: named text fields with computed character limits, shapes, frames, image and icon slots, charts, tables, slide chrome |
 | `layouts/*.js` | 54 layouts in five files (opening, message, content, data, closing) |
-| `visuals/*.js` | 68 visuals in eleven families; `_kit.js` holds legends, markers, keys and cards |
+| `visuals/*.js` | 81 visuals in twelve families; `_kit.js` holds legends, markers, keys and cards |
 | `tools/post.py` | rewrites token colours as `schemeClr`, sentinel fonts as theme fonts, groups each visual, writes deterministic zips |
 
 How to add a layout or a visual, and the design rules, are in [template-authoring.md](../skills/make-clean-pptx/references/template-authoring.md).

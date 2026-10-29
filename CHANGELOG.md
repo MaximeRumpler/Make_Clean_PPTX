@@ -6,6 +6,7 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ### Added
 - **JSON Schema for deck.json**, `assets/deck.schema.json` (draft 2020-12): every key, layout reference, `fill` value type (text, bullets, tables, images, icons, SVG, charts, waterfall, Gantt, shading, positions), `insert`, `theme`, `logo`, `skeleton` and the other deck options, so agents and tools that do not read the reference can check their specs. `scripts/validate_spec.py deck.json` validates a spec with the standard library only (JSON report, exit 0 valid, 1 invalid, 2 unreadable). Tests check that the shipped examples validate and that the schema's keys, sources and colour names match `build_deck.py`.
+- **Orbital diagrams**, first visuals of a new opt-in **Expressive** family: `V-ORB-01-<n>` one orbit with 3 to 8 satellites, `V-ORB-02-<inner>x<outer>` two orbits (2x4, 3x5, 3x6, 4x6), `V-ORB-03-<n>` half orbit for a half frame (3 to 5). Geometry is computed in the generator, one slide per count, checked at build time and in tests (no overlaps, nothing crosses the ring or leaves the frame, centre then clockwise from 12 o'clock). `read_index.py` hides rows tagged `expressive` unless asked for, like `signature`.
 
 ## [1.2.0] - 2026-10-27
 

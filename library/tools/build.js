@@ -13,7 +13,7 @@ const OUT = L.STYLE.out;
 
 const LIBS = {
   layouts: ["opening", "message", "content", "data", "closing"],
-  visuals: ["compare", "evolve", "compose", "relate", "kpi", "matrix", "process", "time", "structure", "frameworks", "signature"],
+  visuals: ["compare", "evolve", "compose", "relate", "kpi", "matrix", "process", "time", "structure", "frameworks", "signature", "expressive"],
 };
 
 function load(lib) {

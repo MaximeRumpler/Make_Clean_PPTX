@@ -84,6 +84,80 @@ def test_signature_visuals_are_opt_in():
     assert "V-SIG-03" in out
 
 
+def test_expressive_visuals_are_opt_in():
+    """Expressive compositions (orbits) are hidden like signature metaphors, shown when asked for."""
+    orb = [e for e in load_index(ASSETS / "visuals.csv") if e["id"].startswith("V-ORB-")]
+    assert len(orb) >= 10 and all("expressive" in e["tags"].split() and e["category"] == "Expressive" for e in orb)
+    code, out, _ = run("read_index.py", ASSETS / "visuals.csv", "-q", "orbit satellites centre ecosystem", "--top", "80")
+    assert code == 0 and "V-ORB-" not in out and "V-STR-05" in out
+    code, out, _ = run("read_index.py", ASSETS / "visuals.csv", "--category", "expressive")
+    assert code == 0 and out.count("V-ORB-") == len(orb)
+    code, out, _ = run("read_index.py", ASSETS / "visuals.csv", "-q", "expressive orbit seven", "--top", "1")
+    assert "V-ORB-01-7" in out
+    code, out, _ = run("read_index.py", ASSETS / "visuals.csv", "--category", "signature")
+    assert "V-ORB-" not in out
+
+
+def _orbit_parts(entry):
+    """Boxes (EMU) of the fields of an orbital visual, in reading (z) order, with its frame."""
+    import math
+    slide = Presentation(ASSETS / "visuals.pptx").slides[entry["slide"] - 1]
+    group = next(s for s in slide.shapes if s.name == entry["id"])
+    boxes = {s.name.split("::", 1)[-1]: abs_box(s) for s in iter_shapes(group)}
+    order = [s.name.split("::", 1)[-1] for s in iter_shapes(group)]
+    ring = next(abs_box(s) for s in iter_shapes(group) if "decoration#1" in s.name)
+    return boxes, order, ring, math
+
+
+@pytest.mark.parametrize("vid", [e["id"] for e in load_index(ASSETS / "visuals.csv") if e["id"].startswith("V-ORB-")])
+def test_orbit_geometry(vid):
+    """No text box overlaps another or crosses the ring, everything inside the frame, centre then clockwise from 12."""
+    entry = next(e for e in load_index(ASSETS / "visuals.csv") if e["id"] == vid)
+    boxes, order, ring, math = _orbit_parts(entry)
+    emu = 914400
+    frame = {"full": (0.6, 1.2, 12.133, 4.55), "half": (0.6, 1.2, 5.9, 4.2)}[entry["frame"]]
+    fx1, fy1, fx2, fy2 = (round(v * emu) for v in (frame[0], frame[1], frame[0] + frame[2], frame[1] + frame[3]))
+    fields = [f["name"] for f in entry["field_list"] if f["type"] == "text"]
+    for name in fields:
+        x1, y1, x2, y2 = boxes[name]
+        assert fx1 - 9 <= x1 and fy1 - 9 <= y1 and x2 <= fx2 + 9 and y2 <= fy2 + 9, f"{vid}: {name} leaves the frame"
+    # text boxes beside the satellites (and the takeaway) never overlap any other field
+    side = [n for n in fields if n.endswith(" text") and n != "Centre text"] + (["Takeaway"] if "Takeaway" in fields else [])
+    for a in side:
+        for b in fields:
+            if a == b or (b == "Centre text" and a == "Centre"):
+                continue
+            ax1, ay1, ax2, ay2 = boxes[a]
+            bx1, by1, bx2, by2 = boxes[b]
+            assert ax2 <= bx1 or bx2 <= ax1 or ay2 <= by1 or by2 <= ay1, f"{vid}: {a} overlaps {b}"
+    # ... and stay outside the ring (the first decoration): every corner farther than its radius
+    cx, cy = (ring[0] + ring[2]) / 2, ring[1] + (ring[3] - ring[1]) / 2
+    rx, ry = (ring[2] - ring[0]) / 2, (ring[3] - ring[1]) / 2
+    if entry["id"].startswith("V-ORB-03"):  # the half ring's box starts at the centre
+        cx, rx = ring[0], ring[2] - ring[0]
+    for a in side:
+        x1, y1, x2, y2 = boxes[a]
+        for px in (x1, x2):
+            for py in (y1, y2):
+                assert ((px - cx) / rx) ** 2 + ((py - cy) / ry) ** 2 > 1, f"{vid}: {a} crosses the ring"
+    # reading order: centre first, then each ring clockwise from 12 o'clock
+    sats = [n for n in fields if re.fullmatch(r"(Satellite|Inner|Outer) \d+", n)]
+    assert order.index("Centre") < min(order.index(n) for n in sats)
+    assert [order.index(n) for n in sats] == sorted(order.index(n) for n in sats)
+    for prefix in ("Satellite", "Inner", "Outer"):
+        ring_sats = [n for n in sats if n.startswith(prefix + " ")]
+        if not ring_sats:
+            continue
+        x0, y0 = (boxes["Centre"][0] + boxes["Centre"][2]) / 2, None
+        y0 = boxes["Centre"][3]  # bottom of the label box, close to the centre of the disc
+        angles = []
+        for n in ring_sats:
+            x1, y1, x2, y2 = boxes[n]
+            # clockwise angle from 12 o'clock, in degrees (y grows downwards)
+            angles.append(math.degrees(math.atan2((x1 + x2) / 2 - x0, y0 - (y1 + y2) / 2)) % 360)
+        assert angles == sorted(angles) and angles[0] < 360 / len(ring_sats) + 1, f"{vid}: {prefix} order {angles}"
+
+
 def test_icons_bundle():
     data = json.loads((ASSETS / "icons" / "lucide.json").read_text(encoding="utf-8"))
     assert len(data) > 1500 and "rocket" in data and data["rocket"]["tags"]
