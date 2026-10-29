@@ -4,6 +4,9 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [Unreleased]
 
+### Added
+- **JSON Schema for deck.json**, `assets/deck.schema.json` (draft 2020-12): every key, layout reference, `fill` value type (text, bullets, tables, images, icons, SVG, charts, waterfall, Gantt, shading, positions), `insert`, `theme`, `logo`, `skeleton` and the other deck options, so agents and tools that do not read the reference can check their specs. `scripts/validate_spec.py deck.json` validates a spec with the standard library only (JSON report, exit 0 valid, 1 invalid, 2 unreadable). Tests check that the shipped examples validate and that the schema's keys, sources and colour names match `build_deck.py`.
+
 ## [1.2.0] - 2026-10-27
 
 ### Added
