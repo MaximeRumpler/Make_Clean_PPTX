@@ -12,33 +12,33 @@
       "role": "Main text colour (token ink: titles, key numbers) and, lightened, captions and labels (token muted). Also the fill of the few panels drawn in ink.",
       "neutral": "111111",
       "uses": {
-        "text": 971,
+        "text": 1060,
         "fill": 27,
         "line": 131,
         "chart_series": 0,
-        "entries": 120
+        "entries": 133
       }
     },
     "lt1": {
       "role": "Slide background (token paper), text on dark fills, and, darkened, rules and borders (token line).",
       "neutral": "FFFFFF",
       "uses": {
-        "text": 135,
-        "fill": 52,
-        "line": 259,
+        "text": 160,
+        "fill": 118,
+        "line": 321,
         "chart_series": 0,
-        "entries": 90
+        "entries": 103
       }
     },
     "dk2": {
       "role": "Body text (token ink2).",
       "neutral": "404040",
       "uses": {
-        "text": 474,
+        "text": 540,
         "fill": 0,
         "line": 0,
         "chart_series": 0,
-        "entries": 99
+        "entries": 112
       }
     },
     "lt2": {
@@ -57,10 +57,10 @@
       "neutral": "1F1F1F",
       "uses": {
         "text": 0,
-        "fill": 98,
-        "line": 25,
+        "fill": 111,
+        "line": 35,
         "chart_series": 47,
-        "entries": 70
+        "entries": 83
       }
     },
     "accent2": {
@@ -68,10 +68,10 @@
       "neutral": "595959",
       "uses": {
         "text": 0,
-        "fill": 39,
+        "fill": 51,
         "line": 4,
         "chart_series": 4,
-        "entries": 17
+        "entries": 21
       }
     },
     "accent3": {
@@ -80,9 +80,9 @@
       "uses": {
         "text": 4,
         "fill": 25,
-        "line": 14,
+        "line": 80,
         "chart_series": 8,
-        "entries": 23
+        "entries": 36
       }
     },
     "accent4": {
@@ -100,11 +100,11 @@
       "role": "Fifth step: light fills and levels. Carries ink text; used as a subtitle colour on dark slides.",
       "neutral": "D0D0D0",
       "uses": {
-        "text": 6,
+        "text": 19,
         "fill": 43,
         "line": 2,
         "chart_series": 6,
-        "entries": 31
+        "entries": 44
       }
     },
     "accent6": {
@@ -154,8 +154,8 @@
       "role": "Everything else: body, captions, labels, table and chart text (theme font +mn).",
       "neutral": "Arial",
       "uses": {
-        "runs": 1386,
-        "entries": 122
+        "runs": 1579,
+        "entries": 135
       }
     }
   },
@@ -272,23 +272,23 @@
   },
   "pairs": [
     {
-      "text": "muted",
+      "text": "ink",
       "on": "paper",
       "kind": "text",
-      "runs": 371,
+      "runs": 421,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
         "dk1",
         "lt1"
       ],
-      "neutral_ratio": 5.06
+      "neutral_ratio": 18.88
     },
     {
       "text": "ink2",
       "on": "paper",
       "kind": "text",
-      "runs": 346,
+      "runs": 412,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
@@ -298,17 +298,30 @@
       "neutral_ratio": 10.37
     },
     {
-      "text": "ink",
+      "text": "muted",
       "on": "paper",
       "kind": "text",
-      "runs": 345,
+      "runs": 384,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
         "dk1",
         "lt1"
       ],
-      "neutral_ratio": 18.88
+      "neutral_ratio": 5.06
+    },
+    {
+      "text": "paper",
+      "on": "a1",
+      "kind": "text",
+      "runs": 102,
+      "smallest_pt": 10.0,
+      "min_ratio": 4.5,
+      "slots": [
+        "lt1",
+        "accent1"
+      ],
+      "neutral_ratio": 16.48
     },
     {
       "text": "ink",
@@ -322,19 +335,6 @@
         "lt2"
       ],
       "neutral_ratio": 16.87
-    },
-    {
-      "text": "paper",
-      "on": "a1",
-      "kind": "text",
-      "runs": 89,
-      "smallest_pt": 10.0,
-      "min_ratio": 4.5,
-      "slots": [
-        "lt1",
-        "accent1"
-      ],
-      "neutral_ratio": 16.48
     },
     {
       "text": "ink2",
@@ -353,7 +353,7 @@
       "text": "paper",
       "on": "a2",
       "kind": "text",
-      "runs": 31,
+      "runs": 43,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
@@ -374,6 +374,19 @@
         "accent3"
       ],
       "neutral_ratio": 5.62
+    },
+    {
+      "text": "a5",
+      "on": "a1",
+      "kind": "text",
+      "runs": 18,
+      "smallest_pt": 10.0,
+      "min_ratio": 4.5,
+      "slots": [
+        "accent5",
+        "accent1"
+      ],
+      "neutral_ratio": 10.69
     },
     {
       "text": "ink",
@@ -478,19 +491,6 @@
         "accent5"
       ],
       "neutral_ratio": 6.72
-    },
-    {
-      "text": "a5",
-      "on": "a1",
-      "kind": "text",
-      "runs": 5,
-      "smallest_pt": 10.0,
-      "min_ratio": 4.5,
-      "slots": [
-        "accent5",
-        "accent1"
-      ],
-      "neutral_ratio": 10.69
     },
     {
       "text": "ink2",

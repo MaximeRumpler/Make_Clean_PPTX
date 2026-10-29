@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this skill in your work, please cite it as below."
 title: "Make Clean PPTX"
-abstract: "Agent skill that turns notes into clean, sober PowerPoint decks from a library of 54 layouts and 68 visuals."
+abstract: "Agent skill that turns notes into clean, sober PowerPoint decks from a library of 54 layouts and 81 visuals."
 type: software
 authors:
   - given-names: Maxime

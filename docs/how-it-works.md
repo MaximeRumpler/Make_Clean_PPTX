@@ -34,7 +34,7 @@ Nothing is drawn from scratch: the slides already exist and are cloned, so spaci
 
 ## Inside the libraries
 
-| **Layouts** (54) | **Visuals** (68) |
+| **Layouts** (54) | **Visuals** (81) |
 |:---|:---|
 | Cover 5 · Agenda 3 · Divider 3 · Statement 6 · Text 9 · Media 3 · Team 1 · Frame 6 · KPI 4 · Table 2 · Decision 4 · Closing 3 · Editorial 4 · Process 1 | Compare 6 · Evolve 6 · Compose 6 · Relate 5 · KPI 5 · Matrix 6 · Process 7 · Time 6 · Structure 9 · Frameworks 6 · Signature 6 (opt-in) |
 | Chosen by what the message *is*: one figure, a stance and three reasons, a choice between options, a chart that needs commentary. Frames receive visuals. | Chosen by what the data *does*: compare, evolve, break down, relate, prioritise, plan, structure. Every quantitative visual is a native, editable chart. |

@@ -4,6 +4,9 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [Unreleased]
 
+### Added
+- **Orbital diagrams**, first visuals of a new opt-in **Expressive** family: `V-ORB-01-<n>` one orbit with 3 to 8 satellites, `V-ORB-02-<inner>x<outer>` two orbits (2x4, 3x5, 3x6, 4x6), `V-ORB-03-<n>` half orbit for a half frame (3 to 5). Geometry is computed in the generator, one slide per count, checked at build time and in tests (no overlaps, nothing crosses the ring or leaves the frame, centre then clockwise from 12 o'clock). `read_index.py` hides rows tagged `expressive` unless asked for, like `signature`.
+
 ## [1.2.0] - 2026-10-27
 
 ### Added

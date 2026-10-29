@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" role="img" aria-labelledby="t d">
   <title id="t">Make_Clean_PPTX</title>
-  <desc id="d">Agent skill that turns notes into PowerPoint decks from 54 slide layouts and 68 charts and diagrams.</desc>
+  <desc id="d">Agent skill that turns notes into PowerPoint decks from 54 slide layouts and 81 charts and diagrams.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#1C2333"/>
@@ -23,7 +23,7 @@
     <rect x="236" y="176" width="190" height="34" rx="17" fill="none" stroke="#3B4660" stroke-width="1.5"/>
     <text x="331" y="198" text-anchor="middle" fill="#9AA5B8">54 LAYOUTS</text>
     <rect x="440" y="176" width="190" height="34" rx="17" fill="none" stroke="#3B4660" stroke-width="1.5"/>
-    <text x="535" y="198" text-anchor="middle" fill="#9AA5B8">68 VISUALS</text>
+    <text x="535" y="198" text-anchor="middle" fill="#9AA5B8">81 VISUALS</text>
   </g>
 
   <!-- stack of slides -->

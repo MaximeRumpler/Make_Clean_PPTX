@@ -12,6 +12,7 @@ Examples
   read_index.py visuals --where frame=wide --where kind=chart
   read_index.py visuals --id V-COM-01
   read_index.py visuals --category signature     # opt-in metaphors, hidden otherwise
+  read_index.py visuals --category expressive    # opt-in compositions (orbits), hidden otherwise
   read_index.py path/to/index.csv --format json
 
 "layouts" and "visuals" resolve to the bundled indexes (or to your own, see
@@ -177,15 +178,16 @@ def search(entries: list[dict], query: str, top: int = 10) -> list[dict]:
     return [e for _, e in scored[:top]]
 
 
-# Rows tagged with this word are opt-in (signature metaphors, see index-schema.md):
-# left out of searches and listings unless the request names them.
-OPT_IN_TAG = "signature"
+# Rows tagged with one of these words are opt-in (signature metaphors, expressive
+# compositions, see index-schema.md): left out of searches and listings unless the
+# request names the word.
+OPT_IN_TAGS = ("signature", "expressive")
 
 
 def opt_in_filter(entries: list[dict], *requests: str | None) -> list[dict]:
-    if any(OPT_IN_TAG in (r or "").lower() for r in requests):
-        return entries
-    return [e for e in entries if OPT_IN_TAG not in e.get("tags", "").lower().split()]
+    asked = " ".join((r or "").lower() for r in requests)
+    hidden = {t for t in OPT_IN_TAGS if t not in asked}
+    return [e for e in entries if not hidden & set(e.get("tags", "").lower().split())]
 
 
 def where(entries: list[dict], conditions: list[str]) -> list[dict]:

@@ -12,7 +12,7 @@ library/
   style-tokens.json      style tokens: font pair, corners, cards, background, title case, numbering
   tools/lib.js           drawing kit: text fields, shapes, frames, charts, tables, icon slots
   layouts/*.js           54 layouts, by family
-  visuals/*.js           68 visuals, by family (_kit.js: legends, markers, keys, cards)
+  visuals/*.js           81 visuals, by family (_kit.js: legends, markers, keys, cards)
   tools/build.js         pptxgenjs -> out/<lib>.pptx + out/<lib>.registry.json
   tools/post.py          theme colours and fonts, visual groups, deterministic zip -> skill assets/
   tools/build_index.py   registry -> assets/<lib>.csv
