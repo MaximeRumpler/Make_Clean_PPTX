@@ -8,6 +8,10 @@ All notable changes to this project are documented here. Format based on [Keep a
 - **JSON Schema for deck.json**, `assets/deck.schema.json` (draft 2020-12): every key, layout reference, `fill` value type (text, bullets, tables, images, icons, SVG, charts, waterfall, Gantt, shading, positions), `insert`, `theme`, `logo`, `skeleton` and the other deck options, so agents and tools that do not read the reference can check their specs. `scripts/validate_spec.py deck.json` validates a spec with the standard library only (JSON report, exit 0 valid, 1 invalid, 2 unreadable). Tests check that the shipped examples validate and that the schema's keys, sources and colour names match `build_deck.py`.
 - **Orbital diagrams**, first visuals of a new opt-in **Expressive** family: `V-ORB-01-<n>` one orbit with 3 to 8 satellites, `V-ORB-02-<inner>x<outer>` two orbits (2x4, 3x5, 3x6, 4x6), `V-ORB-03-<n>` half orbit for a half frame (3 to 5). Geometry is computed in the generator, one slide per count, checked at build time and in tests (no overlaps, nothing crosses the ring or leaves the frame, centre then clockwise from 12 o'clock). `read_index.py` hides rows tagged `expressive` unless asked for, like `signature`.
 
+### Changed
+- Docs brought in line with the Make PPTX set: the same set table and footer in every README, gallery badge at 135 slides, opt-in Signature and Expressive visuals explained in the README, gallery and how-it-works, the quick choices and skeleton mode linked from the README, the deck.json schema and `"theme"`/`"logo"` keys in how-it-works, plainer plugin and citation descriptions, theme-contract counts refreshed for 135 slides.
+- Gallery: `gallery.py --html-only` also keeps the counts and version in `<head>` in sync; card ids and focus rings use a darker green in the light theme (WCAG AA contrast); the header has a short Make PPTX set section; `sitemap.xml` date refreshed.
+
 ## [1.2.0] - 2026-10-27
 
 ### Added

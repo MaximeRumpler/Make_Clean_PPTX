@@ -8,7 +8,9 @@ Writes
   docs/thumbnails/<id>.jpg   one image per layout and per visual
   docs/catalog.json          data for the GitHub Pages gallery (docs/index.html)
   docs/index.html            static cards, counts and heading between the <!-- x:start/end -->
-                             markers, so crawlers and readers without JavaScript see the gallery
+                             markers, so crawlers and readers without JavaScript see the gallery;
+                             also the counts and version quoted in <head>
+                             (the rest of the page, header text included, is edited by hand)
   CATALOG.md                 the same catalogue, readable on GitHub
   docs/preview.jpg           a mosaic used in the README
 Needs LibreOffice and poppler (same as render_check.py), except with --html-only.
@@ -60,7 +62,13 @@ def write_static_html(catalog: list) -> None:
     page = _fill(page, "stats", stats)
     page = _fill(page, "heading", f'{n["layouts"]} slide layouts and {n["visuals"]} charts and diagrams')
     page = _fill(page, "cards", cards)
-    path.write_text(page, encoding="utf-8")
+    # counts and version quoted in <head> (title, description, Open Graph, JSON-LD)
+    version = json.loads((REPO / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))["version"]
+    head, sep, body = page.partition("</head>")
+    head = re.sub(r"\b\d+ slide layouts", f'{n["layouts"]} slide layouts', head)
+    head = re.sub(r"\b\d+ ((?:editable )?charts and diagrams)", lambda m: f'{n["visuals"]} {m.group(1)}', head)
+    head = re.sub(r'"softwareVersion": "[^"]*"', f'"softwareVersion": "{version}"', head)
+    path.write_text(head + sep + body, encoding="utf-8")
 
 
 def render(lib: str) -> dict:

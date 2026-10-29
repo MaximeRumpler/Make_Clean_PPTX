@@ -1,15 +1,15 @@
 <div align="center">
 
-[![Make Clean PPTX, agent skill that turns notes into PowerPoint decks: 54 layouts, 81 charts and diagrams](docs/banner.svg)](https://maximerumpler.github.io/Make_Clean_PPTX/)
+[![Make_Clean_PPTX, an agent skill that turns notes into PowerPoint decks: 54 slide layouts, 81 charts and diagrams](docs/banner.svg)](https://maximerumpler.github.io/Make_Clean_PPTX/)
 
-*Give your AI assistant your notes. Get back a clean, professional PowerPoint.*
+*Give your AI assistant your notes. Get back a PowerPoint deck with one idea per slide and real, editable charts.*
 
 <sub lang="fr">En français : donnez vos notes à votre assistant IA, recevez une présentation PowerPoint propre, une idée par diapositive.</sub>
 
 [![CI](https://img.shields.io/github/actions/workflow/status/MaximeRumpler/Make_Clean_PPTX/ci.yml?branch=main&style=flat-square&label=CI&color=10B981&labelColor=1C2333)](https://github.com/MaximeRumpler/Make_Clean_PPTX/actions/workflows/ci.yml)
-[![License](https://img.shields.io/badge/License-EUPL--1.2-10B981?style=flat-square&labelColor=1C2333)](LICENSE)
-[![Gallery](https://img.shields.io/badge/Gallery-122_slides-10B981?style=flat-square&labelColor=1C2333)](https://maximerumpler.github.io/Make_Clean_PPTX/)
-[![Claude Code](https://img.shields.io/badge/Claude_Code-plugin-D97757?style=flat-square&logo=anthropic&logoColor=white&labelColor=1C2333)](#install)
+[![Licence](https://img.shields.io/badge/Licence-EUPL--1.2-10B981?style=flat-square&labelColor=1C2333)](LICENSE)
+[![Gallery](https://img.shields.io/badge/Gallery-135_slides-10B981?style=flat-square&labelColor=1C2333)](https://maximerumpler.github.io/Make_Clean_PPTX/)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-plugin-10B981?style=flat-square&labelColor=1C2333)](#install)
 
 </div>
 
@@ -23,7 +23,7 @@
 
 ## What it does
 
-Make Clean PPTX is a *skill*: a folder of instructions and small tools that an AI assistant such as Claude or Codex uses to make presentations.
+Make_Clean_PPTX is a *skill*: a folder of instructions and small tools that an AI assistant such as Claude or Codex uses to make presentations.
 
 You give it your notes, a report or a few figures, in English or French. It writes one message per slide, takes a matching slide design and chart from its library, and checks the file before handing it over. It never makes up numbers.
 
@@ -53,6 +53,8 @@ Make an 8-slide deck in French from these notes.
 Review my-deck.pptx and make it look professional.
 ```
 
+It may ask a few quick choices first (file format, a confidentiality label, length, extra accessibility care). Every choice is optional and the defaults add nothing. Content you cannot share? Ask for a skeleton deck that you fill in yourself, offline if needed. Both are explained in the [Get started guide](https://github.com/MaximeRumpler/Make_PPTX/blob/main/docs/get-started.md#5-the-quick-choices-it-asks-about) and the [Private mode page](https://github.com/MaximeRumpler/Make_PPTX/blob/main/docs/private-mode.md).
+
 * * *
 
 ## What's inside
@@ -61,26 +63,26 @@ Review my-deck.pptx and make it look professional.
 |:---:|:---:|:---:|
 | covers, key messages, figures, options, next steps | bars, waterfalls, matrices, timelines, org charts | bundled, plus free online icons and photos |
 
+19 of the visuals are opt-in: six *signature* illustrations (gears, a light bulb, a summit…) and thirteen *expressive* orbital diagrams. The skill uses them only when you ask, once or twice per deck at most.
+
 Browse them in the [gallery](https://maximerumpler.github.io/Make_Clean_PPTX/), or download a [finished example deck](https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest) made from a page of notes. How it works and how to add your own designs: [docs/how-it-works.md](docs/how-it-works.md).
 
 * * *
 
 ## The Make PPTX set
 
-Part of [**Make PPTX**](https://github.com/MaximeRumpler/Make_PPTX), a set of three skills from your notes to a finished deck.
-
-*Start with Make Clean for the structure. Add a style and your brand colours when you need them.*
+Part of [**Make PPTX**](https://github.com/MaximeRumpler/Make_PPTX), three skills that take your notes to a finished deck. Each one works on its own.
 
 | **Make_Clean_PPTX** | **Make_Style_PPTX** | **Make_Colors_PPTX** |
 |:---|:---|:---|
-| **Form.** Notes in, clean deck out. | **Look.** The same deck in another style: editorial, organic, geometric, tech, soft. | **Brand.** Your colours, fonts and logo, from your brand guidelines, website or example files. |
-| This repository | In preparation | In preparation |
+| **Form.** Notes in, a clean deck out: one message per slide, tested layouts and charts. | **Look.** The same deck in another style: other shapes, arrangements and backgrounds. | **Brand.** Your colours, fonts and logo, from your brand guidelines, website or example files. |
+| [Install](https://github.com/MaximeRumpler/Make_Clean_PPTX#install) · [Gallery](https://maximerumpler.github.io/Make_Clean_PPTX/) | In preparation | In preparation |
 
-Each one works on its own; Make_Clean_PPTX is all you need to start.
+*Start with Make_Clean_PPTX for the structure. Add a style and your brand colours when you need them.*
 
 * * *
 
-## License
+## Licence
 
 [EUPL-1.2](LICENSE), the open source licence of the European Union: free to use; if you share an improved version, share it under the same licence. **You own the decks you make.** The EUPL does not apply to them and no attribution is required ([NOTICE](NOTICE)). Contributions are welcome: [CONTRIBUTING.md](CONTRIBUTING.md).
 
