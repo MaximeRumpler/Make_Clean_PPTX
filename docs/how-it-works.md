@@ -25,6 +25,7 @@ Nothing is drawn from scratch: the slides already exist and are cloned, so spaci
 
 ## Manual install and requirements
 
+- **Claude Code marketplaces:** `MaximeRumpler/Make_PPTX` is the marketplace of the set (`make-pptx`, one entry per public skill: `/plugin install make-clean-pptx@make-pptx`). This repository is also a marketplace of its own (`make-clean-pptx@make-clean-pptx`), kept for earlier installs.
 - **Claude Code without the plugin:** `git clone` this repository, then `./install.sh` (copies the skill to `~/.claude/skills/`; `--project` for `./.claude/skills/`).
 - **Codex, Cursor, Copilot, Gemini CLI and other assistants:** `npx skills add MaximeRumpler/Make_Clean_PPTX`, or copy `skills/make-clean-pptx/` where it loads skills, or point it at [`AGENTS.md`](../AGENTS.md).
 - **Windows:** the plugin, the zip and `npx skills add` work as is; `install.sh` needs Git Bash or WSL, or copy the `skills/make-clean-pptx/` folder by hand.
@@ -37,7 +38,7 @@ Nothing is drawn from scratch: the slides already exist and are cloned, so spaci
 | **Layouts** (54) | **Visuals** (81) |
 |:---|:---|
 | Cover 5 · Agenda 3 · Divider 3 · Statement 6 · Text 9 · Media 3 · Team 1 · Frame 6 · KPI 4 · Table 2 · Decision 4 · Closing 3 · Editorial 4 · Process 1 | Compare 6 · Evolve 6 · Compose 6 · Relate 5 · KPI 5 · Matrix 6 · Process 7 · Time 6 · Structure 9 · Frameworks 6 · Signature 6 (opt-in) · Expressive 13 (opt-in) |
-| Chosen by what the message *is*: one figure, a stance and three reasons, a choice between options, a chart that needs commentary. Frames receive visuals. | Chosen by what the data *does*: compare, evolve, break down, relate, prioritise, plan, structure. Every quantitative visual is a native, editable chart. Signature and Expressive visuals are used only on request. |
+| Chosen by what the message *is*: one figure, a stance and three reasons, a choice between options, a chart that needs commentary. Frames receive visuals. | Chosen by what the data *does*: compare, evolve, break down, relate, prioritise, plan, structure. Every quantitative visual is a native, editable chart. Signature and Expressive visuals are opt-in and used sparingly, adapted to each deck. |
 
 Each row of the index (`skills/make-clean-pptx/assets/*.csv`) describes the slide, when to use it, its tags, and every editable field with its character limit. The agent searches the index instead of opening slides:
 

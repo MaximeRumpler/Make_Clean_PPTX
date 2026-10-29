@@ -48,7 +48,7 @@ Then refine with the index: `use_when`, `density`, `style` (Standard, Editorial,
 - Alternate **dense and airy** slides (`density` column): after a table, a statement or a figure.
 - Use the **Bold** layouts (dark covers, dividers, panels) sparingly: two or three per deck give structure, more make it heavy.
 - A plain text slide between two visual ones is fine. Do not chase novelty.
-- **Signature visuals** (gears, bulb, puzzle, road, mountain, target): one or two per deck at most, a single metaphor, only when asked for or when the metaphor is the message (visual-selection.md, section 6).
+- **Signature visuals** (gears, bulb, puzzle, road, mountain, target): sparingly, a single metaphor, only when asked for or when the metaphor is the message; how many depends on the request and the deck (visual-selection.md, sections 6 and 7).
 
 ## Fitting the text
 

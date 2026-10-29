@@ -15,7 +15,7 @@ Turn any content into a clean, readable deck built from tested slide designs.
 The design already exists, in two libraries bundled in `assets/`:
 
 - **layouts** (54 slides): the form of a slide. Covers, agendas, statements, columns, KPIs, decisions, closings, and *frames* that receive a visual.
-- **visuals** (81 components): the content made visual. Native charts, matrices, processes, timelines, structures, frameworks, and a few opt-in *signature* metaphors and *expressive* compositions (one or two per deck at most, see visual-selection.md).
+- **visuals** (81 components): the content made visual. Native charts, matrices, processes, timelines, structures, frameworks, and a few opt-in *signature* metaphors and *expressive* compositions (used sparingly, the amount judged per deck, see visual-selection.md).
 
 Each library has a CSV index that describes every slide and every editable field with its character limit. The skill never draws slides from scratch: it **clones** the right layout, **inserts** the right visual into its frame, and fills the named fields. Everything is neutral black, grey and white, built on theme colours, so applying the user's PowerPoint theme rebrands the whole deck.
 

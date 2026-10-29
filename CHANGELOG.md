@@ -10,6 +10,8 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ### Changed
 - Docs brought in line with the Make PPTX set: the same set table and footer in every README, gallery badge at 135 slides, opt-in Signature and Expressive visuals explained in the README, gallery and how-it-works, the quick choices and skeleton mode linked from the README, the deck.json schema and `"theme"`/`"logo"` keys in how-it-works, plainer plugin and citation descriptions, theme-contract counts refreshed for 135 slides.
+- Claude Code install now goes through the shared `make-pptx` marketplace of the set (`/plugin marketplace add MaximeRumpler/Make_PPTX`, `/plugin install make-clean-pptx@make-pptx`) in the README, gallery and how-it-works. This repository's own marketplace is unchanged, so earlier installs keep working.
+- Opt-in Signature and Expressive visuals: no fixed number per deck any more. SKILL.md, layout-rules.md, visual-selection.md and the index `limits` say to use them sparingly and judge the amount per deck from the request, the audience and the content style; the opt-in rule itself is unchanged.
 - Gallery: `gallery.py --html-only` also keeps the counts and version in `<head>` in sync; card ids and focus rings use a darker green in the light theme (WCAG AA contrast); the header has a short Make PPTX set section; `sitemap.xml` date refreshed.
 
 ## [1.2.0] - 2026-10-27

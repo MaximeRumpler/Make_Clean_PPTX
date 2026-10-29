@@ -35,13 +35,15 @@ The slides are black, grey and white. Apply your company's PowerPoint theme and 
 
 | **Claude.ai or Claude desktop** | **Claude Code** | **Codex, Cursor, Copilot, Gemini CLI and others** |
 |:---|:---|:---|
-| 1. Download [**make-clean-pptx.zip**](https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest/download/make-clean-pptx.zip)<br>2. *Settings → Capabilities*: turn on *Code execution and file creation*<br>3. *Skills → Upload skill*, choose the zip | `/plugin marketplace add MaximeRumpler/Make_Clean_PPTX`<br>then `/plugin install make-clean-pptx@make-clean-pptx` | `npx skills add MaximeRumpler/Make_Clean_PPTX`<br>It asks which assistant you use. Needs [Node.js](https://nodejs.org). |
+| 1. Download [**make-clean-pptx.zip**](https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest/download/make-clean-pptx.zip)<br>2. *Settings → Capabilities*: turn on *Code execution and file creation*<br>3. *Skills → Upload skill*, choose the zip | `/plugin marketplace add MaximeRumpler/Make_PPTX`<br>then `/plugin install make-clean-pptx@make-pptx` | `npx skills add MaximeRumpler/Make_Clean_PPTX`<br>It asks which assistant you use. Needs [Node.js](https://nodejs.org). |
 
 **Not sure which one?** If you talk to Claude in a browser or in the Claude app, use the first column: nothing to install on your computer. Without step 2, Claude can read the skill but cannot build the file. First time with a skill? The [Get started guide](https://github.com/MaximeRumpler/Make_PPTX/blob/main/docs/get-started.md) walks you through it.
 
 Works on Windows, macOS and Linux. The second and third columns need Python on your computer; the skill tells you if it, or anything else, is missing. Other ways (manual copy, `install.sh`): [docs/how-it-works.md](docs/how-it-works.md#manual-install-and-requirements).
 
-**Update**: Claude Code, `/plugin marketplace update MaximeRumpler/Make_Clean_PPTX`; Claude.ai, upload the new zip; other assistants, run the `npx skills add` line again.
+The Claude Code command adds `make-pptx`, the marketplace of the Make PPTX set. Installed earlier with `/plugin marketplace add MaximeRumpler/Make_Clean_PPTX`? That still works; update with `/plugin marketplace update make-clean-pptx`.
+
+**Update**: Claude Code, `/plugin marketplace update make-pptx`; Claude.ai, upload the new zip; other assistants, run the `npx skills add` line again.
 
 ## Use
 
@@ -63,7 +65,7 @@ It may ask a few quick choices first (file format, a confidentiality label, leng
 |:---:|:---:|:---:|
 | covers, key messages, figures, options, next steps | bars, waterfalls, matrices, timelines, org charts | bundled, plus free online icons and photos |
 
-19 of the visuals are opt-in: six *signature* illustrations (gears, a light bulb, a summit…) and thirteen *expressive* orbital diagrams. The skill uses them only when you ask, once or twice per deck at most.
+19 of the visuals are opt-in: six *signature* illustrations (gears, a light bulb, a summit…) and thirteen *expressive* orbital diagrams. The skill uses them only when you ask or when the content clearly suits them, and sparingly: how many depends on your request, your audience and the style of the content.
 
 Browse them in the [gallery](https://maximerumpler.github.io/Make_Clean_PPTX/), or download a [finished example deck](https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest) made from a page of notes. How it works and how to add your own designs: [docs/how-it-works.md](docs/how-it-works.md).
 
