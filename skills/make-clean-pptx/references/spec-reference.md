@@ -2,6 +2,8 @@
 
 `build_deck.py --spec deck.json` reads one JSON file. Everything except `slides` is optional. Relative file paths in it (images, `.svg` files, `local:` icons, `theme`) are looked up in the folder of deck.json first, then in the working directory; absolute paths are used as they are, and a file found in neither place is reported with both folders. Set `language` to the language tag of the content (`fr-FR`, `en-GB`, `de-DE`…): screen readers and spell checkers use it on every text run.
 
+The whole format is also a JSON Schema (draft 2020-12), `assets/deck.schema.json`, for tools and agents that write deck.json without reading this page. `python3 scripts/validate_spec.py deck.json` checks a spec against it with the standard library only and prints `{"valid": …, "errors": [{"path": "slides[2].fill.Title", "message": …}]}` (exit `0` valid, `1` invalid, `2` not readable JSON); any draft 2020-12 validator gives the same answer. The schema is a little stricter than the build: a key it does not know is an error, where `build_deck.py` only warns (or ignores it inside a `fill` value). Colour names are listed in lower case. Whether a field name exists in a layout is not in the schema: the build reports that.
+
 ```json
 {
   "output": "build/deck.pptx",

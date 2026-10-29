@@ -90,4 +90,8 @@ Built by [**Maxime Rumpler**](https://github.com/MaximeRumpler) · [![KairosTech
 
 <sub>With thanks to the creators and contributors of [impeccable](https://github.com/pbakaus/impeccable), whose design skills for AI agents inspired this set, and of Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), which guides how its texts are written.</sub>
 
+<p align="right">
+  <img src="https://komarev.com/ghpvc/?username=MaximeRumpler&repo=Make_Clean_PPTX&color=44cc11&style=flat-square&label=views" alt="Repository Views" />
+</p>
+
 </div>

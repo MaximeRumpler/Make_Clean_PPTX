@@ -85,9 +85,9 @@ Full reference: [spec-reference.md](../skills/make-clean-pptx/references/spec-re
 ```text
 skills/make-clean-pptx/     the skill (self-contained: copy this folder anywhere)
 ├── SKILL.md                the workflow the agent follows
-├── assets/                 layouts.pptx · visuals.pptx · their CSV indexes · icons/
+├── assets/                 layouts.pptx · visuals.pptx · their CSV indexes · icons/ · deck.schema.json
 ├── scripts/                read_index · build_deck · find_icon · fetch_image
-│                           lint_deck · render_check · inspect_template · fetch_templates · doctor
+│                           lint_deck · render_check · inspect_template · fetch_templates · doctor · validate_spec
 └── references/             layout rules · visual selection · spec · review checklist · icons · images · index schema
 agents/deck-reviewer.md     review sub-agent (Claude Code plugin)
 library/                    generators of the two libraries (pptxgenjs + Python post-processing)
