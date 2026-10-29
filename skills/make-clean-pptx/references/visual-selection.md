@@ -91,8 +91,8 @@ Check the `frame` column: `full` visuals belong in L-31 / L-33, `wide` in L-32 /
 The **Signature** family (`V-SIG-*`: meshing gears, light bulb, puzzle, winding road, mountain and summit flag, target) holds metaphor illustrations that give a deck a recognisable tone. A metaphor is strong once and tiring the third time, and a deck full of them reads as clip art, so they are opt-in: hidden from searches unless asked for (`read_index.py visuals --category signature`, see index-schema.md).
 
 - **Only when** the user asks for a tone, an identity or "something memorable", or when the metaphor genuinely *is* the message (parts that drive each other: gears; four parts that make a whole: puzzle; an ambition reached in stages: mountain).
-- **At most one or two per deck**, typically on the opening of a chapter or the closing vision, never as filler.
-- **One metaphor per deck**: never two different ones (no gears on slide 3 and a puzzle on slide 9). Reuse the same one if a second is needed.
+- **How many: no fixed number.** Judge per deck from the request, the audience and the content style: a sober board update may need none, a keynote or workshop deck can carry more. Typical places: the opening of a chapter, the closing vision. Never as filler.
+- **Usually one metaphor per deck**: gears on slide 3 and a puzzle on slide 9 read as clip art. Reuse the same one when a second is needed, unless the request calls for more.
 - **Never for figures or data**: the labels are words. A real plan goes on a timeline (V-TIM-01), real scopes on concentric circles (V-STR-08).
 - Prefer the ordinary visual whenever it says the same thing: the signature is a seasoning, not the meal.
 
@@ -103,4 +103,4 @@ The **Expressive** family holds compositions with a strong shape, for the one sl
 - **Only when** the user asks for it, or when there is a real centre and satellites (an ecosystem, stakeholders around a product, capabilities around a core). Items that are merely parallel go in a list or a grid.
 - **Pick the variant for the exact count**: positions are computed for it, so there is no satellite to delete. Satellites read clockwise from 12 o'clock.
 - **Short words only**: labels of 16 characters, a text of 40 beside each satellite. Denser text goes to V-STR-05 (hub and spoke); more than 8 items go to a list layout.
-- **One per deck** at most.
+- **Sparingly, judged per deck**: it is the slide that stands out, so how many depends on the request and the tone of the content, not on a fixed count.

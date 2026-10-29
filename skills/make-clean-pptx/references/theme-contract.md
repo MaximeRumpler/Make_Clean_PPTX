@@ -15,24 +15,24 @@ A typical brand palette, six distinct hues, breaks both: charts turn into a rain
 
 ## Slots
 
-Each colour slot of the theme, what the libraries use it for, and how many times (text runs, shape fills, lines, chart series or slices) and in how many of the 122 library slides.
+Each colour slot of the theme, what the libraries use it for, and how many times (text runs, shape fills, lines, chart series or slices) and in how many of the 135 library slides.
 
 | Slot | Role | Neutral | Text | Fill | Line | Chart | Slides |
 |---|---|---|---|---|---|---|---|
-| `dk1` | main text (`ink`); lightened for captions and labels (`muted`) | `111111` | 971 | 27 | 131 | 0 | 120 |
-| `lt1` | slide background (`paper`), text on dark fills; darkened for rules (`line`) | `FFFFFF` | 135 | 52 | 259 | 0 | 90 |
-| `dk2` | body text (`ink2`) | `404040` | 474 | 0 | 0 | 0 | 99 |
+| `dk1` | main text (`ink`); lightened for captions and labels (`muted`) | `111111` | 1060 | 27 | 131 | 0 | 133 |
+| `lt1` | slide background (`paper`), text on dark fills; darkened for rules (`line`) | `FFFFFF` | 160 | 118 | 321 | 0 | 103 |
+| `dk2` | body text (`ink2`) | `404040` | 540 | 0 | 0 | 0 | 112 |
 | `lt2` | cards, panels, frames (`surface`) | `F2F2F2` | 0 | 112 | 0 | 0 | 32 |
-| `accent1` | strongest emphasis, main series, dark panels and slides | `1F1F1F` | 0 | 98 | 25 | 47 | 70 |
-| `accent2` | second step, dark secondary panels | `595959` | 0 | 39 | 4 | 4 | 17 |
-| `accent3` | middle step, third series; muted text on dark slides | `8C8C8C` | 4 | 25 | 14 | 8 | 23 |
+| `accent1` | strongest emphasis, main series, dark panels and slides | `1F1F1F` | 0 | 111 | 35 | 47 | 83 |
+| `accent2` | second step, dark secondary panels | `595959` | 0 | 51 | 4 | 4 | 21 |
+| `accent3` | middle step, third series; muted text on dark slides | `8C8C8C` | 4 | 25 | 80 | 8 | 36 |
 | `accent4` | reference series, light fills; kickers on dark slides | `B3B3B3` | 15 | 26 | 16 | 8 | 29 |
-| `accent5` | light fills, levels; subtitles on dark slides | `D0D0D0` | 6 | 43 | 2 | 6 | 31 |
+| `accent5` | light fills, levels; subtitles on dark slides | `D0D0D0` | 19 | 43 | 2 | 6 | 44 |
 | `accent6` | faintest fill (quadrants, logo slots); captions on dark fills | `E6E6E6` | 8 | 31 | 0 | 6 | 27 |
 | `hlink` | hyperlinks (none in the libraries; links people add) | `404040` | 0 | 0 | 0 | 0 | 0 |
 | `folHlink` | visited hyperlinks | `8C8C8C` | 0 | 0 | 0 | 0 | 0 |
 
-Fonts: the **major** font (`+mj`) sets headings, titles and big numbers (227 runs on 68 slides); the **minor** font (`+mn`) sets everything else, including table and chart text (1,386 runs on all 122 slides). The libraries' character limits are measured with Arial metrics: a much wider brand font makes text overflow sooner, so check the render.
+Fonts: the **major** font (`+mj`) sets headings, titles and big numbers (227 runs on 68 slides); the **minor** font (`+mn`) sets everything else, including table and chart text (1,579 runs on all 135 slides). The libraries' character limits are measured with Arial metrics: a much wider brand font makes text overflow sooner, so check the render.
 
 Chart series take the accents in the order `accent1, accent3, accent5, accent2, accent4, accent6`, so that neighbouring series are far apart on the ramp.
 

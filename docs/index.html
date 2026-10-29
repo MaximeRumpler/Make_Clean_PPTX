@@ -44,17 +44,17 @@
 <style>
   :root {
     --bg: #F7F7F5; --card: #FFFFFF; --ink: #111111; --ink2: #404040; --muted: #707070; --line: #E3E3E0;
-    --accent: #10B981; --navy: #1C2333; --chip: #EFEFEC; --shadow: 0 1px 2px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.04);
+    --accent: #10B981; --accent-text: #047857; --navy: #1C2333; --chip: #EFEFEC; --shadow: 0 1px 2px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.04);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #11151F; --card: #1A2030; --ink: #F2F2F2; --ink2: #C9CDD6; --muted: #8E96A8; --line: #2A3245;
-      --chip: #222A3C; --shadow: none;
+      --chip: #222A3C; --shadow: none; --accent-text: #34D399;
     }
   }
   :root[data-theme="dark"] {
     --bg: #11151F; --card: #1A2030; --ink: #F2F2F2; --ink2: #C9CDD6; --muted: #8E96A8; --line: #2A3245;
-    --chip: #222A3C; --shadow: none;
+    --chip: #222A3C; --shadow: none; --accent-text: #34D399;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -86,7 +86,7 @@
   .seg button { border: 0; background: transparent; color: var(--ink2); font: inherit; font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 8px; cursor: pointer; }
   .seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
   input[type=search] { flex: 1 1 220px; min-width: 0; font: inherit; font-size: 14px; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--ink); }
-  input[type=search]:focus, button:focus-visible, .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  input[type=search]:focus, button:focus-visible, .card:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
   .theme { border: 1px solid var(--line); background: var(--card); color: var(--ink2); border-radius: 10px; padding: 8px 11px; font: inherit; font-size: 13px; cursor: pointer; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
   .chips button { border: 1px solid var(--line); background: var(--card); color: var(--ink2); font: inherit; font-size: 12.5px; padding: 5px 11px; border-radius: 999px; cursor: pointer; }
@@ -98,12 +98,13 @@
   main .wrap { padding-top: 26px; padding-bottom: 60px; }
   .grid-title { margin: 0 0 6px; font-size: 18px; letter-spacing: -.01em; }
   .count { color: var(--muted); font-size: 13px; margin: 0 0 16px; }
+  .note { color: var(--ink2); font-size: 13.5px; margin: 0 0 6px; max-width: 760px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; cursor: pointer; text-align: left; padding: 0; font: inherit; color: inherit; box-shadow: var(--shadow); transition: transform .15s ease, border-color .15s ease; }
   .card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
   .card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: #fff; border-bottom: 1px solid var(--line); }
   .card div { padding: 12px 14px 14px; }
-  .id { font: 600 11.5px/1 "SFMono-Regular", Consolas, "Liberation Mono", monospace; color: var(--accent); letter-spacing: .02em; }
+  .id { font: 600 11.5px/1 "SFMono-Regular", Consolas, "Liberation Mono", monospace; color: var(--accent-text); letter-spacing: .02em; }
   .card h3 { margin: 6px 0 4px; font-size: 15px; }
   .card p { margin: 0; color: var(--muted); font-size: 13px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .empty { padding: 60px 0; text-align: center; color: var(--muted); }
@@ -139,9 +140,10 @@
       <a href="https://github.com/MaximeRumpler/Make_PPTX">The Make PPTX set</a>
     </div>
     <div class="how">
-      <section><h2>Install</h2><p>Claude.ai or Claude desktop: download <a href="https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest/download/make-clean-pptx.zip">make-clean-pptx.zip</a>, turn on <em>Code execution and file creation</em> in <em>Settings → Capabilities</em>, then upload the zip under <em>Skills</em>. Claude Code: <code>/plugin marketplace add MaximeRumpler/Make_Clean_PPTX</code>. Other assistants: <code>npx skills add MaximeRumpler/Make_Clean_PPTX</code>.</p></section>
+      <section><h2>Install</h2><p>Claude.ai or Claude desktop: download <a href="https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest/download/make-clean-pptx.zip">make-clean-pptx.zip</a>, turn on <em>Code execution and file creation</em> in <em>Settings → Capabilities</em>, then upload the zip under <em>Skills</em>. Claude Code: <code>/plugin marketplace add MaximeRumpler/Make_PPTX</code>, then <code>/plugin install make-clean-pptx@make-pptx</code>. Other assistants: <code>npx skills add MaximeRumpler/Make_Clean_PPTX</code>.</p></section>
       <section><h2>Ask</h2><p><code>Make a 10-slide deck from this report for the board.</code> It plans one message per slide, picks a design and a chart, fills it with your content and checks the file. It never makes up numbers.</p></section>
-      <section><h2>Then style and colour it</h2><p>Give it your company's theme or template and your logo: colours, fonts and covers follow. Coming next: Make_Style_PPTX for other looks of the same deck, and Make_Colors_PPTX to build a theme from your brand guidelines or website.</p></section>
+      <section><h2>Your theme and logo</h2><p>Give it your company's PowerPoint theme or template and your logo: colours, fonts and covers follow. Content you cannot share? Ask for a skeleton deck to fill in yourself, see <a href="https://github.com/MaximeRumpler/Make_PPTX/blob/main/docs/private-mode.md">Private mode</a>.</p></section>
+      <section id="set"><h2>The Make PPTX set</h2><p>Make_Clean_PPTX gives a deck its form. Two more skills are in preparation: Make_Style_PPTX, the same deck in another style, and Make_Colors_PPTX, your colours, fonts and logo from your brand guidelines, website or example files.</p></section>
     </div>
     <div class="stats" id="stats"><!-- stats:start --><div><b>54</b><span>layouts</span></div><div><b>81</b><span>visuals</span></div><div><b>26</b><span>categories</span></div><div><b>1,900</b><span>bundled icons</span></div><!-- stats:end --></div>
   </div>
@@ -163,6 +165,7 @@
 <main>
   <div class="wrap">
     <h2 class="grid-title"><!-- heading:start -->54 slide layouts and 81 charts and diagrams<!-- heading:end --></h2>
+    <p class="note">Signature and Expressive visuals, shown last, are opt-in: the skill uses them only when you ask or when the content clearly suits them, and sparingly, adapted to the request and the audience.</p>
     <p class="count" id="count" aria-live="polite"></p>
     <div class="grid" id="grid"><!-- cards:start -->
       <button type="button" class="card" data-i="0">

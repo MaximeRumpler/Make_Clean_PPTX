@@ -25,19 +25,20 @@ Nothing is drawn from scratch: the slides already exist and are cloned, so spaci
 
 ## Manual install and requirements
 
+- **Claude Code marketplaces:** `MaximeRumpler/Make_PPTX` is the marketplace of the set (`make-pptx`, one entry per public skill: `/plugin install make-clean-pptx@make-pptx`). This repository is also a marketplace of its own (`make-clean-pptx@make-clean-pptx`), kept for earlier installs.
 - **Claude Code without the plugin:** `git clone` this repository, then `./install.sh` (copies the skill to `~/.claude/skills/`; `--project` for `./.claude/skills/`).
-- **Any other assistant:** `npx skills add MaximeRumpler/Make_Clean_PPTX`, or copy `skills/make-clean-pptx/` where it loads skills, or point it at [`AGENTS.md`](../AGENTS.md).
+- **Codex, Cursor, Copilot, Gemini CLI and other assistants:** `npx skills add MaximeRumpler/Make_Clean_PPTX`, or copy `skills/make-clean-pptx/` where it loads skills, or point it at [`AGENTS.md`](../AGENTS.md).
 - **Windows:** the plugin, the zip and `npx skills add` work as is; `install.sh` needs Git Bash or WSL, or copy the `skills/make-clean-pptx/` folder by hand.
 - **Updating:** the same command or upload again. `install.sh` replaces only a previous copy of this skill, never another folder.
 - **Python 3.9+** with `pip install -r skills/make-clean-pptx/requirements.txt`. Optional, for the visual check: LibreOffice and poppler (`apt install libreoffice-impress poppler-utils`).
-- The libraries, icons and indexes are bundled: building a deck works offline. Online sources (more icons, free photos) are used when available.
+- The libraries, icons and indexes are bundled: building a deck works offline. Online sources (more icons, free photos) are used when available; `--offline` (or `MAKE_CLEAN_PPTX_OFFLINE=1`) turns them off completely.
 
 ## Inside the libraries
 
 | **Layouts** (54) | **Visuals** (81) |
 |:---|:---|
-| Cover 5 · Agenda 3 · Divider 3 · Statement 6 · Text 9 · Media 3 · Team 1 · Frame 6 · KPI 4 · Table 2 · Decision 4 · Closing 3 · Editorial 4 · Process 1 | Compare 6 · Evolve 6 · Compose 6 · Relate 5 · KPI 5 · Matrix 6 · Process 7 · Time 6 · Structure 9 · Frameworks 6 · Signature 6 (opt-in) |
-| Chosen by what the message *is*: one figure, a stance and three reasons, a choice between options, a chart that needs commentary. Frames receive visuals. | Chosen by what the data *does*: compare, evolve, break down, relate, prioritise, plan, structure. Every quantitative visual is a native, editable chart. |
+| Cover 5 · Agenda 3 · Divider 3 · Statement 6 · Text 9 · Media 3 · Team 1 · Frame 6 · KPI 4 · Table 2 · Decision 4 · Closing 3 · Editorial 4 · Process 1 | Compare 6 · Evolve 6 · Compose 6 · Relate 5 · KPI 5 · Matrix 6 · Process 7 · Time 6 · Structure 9 · Frameworks 6 · Signature 6 (opt-in) · Expressive 13 (opt-in) |
+| Chosen by what the message *is*: one figure, a stance and three reasons, a choice between options, a chart that needs commentary. Frames receive visuals. | Chosen by what the data *does*: compare, evolve, break down, relate, prioritise, plan, structure. Every quantitative visual is a native, editable chart. Signature and Expressive visuals are opt-in and used sparingly, adapted to each deck. |
 
 Each row of the index (`skills/make-clean-pptx/assets/*.csv`) describes the slide, when to use it, its tags, and every editable field with its character limit. The agent searches the index instead of opening slides:
 
@@ -53,7 +54,7 @@ python3 skills/make-clean-pptx/scripts/read_index.py visuals -q "budget to actua
 
 | **Rebrand with your theme** | **Bring your own slides** | **Extend the libraries** |
 |:---|:---|:---|
-| Every colour is a theme colour and every font a theme font. In PowerPoint, *Design → Themes* (or *Variants → Colors / Fonts*); in LibreOffice, the master slide. Greys become your brand palette. | Point the skill at your own pptx files and CSV indexes with `--local-dir` or `MAKE_CLEAN_PPTX_TEMPLATES_DIR`. Name the editable shapes; `inspect_template.py` drafts the index. | The libraries are generated from code in [`library/`](../library/README.md): add a layout or a visual as a small JavaScript entry, rebuild, and the pptx, the index and the gallery follow. |
+| Every colour is a theme colour and every font a theme font. Give the assistant your theme or template and your logo (deck.json `"theme"` and `"logo"`), or apply a theme afterwards: in PowerPoint, *Design → Themes*; in LibreOffice, the master slide. The greys take your brand colours; the [theme contract](../skills/make-clean-pptx/references/theme-contract.md) says which slot does what. | Point the skill at your own pptx files and CSV indexes with `--local-dir` or `MAKE_CLEAN_PPTX_TEMPLATES_DIR`. Name the editable shapes; `inspect_template.py` drafts the index. | The libraries are generated from code in [`library/`](../library/README.md): add a layout or a visual as a small JavaScript entry, rebuild, and the pptx, the index and the gallery follow. |
 
 ## The deck spec
 
@@ -72,7 +73,7 @@ The agent writes a small JSON file; `build_deck.py` does the rest.
 }
 ```
 
-Full reference: [spec-reference.md](../skills/make-clean-pptx/references/spec-reference.md). A complete example: [examples/home-energy.json](../examples/home-energy.json).
+Full reference: [spec-reference.md](../skills/make-clean-pptx/references/spec-reference.md). Tools that do not read it can check a spec against the JSON Schema [`assets/deck.schema.json`](../skills/make-clean-pptx/assets/deck.schema.json) with `python3 skills/make-clean-pptx/scripts/validate_spec.py deck.json` (standard library only). A complete example: [examples/home-energy.json](../examples/home-energy.json).
 
 ## Quality gates
 
@@ -102,5 +103,6 @@ Run the tests: `pip install -r requirements-dev.txt && pytest`. Behaviour checks
 
 - **LibreOffice previews** are close to, but not identical with, PowerPoint. The theme uses Arial (Liberation Sans in LibreOffice, same metrics).
 - **No invented content.** Placeholders describe slots; the builder removes or reports any that remain.
+- **Content you cannot share.** `"skeleton": true` (or `build_deck.py --skeleton`) builds the deck with a bracketed instruction and its limit in every field, plus a fill sheet, so the user types the content on their own computer. For users: [Private mode](https://github.com/MaximeRumpler/Make_PPTX/blob/main/docs/private-mode.md).
 - **Third parties.** Lucide icons: ISC (bundled, licence in `assets/icons/`). Online icons keep their licence (Tabler MIT, Material Apache-2.0, OpenMoji CC BY-SA 4.0, credited automatically). Photos keep theirs (CC0, public domain, CC BY, CC BY-SA), credited in the notes and in `<deck>.credits.md`.
 - **Inspiration.** The idea of a skill that carries a design system and checks its own output owes a lot to [impeccable](https://github.com/pbakaus/impeccable) by Paul Bakaus.

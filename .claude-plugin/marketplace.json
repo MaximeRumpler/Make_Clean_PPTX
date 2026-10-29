@@ -1,6 +1,6 @@
 {
   "name": "make-clean-pptx",
-  "description": "The make-clean-pptx agent skill: clean, sober PowerPoint decks from a library of layouts and visuals.",
+  "description": "The make-clean-pptx agent skill: your notes turned into PowerPoint decks from tested slide layouts and charts.",
   "owner": {
     "name": "Maxime Rumpler",
     "url": "https://github.com/MaximeRumpler"
@@ -9,7 +9,7 @@
     {
       "name": "make-clean-pptx",
       "source": "./",
-      "description": "Clean, sober PowerPoint decks from a library of layouts and visuals, with built-in checks.",
+      "description": "Turns your notes into PowerPoint decks from tested slide layouts and editable charts, checked before delivery.",
       "version": "1.2.0",
       "license": "EUPL-1.2",
       "keywords": [

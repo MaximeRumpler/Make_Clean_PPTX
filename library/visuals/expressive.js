@@ -241,7 +241,7 @@ const COMMON = {
 };
 const WORD = { 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight" };
 const FALLBACK = "Fallback: V-STR-05 hub and spoke for dense text, a list layout above 8 items.";
-const OPT_IN = "Opt-in: one expressive composition per deck at most, only when there is a real centre and satellites.";
+const OPT_IN = "Opt-in: use sparingly, only when there is a real centre and satellites.";
 
 const slides = [];
 for (let n = 3; n <= 8; n++) {
