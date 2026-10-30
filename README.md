@@ -9,7 +9,7 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/MaximeRumpler/Make_Clean_PPTX/ci.yml?branch=main&style=flat-square&label=CI&color=10B981&labelColor=1C2333)](https://github.com/MaximeRumpler/Make_Clean_PPTX/actions/workflows/ci.yml)
 [![Licence](https://img.shields.io/badge/Licence-EUPL--1.2-10B981?style=flat-square&labelColor=1C2333)](LICENSE)
 [![Gallery](https://img.shields.io/badge/Gallery-135_slides-10B981?style=flat-square&labelColor=1C2333)](https://maximerumpler.github.io/Make_Clean_PPTX/)
-[![Claude Code](https://img.shields.io/badge/Claude_Code-plugin-10B981?style=flat-square&labelColor=1C2333)](#install)
+[![Make PPTX](https://img.shields.io/badge/Set-Make_PPTX-10B981?style=flat-square&labelColor=1C2333)](https://github.com/MaximeRumpler/Make_PPTX)
 
 </div>
 
@@ -78,7 +78,7 @@ Part of [**Make PPTX**](https://github.com/MaximeRumpler/Make_PPTX), three skill
 | **Make_Clean_PPTX** | **Make_Style_PPTX** | **Make_Colors_PPTX** |
 |:---|:---|:---|
 | **Form.** Notes in, a clean deck out: one message per slide, tested layouts and charts. | **Look.** The same deck in another style: other shapes, arrangements and backgrounds. | **Brand.** Your colours, fonts and logo, from your brand guidelines, website or example files. |
-| [Install](https://github.com/MaximeRumpler/Make_Clean_PPTX#install) · [Gallery](https://maximerumpler.github.io/Make_Clean_PPTX/) | In preparation | In preparation |
+| [Install](https://github.com/MaximeRumpler/Make_Clean_PPTX#install) · [Gallery](https://maximerumpler.github.io/Make_Clean_PPTX/) | Preview · [Install](https://github.com/MaximeRumpler/Make_Style_PPTX#install) | Preview · [Install](https://github.com/MaximeRumpler/Make_Colors_PPTX#install) |
 
 *Start with Make_Clean_PPTX for the structure. Add a style and your brand colours when you need them.*
 
