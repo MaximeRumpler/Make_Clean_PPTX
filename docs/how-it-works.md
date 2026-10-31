@@ -106,3 +106,5 @@ Run the tests: `pip install -r requirements-dev.txt && pytest`. Behaviour checks
 - **Content you cannot share.** `"skeleton": true` (or `build_deck.py --skeleton`) builds the deck with a bracketed instruction and its limit in every field, plus a fill sheet, so the user types the content on their own computer. For users: [Private mode](https://github.com/MaximeRumpler/Make_PPTX/blob/main/docs/private-mode.md).
 - **Third parties.** Lucide icons: ISC (bundled, licence in `assets/icons/`). Online icons keep their licence (Tabler MIT, Material Apache-2.0, OpenMoji CC BY-SA 4.0, credited automatically). Photos keep theirs (CC0, public domain, CC BY, CC BY-SA), credited in the notes and in `<deck>.credits.md`.
 - **Inspiration.** The idea of a skill that carries a design system and checks its own output owes a lot to [impeccable](https://github.com/pbakaus/impeccable) by Paul Bakaus.
+
+[[Make_Clean_PPTX]]

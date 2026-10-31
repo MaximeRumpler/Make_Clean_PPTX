@@ -12,3 +12,5 @@ Please report vulnerabilities privately through GitHub's *Report a vulnerability
 
 ## Supported versions
 Security fixes are made on the latest release.
+
+[[Make_Clean_PPTX]]

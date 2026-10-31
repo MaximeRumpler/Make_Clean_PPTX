@@ -79,3 +79,5 @@ The `arrange` column of `layouts.csv` and `visuals.csv` marks the layouts and vi
 ## Checked in CI
 
 `tests/test_style_contract.py` and the `library` job: every shape is a field or role-tagged, every container field has a role flag, links point to fields, the tokens are valid, the default build is byte-identical to the committed libraries, the alternative pack keeps every id and field name, and both pass the fit check.
+
+[[Make_Clean_PPTX]]

@@ -26,3 +26,5 @@ To install the skill for any supported assistant: `npx skills add MaximeRumpler/
 - **The libraries are generated** from `library/` (see `library/README.md`). Never edit `assets/*.pptx` or `assets/*.csv` by hand: change the generator, rebuild, run the fit test, regenerate the gallery, commit everything together.
 - Library text is placeholder text that describes the slot. Never put names, figures, dates or quotes in it (a test checks for years and currencies).
 - Keep the README's design language: flat-square shields in `#10B981` on `#1C2333`, centred header, `* * *` separators, short bold-title tables.
+
+[[AI]]

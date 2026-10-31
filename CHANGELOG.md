@@ -87,3 +87,5 @@ First public release.
 - GitHub Pages gallery (`docs/`) and `CATALOG.md`.
 - Byte-reproducible library builds (checked in CI), Dependabot, code of conduct, security policy.
 - Engine foundations: slide cloning across packages (pictures, charts, embedded workbooks), text fill with template formatting preserved, cover-cropped pictures, charts, tables; `fetch_image.py` (Openverse, Wikimedia Commons, licence filtering, credits); `lint_deck.py`; `render_check.py`; `inspect_template.py`; `doctor.py`; plugin and marketplace manifests; `install.sh`; pytest suite.
+
+[[Make_Clean_PPTX]]

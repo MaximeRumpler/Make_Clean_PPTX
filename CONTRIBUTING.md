@@ -33,3 +33,5 @@ pytest
 Small and focused. Describe the problem, what changed, and how you verified it (test, rendered contact sheet). Be kind in reviews.
 
 By contributing you agree that your contribution is licensed under the EUPL-1.2, the licence of this repository, including the additional permission in [NOTICE](NOTICE) that leaves the decks people create free of any obligation. This is what keeps improvements to the libraries shared with everyone.
+
+[[Make_Clean_PPTX]]

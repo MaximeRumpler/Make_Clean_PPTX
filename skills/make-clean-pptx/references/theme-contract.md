@@ -99,3 +99,5 @@ The test suite applies three themes to the libraries (`tests/test_theme_contract
 - a **saturated brand palette** (red, orange, teal, yellow, purple, dark teal): the ramp warning, plus 167 shapes too faint across the two libraries, among them white text on the red `accent1` (64 shapes, 4.2:1), white on the orange `accent2` (31), black on the purple and dark-teal `accent5` and `accent6` (34), and the light accents used as text on dark slides.
 
 The fix is never in the deck: build the brand theme as a ramp, keep the brand's signature hue on `accent1` (or `accent2` when it is mid-tone), and use `lint_deck.py --contrast` until the warnings are gone.
+
+[[Make_Clean_PPTX]]
