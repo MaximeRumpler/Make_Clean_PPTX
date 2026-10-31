@@ -27,6 +27,12 @@ Make_Clean_PPTX is a *skill*: a folder of instructions and small tools that an A
 
 You give it your notes, a report or a few figures, in English or French. It writes one message per slide, takes a matching slide design and chart from its library, and checks the file before handing it over. It never makes up numbers.
 
+Each skill does one job, and you only use the ones you need:
+
+<p align="center">
+  <img src="/assets/Make_PPT_flow.svg" alt="Make PowerPoint Flow" width="100%" />
+</p>
+
 The slides are black, grey and white. Apply your company's PowerPoint theme and they switch to your colours and fonts (best with accent colours that run from dark to light, see the [theme contract](skills/make-clean-pptx/references/theme-contract.md)). They open in LibreOffice too, and can be saved as `.odp`.
 
 * * *
