@@ -152,9 +152,14 @@ class SlideCloner:
         return blank
 
     # ------------------------------------------------------------------- slides
-    def clone_slide(self, src_slide):
-        """Append a copy of `src_slide` to the destination deck and return it."""
+    def clone_slide(self, src_slide, layout_id=None):
+        """Append a copy of `src_slide` to the destination deck and return it.
+
+        `layout_id` (e.g. "L-38") is written as the slide's hidden name (`<p:cSld name>`).
+        """
         new = self.dst_prs.slides.add_slide(self.resolve_layout(src_slide))
+        if layout_id:
+            new._element.cSld.set("name", str(layout_id))
         spTree = new.shapes._spTree
         keep = {qn("p:nvGrpSpPr"), qn("p:grpSpPr")}
         for el in list(spTree):

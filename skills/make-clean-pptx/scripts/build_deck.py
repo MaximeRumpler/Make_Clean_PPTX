@@ -265,7 +265,8 @@ class Builder:
         if not 1 <= n <= limit:
             raise SpecError(f"{where}: {src_name} slide {n} does not exist (1..{limit})")
         src_slide = deck.slides[n - 1]
-        slide = self.cloner.clone_slide(src_slide)
+        entry = resolve(index, slide=n)
+        slide = self.cloner.clone_slide(src_slide, entry["id"] if entry else None)
         label = f"slide {pos + 1} ({src_name}#{n})"
 
         fill = dict(spec.get("fill") or {})
