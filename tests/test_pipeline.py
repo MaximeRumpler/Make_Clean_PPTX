@@ -72,6 +72,15 @@ def test_basic_build_text_and_order(fx, tmp_path):
     assert {s.name: s for s in prs.slides[2].shapes}["Title"].text_frame.text == "Reused cover"
 
 
+def test_built_slides_carry_their_layout_id(fx, tmp_path):
+    entries = load_index(fx["design_index"])
+    code, rep, err = build(fx, tmp_path, {"slides": [{"slide": 1}, {"slide": 2}]})
+    assert code == 0, rep
+    prs = Presentation(rep["output"])
+    names = [s._element.cSld.get("name") for s in prs.slides]
+    assert names == [e["id"] for e in entries if e["slide"] in (1, 2)]
+
+
 def test_no_duplicate_zip_entries_and_templates_unchanged(fx, tmp_path):
     before = Path(fx["design"]).read_bytes()
     code, rep, _ = build(fx, tmp_path, {"slides": [{"slide": 3, "fill": {"Title": "x"}}, {"slide": 3, "fill": {"Title": "y"}}]})
