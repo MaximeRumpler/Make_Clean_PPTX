@@ -81,6 +81,21 @@ def test_built_slides_carry_their_layout_id(fx, tmp_path):
     assert names == [e["id"] for e in entries if e["slide"] in (1, 2)]
 
 
+def test_lint_warns_on_expressive_rhythm(fx, tmp_path):
+    import lint_deck
+    code, rep, err = build(fx, tmp_path, {"slides": [{"slide": n} for n in range(1, 7)]})
+    assert code == 0, rep
+    prs = Presentation(rep["output"])
+    assert not [w for w in lint_deck.lint(rep["output"])["warnings"] if "expressive" in w["message"]]
+    for n in (2, 3, 5):  # three of six, two of them side by side
+        prs.slides[n - 1]._element.cSld.set("name", "V-ORB-01-4")
+    marked = tmp_path / "marked.pptx"
+    prs.save(str(marked))
+    msgs = [(w["slide"], w["message"]) for w in lint_deck.lint(str(marked))["warnings"] if "expressive" in w["message"]]
+    assert any(slide == 3 and "follow each other" in m for slide, m in msgs)
+    assert any(slide == 0 and "3 expressive slides out of 6" in m for slide, m in msgs)
+
+
 def test_no_duplicate_zip_entries_and_templates_unchanged(fx, tmp_path):
     before = Path(fx["design"]).read_bytes()
     code, rep, _ = build(fx, tmp_path, {"slides": [{"slide": 3, "fill": {"Title": "x"}}, {"slide": 3, "fill": {"Title": "y"}}]})

@@ -92,6 +92,24 @@ def contrast(prs, add) -> dict:
             "failing_shapes": len(worst), "theme_findings": themes}
 
 
+EXPRESSIVE_IDS = ("V-ORB-", "V-SIG-")  # layout ids (hidden slide names) of the opt-in Expressive and Signature visuals
+
+
+def rhythm(prs, add) -> None:
+    """Soft warnings on the share of expressive slides: not a rule, the amount depends on the
+    request and the audience. Two in a row, or more than about 3 slides in 10."""
+    hits = [n for n, sl in enumerate(prs.slides, 1)
+            if (sl._element.cSld.get("name") or "").startswith(EXPRESSIVE_IDS)]
+    for a, b in zip(hits, hits[1:]):
+        if b == a + 1:
+            add("warning", b, None, f"expressive slides {a} and {b} follow each other; let a calm slide in between "
+                                    "unless the content calls for it")
+    allowed = max(1, round(len(prs.slides) * 0.3))
+    if len(hits) > allowed:
+        add("warning", 0, None, f"{len(hits)} expressive slides out of {len(prs.slides)} (slides {', '.join(map(str, hits))}); "
+                                "about 3 in 10 is the usual ceiling, keep more only if the request asks for it")
+
+
 def lint(path: str, max_fonts: int = 3, min_font: float = 10.0, check_contrast: bool = False) -> dict:
     prs = Presentation(path)
     sw, sh = prs.slide_width, prs.slide_height
@@ -191,6 +209,7 @@ def lint(path: str, max_fonts: int = 3, min_font: float = 10.0, check_contrast: 
     if len(fonts) > max_fonts:
         add("warning", 0, None, f"{len(fonts)} different explicit fonts ({', '.join(sorted(fonts))}); stick to the theme fonts")
 
+    rhythm(prs, add)
     report = {"slides": len(prs.slides), "errors": errors, "warnings": warnings}
     if check_contrast:
         report["contrast"] = contrast(prs, add)
