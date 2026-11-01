@@ -49,6 +49,7 @@ Then refine with the index: `use_when`, `density`, `style` (Standard, Editorial,
 - Use the **Bold** layouts (dark covers, dividers, panels) sparingly: two or three per deck give structure, more make it heavy.
 - A plain text slide between two visual ones is fine. Do not chase novelty.
 - **Signature visuals** (gears, bulb, puzzle, road, mountain, target): sparingly, a single metaphor, only when asked for or when the metaphor is the message; how many depends on the request and the deck (visual-selection.md, sections 6 and 7).
+- **Rhythm**: before choosing layouts, mark each slide in the outline as calm or expressive, and keep calm slides between expressive ones. `lint_deck.py` warns (never fails) when two expressive slides follow each other or when more than about 3 slides in 10 are expressive; keep more only if the request asks for it.
 
 ## Fitting the text
 
