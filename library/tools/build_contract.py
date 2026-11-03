@@ -153,7 +153,7 @@ def pairs(neutral: Palette) -> tuple:
         out.append({"text": fg, "on": bg, "kind": "graphic", "runs": 0, "smallest_pt": None, "min_ratio": LARGE_MIN,
                     "slots": [token_slot(fg), token_slot(bg)],
                     "neutral_ratio": round(ratio(neutral.token(fg), neutral.token(bg)), 2)})
-    out.sort(key=lambda p: (p["kind"] != "text", -p["runs"], p["text"], p["on"]))
+    out.sort(key=lambda p: (p["kind"] != "text", p["text"], p["on"]))  # not by usage: counts change with the library
     return out, composite
 
 
