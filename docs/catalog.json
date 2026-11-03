@@ -763,7 +763,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
-  "arrange": "row:4:ordered",
+  "arrange": "",
   "fields": 24,
   "thumbnail": "thumbnails/L-48.jpg"
  },
@@ -859,7 +859,7 @@
   "objective": "",
   "frame": "",
   "style": "Standard",
-  "arrange": "column:5:ordered",
+  "arrange": "",
   "fields": 24,
   "thumbnail": "thumbnails/L-54.jpg"
  },
