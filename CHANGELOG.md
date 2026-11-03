@@ -4,6 +4,8 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-03
+
 ### Added
 - **`emphasis` in deck.json** (#1636): a theme accent (`accent1` to `accent6`) for the key numbers (fields named `... value` or `Number ...`, 28 pt and larger) instead of the text colour, for brands whose main colour is mid-tone. Large text only; the contract check gains one pair (emphasis on paper, 3:1) reported as a warning. Nothing changes without the key.
 - **`logo_dark` in deck.json** (#1637): a light version of the logo used instead of `logo` in any logo slot whose background is dark, measured with the theme the deck will get (dark cover L-02, dark themes). Alone, it only appears on dark slides. Nothing changes without the key.
