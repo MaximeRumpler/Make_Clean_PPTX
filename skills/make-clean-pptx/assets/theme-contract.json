@@ -272,108 +272,43 @@
   },
   "pairs": [
     {
-      "text": "ink",
-      "on": "paper",
-      "kind": "text",
-      "runs": 421,
-      "smallest_pt": 10.0,
-      "min_ratio": 4.5,
-      "slots": [
-        "dk1",
-        "lt1"
-      ],
-      "neutral_ratio": 18.88
-    },
-    {
-      "text": "ink2",
-      "on": "paper",
-      "kind": "text",
-      "runs": 412,
-      "smallest_pt": 10.0,
-      "min_ratio": 4.5,
-      "slots": [
-        "dk2",
-        "lt1"
-      ],
-      "neutral_ratio": 10.37
-    },
-    {
-      "text": "muted",
-      "on": "paper",
-      "kind": "text",
-      "runs": 384,
-      "smallest_pt": 10.0,
-      "min_ratio": 4.5,
-      "slots": [
-        "dk1",
-        "lt1"
-      ],
-      "neutral_ratio": 5.06
-    },
-    {
-      "text": "paper",
+      "text": "a3",
       "on": "a1",
       "kind": "text",
-      "runs": 102,
+      "runs": 3,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
-        "lt1",
+        "accent3",
         "accent1"
       ],
-      "neutral_ratio": 16.48
+      "neutral_ratio": 4.9
     },
     {
-      "text": "ink",
-      "on": "surface",
+      "text": "a3",
+      "on": "paper",
       "kind": "text",
-      "runs": 101,
+      "runs": 1,
+      "smallest_pt": 80.0,
+      "min_ratio": 3.0,
+      "slots": [
+        "accent3",
+        "lt1"
+      ],
+      "neutral_ratio": 3.36
+    },
+    {
+      "text": "a4",
+      "on": "a1",
+      "kind": "text",
+      "runs": 15,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
-        "dk1",
-        "lt2"
+        "accent4",
+        "accent1"
       ],
-      "neutral_ratio": 16.87
-    },
-    {
-      "text": "ink2",
-      "on": "surface",
-      "kind": "text",
-      "runs": 57,
-      "smallest_pt": 10.0,
-      "min_ratio": 4.5,
-      "slots": [
-        "dk2",
-        "lt2"
-      ],
-      "neutral_ratio": 9.26
-    },
-    {
-      "text": "paper",
-      "on": "a2",
-      "kind": "text",
-      "runs": 43,
-      "smallest_pt": 10.0,
-      "min_ratio": 4.5,
-      "slots": [
-        "lt1",
-        "accent2"
-      ],
-      "neutral_ratio": 7.0
-    },
-    {
-      "text": "ink",
-      "on": "a3",
-      "kind": "text",
-      "runs": 20,
-      "smallest_pt": 10.0,
-      "min_ratio": 4.5,
-      "slots": [
-        "dk1",
-        "accent3"
-      ],
-      "neutral_ratio": 5.62
+      "neutral_ratio": 7.86
     },
     {
       "text": "a5",
@@ -389,17 +324,43 @@
       "neutral_ratio": 10.69
     },
     {
-      "text": "ink",
-      "on": "a6",
+      "text": "a5",
+      "on": "a2",
       "kind": "text",
-      "runs": 18,
+      "runs": 1,
+      "smallest_pt": 10.0,
+      "min_ratio": 4.5,
+      "slots": [
+        "accent5",
+        "accent2"
+      ],
+      "neutral_ratio": 4.54
+    },
+    {
+      "text": "a6",
+      "on": "a1",
+      "kind": "text",
+      "runs": 8,
+      "smallest_pt": 10.0,
+      "min_ratio": 4.5,
+      "slots": [
+        "accent6",
+        "accent1"
+      ],
+      "neutral_ratio": 13.21
+    },
+    {
+      "text": "ink",
+      "on": "a3",
+      "kind": "text",
+      "runs": 20,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
         "dk1",
-        "accent6"
+        "accent3"
       ],
-      "neutral_ratio": 15.13
+      "neutral_ratio": 5.62
     },
     {
       "text": "ink",
@@ -428,56 +389,56 @@
       "neutral_ratio": 12.24
     },
     {
-      "text": "muted",
+      "text": "ink",
+      "on": "a6",
+      "kind": "text",
+      "runs": 18,
+      "smallest_pt": 10.0,
+      "min_ratio": 4.5,
+      "slots": [
+        "dk1",
+        "accent6"
+      ],
+      "neutral_ratio": 15.13
+    },
+    {
+      "text": "ink",
+      "on": "paper",
+      "kind": "text",
+      "runs": 421,
+      "smallest_pt": 10.0,
+      "min_ratio": 4.5,
+      "slots": [
+        "dk1",
+        "lt1"
+      ],
+      "neutral_ratio": 18.88
+    },
+    {
+      "text": "ink",
       "on": "surface",
       "kind": "text",
-      "runs": 16,
+      "runs": 101,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
         "dk1",
         "lt2"
       ],
-      "neutral_ratio": 4.52
+      "neutral_ratio": 16.87
     },
     {
-      "text": "a4",
-      "on": "a1",
+      "text": "ink2",
+      "on": "a4",
       "kind": "text",
-      "runs": 15,
+      "runs": 2,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
-        "accent4",
-        "accent1"
+        "dk2",
+        "accent4"
       ],
-      "neutral_ratio": 7.86
-    },
-    {
-      "text": "paper",
-      "on": "ink",
-      "kind": "text",
-      "runs": 11,
-      "smallest_pt": 11.0,
-      "min_ratio": 4.5,
-      "slots": [
-        "lt1",
-        "dk1"
-      ],
-      "neutral_ratio": 18.88
-    },
-    {
-      "text": "a6",
-      "on": "a1",
-      "kind": "text",
-      "runs": 8,
-      "smallest_pt": 10.0,
-      "min_ratio": 4.5,
-      "slots": [
-        "accent6",
-        "accent1"
-      ],
-      "neutral_ratio": 13.21
+      "neutral_ratio": 4.95
     },
     {
       "text": "ink2",
@@ -506,56 +467,95 @@
       "neutral_ratio": 8.31
     },
     {
-      "text": "a3",
-      "on": "a1",
-      "kind": "text",
-      "runs": 3,
-      "smallest_pt": 10.0,
-      "min_ratio": 4.5,
-      "slots": [
-        "accent3",
-        "accent1"
-      ],
-      "neutral_ratio": 4.9
-    },
-    {
       "text": "ink2",
-      "on": "a4",
+      "on": "paper",
       "kind": "text",
-      "runs": 2,
+      "runs": 412,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
         "dk2",
-        "accent4"
-      ],
-      "neutral_ratio": 4.95
-    },
-    {
-      "text": "a3",
-      "on": "paper",
-      "kind": "text",
-      "runs": 1,
-      "smallest_pt": 80.0,
-      "min_ratio": 3.0,
-      "slots": [
-        "accent3",
         "lt1"
       ],
-      "neutral_ratio": 3.36
+      "neutral_ratio": 10.37
     },
     {
-      "text": "a5",
-      "on": "a2",
+      "text": "ink2",
+      "on": "surface",
       "kind": "text",
-      "runs": 1,
+      "runs": 57,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
-        "accent5",
+        "dk2",
+        "lt2"
+      ],
+      "neutral_ratio": 9.26
+    },
+    {
+      "text": "muted",
+      "on": "paper",
+      "kind": "text",
+      "runs": 384,
+      "smallest_pt": 10.0,
+      "min_ratio": 4.5,
+      "slots": [
+        "dk1",
+        "lt1"
+      ],
+      "neutral_ratio": 5.06
+    },
+    {
+      "text": "muted",
+      "on": "surface",
+      "kind": "text",
+      "runs": 16,
+      "smallest_pt": 10.0,
+      "min_ratio": 4.5,
+      "slots": [
+        "dk1",
+        "lt2"
+      ],
+      "neutral_ratio": 4.52
+    },
+    {
+      "text": "paper",
+      "on": "a1",
+      "kind": "text",
+      "runs": 102,
+      "smallest_pt": 10.0,
+      "min_ratio": 4.5,
+      "slots": [
+        "lt1",
+        "accent1"
+      ],
+      "neutral_ratio": 16.48
+    },
+    {
+      "text": "paper",
+      "on": "a2",
+      "kind": "text",
+      "runs": 43,
+      "smallest_pt": 10.0,
+      "min_ratio": 4.5,
+      "slots": [
+        "lt1",
         "accent2"
       ],
-      "neutral_ratio": 4.54
+      "neutral_ratio": 7.0
+    },
+    {
+      "text": "paper",
+      "on": "ink",
+      "kind": "text",
+      "runs": 11,
+      "smallest_pt": 11.0,
+      "min_ratio": 4.5,
+      "slots": [
+        "lt1",
+        "dk1"
+      ],
+      "neutral_ratio": 18.88
     },
     {
       "text": "a1",
