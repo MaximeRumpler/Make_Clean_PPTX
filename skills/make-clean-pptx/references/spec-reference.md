@@ -13,6 +13,7 @@ The whole format is also a JSON Schema (draft 2020-12), `assets/deck.schema.json
   "theme_fonts_fallback": "Arial",
   "logo": "brand/logo.png",
   "logo_alt": "Brand name",
+  "logo_dark": "brand/logo-light.png",
   "slides": [ { …slide… }, { …slide… } ]
 }
 ```
@@ -31,7 +32,9 @@ Fonts: a brand font that is neither common (Windows, macOS, Office) nor installe
 
 `logo_alt` is the alt text, normally the brand name. Without it the logo is marked decorative, so screen readers skip it and the lint does not ask for alt text.
 
-Without `logo`, the slots are removed like any optional field left unfilled, and the deck is the same as before the slot existed. One slide can drop the logo with `"Logo": null` in its `fill`, or take another file with `"Logo": "other.png"`. `lint_deck.py` warns when a logo overlaps text. Its contrast against the background is not checked: on the dark cover L-02, use a light version of the logo.
+Without `logo`, the slots are removed like any optional field left unfilled, and the deck is the same as before the slot existed. One slide can drop the logo with `"Logo": null` in its `fill`, or take another file with `"Logo": "other.png"`. `lint_deck.py` warns when a logo overlaps text. Its contrast against the background is not checked: on the dark cover L-02, add `logo_dark`.
+
+`logo_dark` (optional) is the light version of the logo for dark backgrounds. In each logo slot the build measures what is painted behind it (the slide, its layout and master, with the colours and colour map of the `theme` the deck will get) and uses `logo_dark` when that background is dark (below the luminance where white text beats black), `logo` otherwise. It takes the same formats and the same `logo_alt`; alone, without `logo`, it only appears on dark slides. A picture or gradient behind the slot counts as light: set `"Logo": "file"` on that slide to choose by hand.
 
 ## Skeleton
 

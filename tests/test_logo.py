@@ -166,3 +166,22 @@ def test_lint_warns_when_a_logo_covers_text(tmp_path, logos):
     prs.save(deck)
     found = [w for w in lint(deck)["warnings"] if w["shape"] == "Logo"]
     assert found and "overlaps text box 'Title'" in found[0]["message"]
+
+
+def test_dark_cover_gets_logo_dark(tmp_path, logos):
+    from pptx import Presentation as P
+    light = logos / "light.png"
+    Image.new("RGB", (300, 80), (240, 240, 240)).save(light)
+    spec = {"output": str(tmp_path / "d.pptx"), "logo": str(logos / "wide.png"), "logo_dark": str(light),
+            "slides": [{"id": "L-02", "fill": {"Title": "Annual review"}}, {"id": "L-01", "fill": {"Title": "Annual review"}}]}
+    path = tmp_path / "deck.json"
+    path.write_text(json.dumps(spec), encoding="utf-8")
+    p = subprocess.run([sys.executable, str(SCRIPTS / "build_deck.py"), "--spec", str(path),
+                        "--layouts", str(ASSETS / "layouts.pptx"), "--layouts-index", str(ASSETS / "layouts.csv")],
+                       capture_output=True, encoding="utf-8", cwd=str(tmp_path))
+    assert p.returncode == 0, p.stdout
+    sizes = []
+    for s in P(str(tmp_path / "d.pptx")).slides:
+        sh = next(x for x in s.shapes if x.name == "Logo")
+        sizes.append(sh.image.size)
+    assert sizes == [(300, 80), (800, 200)]  # dark cover: light logo; light cover: normal logo
