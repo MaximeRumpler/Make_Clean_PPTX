@@ -53,6 +53,10 @@ the spec file, then to the current folder); "logo_alt" is its alt text, usually
 the brand name (without it the logo is marked decorative). Without "logo" the
 slots are removed, as any optional field left unfilled.
 
+"accent_scale": "tints" (optional, needs "theme") draws the visuals that read the accents
+as a scale (heatmap, funnel, pyramid, staircase, rings; tag "sequential" in the index)
+with tints of accent1 instead of accent2 to accent6; "colours" is the default.
+
 "skeleton": true (or --skeleton) builds a deck without any of the user's content:
 every field used gets a bracketed instruction with its limit from the index
 ("[KPI 1 value, max 6 characters]"), charts get flat dummy series named
@@ -91,6 +95,7 @@ try:
     from _common import (eprint, estimate_fit, is_dark, iter_shapes, mark_decorative, overflows, set_offline,
                          shape_kind, token_xml)
     from _svg import SvgError, parse_svg, svg_to_shapes
+    from _contrast import read_theme, tint_steps
     from _theme import ThemeError, apply_theme, fallback_fonts, load_theme_source
     from fetch_templates import FetchError, ensure_templates
     from read_index import load_index, resolve
@@ -104,7 +109,7 @@ except ImportError as _exc:  # a missing package would otherwise end in a traceb
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tif", ".tiff", ".webp"}
 SOURCE_ALIASES = {"design": "layouts", "shapes": "visuals"}
 SPEC_KEYS = {"output", "properties", "slides", "language", "theme", "theme_fonts_fallback", "logo", "logo_alt",
-             "skeleton"}
+             "skeleton", "accent_scale"}
 DUMMY_SERIES = "Dummy data — replace"  # lint_deck.py looks for this name
 SKELETON_ICON = "lucide:circle-dashed"
 LABEL_FIELD = "Footer"  # skeleton mode keeps its value: the confidentiality label, not content
@@ -206,11 +211,15 @@ def load_logo(spec: dict, spec_dir: Path) -> dict | None:
 
 class Builder:
     def __init__(self, design_path: str, shapes_path: str | None, design_index=None, shapes_index=None, strict=False,
-                 logo: dict | None = None, spec_dir: Path | None = None, skeleton: bool = False):
+                 logo: dict | None = None, spec_dir: Path | None = None, skeleton: bool = False,
+                 theme_src: dict | None = None, accent_scale: str | None = None):
         self.prs = Presentation(design_path)
         self.skeleton = skeleton
         self.sheet: list[dict] = []  # skeleton mode: one row per field to fill
         self.logo = logo
+        self.theme_src = theme_src
+        self.accent_scale = accent_scale
+        self._tints = None
         self.logos_placed = 0
         self.spec_dir = spec_dir or Path.cwd()
         self.shapes_prs = Presentation(shapes_path) if shapes_path else None
@@ -285,6 +294,8 @@ class Builder:
                 used.add(comp["into"])
         if not spec.get("keep_unfilled"):
             self._clear_unfilled(list(slide.shapes), resolve(index, slide=n), used, label)
+        if self.accent_scale and "sequential" in str((entry or {}).get("tags", "")).lower().split():
+            self._tint_fills(slide._element.find(qn("p:cSld")))
 
         notes = self._skeleton_notes(pos + 1) if self.skeleton else spec.get("notes")
         credit_lines = [c["credit"] for c in self.credits if c.get("slide") == pos + 1 and c.get("credit")]
@@ -371,6 +382,8 @@ class Builder:
         self._fill(slide, scope, None, cfill, label)
         if not comp.get("keep_unfilled"):
             self._clear_unfilled(scope, entry, set(cfill), label)
+        if self.accent_scale and "sequential" in str((entry or {}).get("tags", "")).lower().split():
+            self._tint_fills(shp._element)
 
     # ------------------------------------------------------------------ fill
     def _fill(self, slide, scope: list, top_level: list | None, fill: dict, label: str) -> None:
@@ -637,6 +650,27 @@ class Builder:
         shp._element.getparent().remove(shp._element)
         if meta.get("attribution_required"):
             self.credits.append({"slide": int(re.search(r"slide (\d+)", label).group(1)), "credit": meta["credit"], "path": meta.get("ref", "")})
+
+    # ---------------------------------------------------------------- accent scale
+    def _tint_fills(self, root) -> None:
+        """Shape and cell fills of a "sequential" visual: accent2..6 become tints of accent1 of the same
+        lightness, so a scale reads as one hue getting lighter instead of as categories."""
+        if self._tints is None:
+            colors = read_theme(etree.tostring(self.theme_src["root"]))["colors"] if self.theme_src else {}
+            self._tints = tint_steps(colors) if colors else {}
+        if not self._tints:
+            return
+        for fill in root.iter(qn("a:solidFill")):
+            if etree.QName(fill.getparent()).localname not in ("spPr", "tcPr"):
+                continue
+            clr = fill.find(qn("a:schemeClr"))
+            if clr is None or clr.get("val") not in self._tints or len(clr):
+                continue
+            mod, off = self._tints[clr.get("val")]
+            clr.set("val", "accent1")
+            etree.SubElement(clr, qn("a:lumMod")).set("val", str(mod))
+            if off:
+                etree.SubElement(clr, qn("a:lumOff")).set("val", str(off))
 
     # ---------------------------------------------------------------- logo
     def _fill_logo(self, slide, shp, value: dict, label: str) -> None:
@@ -1052,6 +1086,10 @@ def main(argv=None) -> int:
             theme_src = load_theme_source(theme_path)
             fallback_fonts(spec.get("theme_fonts_fallback"))
         logo = load_logo(spec, spec_dir)  # same: a wrong logo file stops the build first
+        accent_scale = spec.get("accent_scale")
+        if accent_scale not in (None, "", "tints", "colours"):
+            raise SpecError("'accent_scale' can be 'tints' or 'colours' (the default)")
+        accent_scale = "tints" if accent_scale == "tints" else None
         skeleton = bool(args.skeleton or spec.get("skeleton") is True)
 
         if args.layouts:
@@ -1082,11 +1120,16 @@ def main(argv=None) -> int:
             logo=logo,
             spec_dir=spec_dir,
             skeleton=skeleton,
+            theme_src=theme_src,
+            accent_scale=accent_scale,
         )
         b.base_dir = Path(args.spec).resolve().parent
         b.warnings.extend(check_keys(spec))
         if spec.get("theme_fonts_fallback") and not theme_src:
             b.warn("spec: 'theme_fonts_fallback' is ignored without a 'theme'")
+        if accent_scale and not theme_src:
+            b.warn("spec: 'accent_scale' needs a 'theme' (the tints follow the theme's accent colours): ignored")
+            b.accent_scale = None
         if spec.get("logo_alt") and not logo:
             b.warn("spec: 'logo_alt' is ignored without a 'logo'")
         for i, s in enumerate(spec["slides"]):

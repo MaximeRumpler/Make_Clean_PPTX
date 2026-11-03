@@ -159,7 +159,7 @@ module.exports = {
       description: "Four rising steps, darker as they climb, each with a level name and its description.",
       use_when: "Maturity levels, capability growth, a progression plan.",
       limits: "Four levels; mark where we are by shading a step.",
-      tags: "staircase maturity levels progression steps growth capability ladder",
+      tags: "staircase maturity levels progression steps growth capability ladder sequential",
       arrange: false, // step heights carry the levels
       related: "V-FRM-05 V-PRO-01",
       fill_notes: "Level n, Level n text.",

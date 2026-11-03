@@ -70,7 +70,7 @@ module.exports = {
       description: "Four stacked levels narrowing to the top, with a description beside each level.",
       use_when: "Hierarchy of needs, priorities or foundations (vision to operations).",
       limits: "Four levels; the top holds the most important or the rarest.",
-      tags: "pyramid levels hierarchy foundations layers priorities vision",
+      tags: "pyramid levels hierarchy foundations layers priorities vision sequential",
       arrange: false, // level widths carry the hierarchy
       related: "V-STR-04 V-PRO-07",
       fill_notes: "Level n, Level n text.",
@@ -181,7 +181,7 @@ module.exports = {
       description: "Three nested circles from the core outwards, with a label for each ring on the side.",
       use_when: "Scope or influence by distance: core business, adjacent, ecosystem; TAM SAM SOM.",
       limits: "Three rings.",
-      tags: "concentric circles core rings scope tam sam som influence layers",
+      tags: "concentric circles core rings scope tam sam som influence layers sequential",
       arrange: false, // rings nest by design
       related: "V-STR-05 V-STR-03",
       fill_notes: "Ring n, Ring n text.",
@@ -205,7 +205,7 @@ module.exports = {
       description: "A dark half disc at the base wrapped by three nested half rings, each layer named at its top.",
       use_when: "Layers that build outwards from a core: capabilities around a product, circles of stakeholders, foundations to reach.",
       limits: "A core and three rings (the outer ring can be deleted with null); a few words per layer.",
-      tags: "half ring radial layers semicircle arch core onion nested levels foundations rainbow",
+      tags: "half ring radial layers semicircle arch core onion nested levels foundations rainbow sequential",
       arrange: false, // rings nest by design
       related: "V-STR-08 V-STR-03",
       fill_notes: "Layer 1 is the core, Layer 4 the outer ring; Layer n text (optional).",
