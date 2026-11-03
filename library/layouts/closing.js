@@ -29,6 +29,7 @@ module.exports = {
       description: "Horizontal line with four dated steps, each with its owner.",
       use_when: "Closing with what happens next and who does it.",
       tags: "next steps actions timeline plan follow up dates owners",
+      arrange: false, // the line is the timeline: arranged, it loses its spine
       draw(ctx) {
         chrome(ctx, { titlePh: "Next steps", titleKeep: true, lead: true });
         hrule(ctx, MX, 3.05, CW, { color: "ink", w: 1.25 });
@@ -134,6 +135,7 @@ module.exports = {
       description: "Title on the left; five numbered steps stacked on the right along a vertical line.",
       use_when: "A method, procedure or chronology of up to five steps with a line of detail each.",
       tags: "steps sequence vertical method procedure process numbered chronology",
+      arrange: false, // the vertical line carries the steps: arranged, it loses its spine
       draw(ctx) {
         text(ctx, "Kicker", "Section", MX, 0.45, 4, 0.3, "label", { optional: true });
         text(ctx, "Title", "Slide title states the takeaway", MX, 0.85, 4.2, 2.0, "title");

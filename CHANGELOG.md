@@ -14,6 +14,7 @@ All notable changes to this project are documented here. Format based on [Keep a
 - **Expressive rhythm in `lint_deck.py`**: soft warnings (never errors) when two orbital or signature slides follow each other, or when more than about 3 slides in 10 are expressive. Read from the layout-id marker of built slides.
 
 ### Changed
+- Next steps (L-48) and Vertical sequence (L-54) are tagged `arrange: false`: arranged, a timeline loses its connecting line, so Make_Style leaves them on the plain grid (#1639).
 - `theme-contract.json`: `pairs` are sorted by text colour and fill instead of by usage count, so copies of the contract no longer look different when only the counts change (#1638). Content of the pairs is unchanged.
 - Docs brought in line with the Make PPTX set: the same set table and footer in every README, gallery badge at 135 slides, opt-in Signature and Expressive visuals explained in the README, gallery and how-it-works, the quick choices and skeleton mode linked from the README, the deck.json schema and `"theme"`/`"logo"` keys in how-it-works, plainer plugin and citation descriptions, theme-contract counts refreshed for 135 slides.
 - Claude Code install now goes through the shared `make-pptx` marketplace of the set (`/plugin marketplace add MaximeRumpler/Make_PPTX`, `/plugin install make-clean-pptx@make-pptx`) in the README, gallery and how-it-works. This repository's own marketplace is unchanged, so earlier installs keep working.
