@@ -188,7 +188,7 @@ def _latin(font_scheme, role):
     return font_scheme.find("a:%sFont/a:latin" % role, NS) if font_scheme is not None else None
 
 
-def apply_theme(prs, source: dict, fallback=None) -> tuple:
+def apply_theme(prs, source: dict, fallback=None, emphasis: str | None = None) -> tuple:
     """Replace colours, fonts and name of every slide master's theme; apply the source colour map.
 
     Returns (report dict, list of warning strings).
@@ -272,7 +272,7 @@ def apply_theme(prs, source: dict, fallback=None) -> tuple:
     findings = []
     if CONTRACT.is_file():
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
-        findings = [f["message"] for f in theme_findings(theme, contract, eff_map)]
+        findings = [f["message"] for f in theme_findings(theme, contract, eff_map, emphasis)]
     warnings.extend("theme: " + m for m in findings)
     if findings:
         warnings.append("theme: the deck is built, but the theme breaks the contract above "

@@ -15,6 +15,7 @@ The whole format is also a JSON Schema (draft 2020-12), `assets/deck.schema.json
   "logo_alt": "Brand name",
   "logo_dark": "brand/logo-light.png",
   "accent_scale": "tints",
+  "emphasis": "accent3",
   "slides": [ { …slide… }, { …slide… } ]
 }
 ```
@@ -30,6 +31,10 @@ Fonts: a brand font that is neither common (Windows, macOS, Office) nor installe
 ## Accent scale
 
 `accent_scale` (optional, needs `theme`) is `"colours"` (the default: nothing changes) or `"tints"`. The visuals that read the accents as a scale (tag `sequential` in the index: heatmap grid, funnel, pyramid, staircase, concentric circles, half-ring layers) normally use `accent2` to `accent6`; with a multi-colour brand ramp that reads as categories more than as levels. With `"tints"`, the shape and cell fills of those visuals use tints of `accent1` at the lightness of each accent they replace, so the text colour chosen for each level still reads on it. Charts and categorical visuals keep the brand colours. Without a theme the key is ignored with a warning.
+
+## Emphasis
+
+`emphasis` (optional) is a theme accent, `accent1` to `accent6`, used for the **key numbers** instead of the text colour: the fields named `... value` or `Number ...` (KPI values, big numbers, results) at 28 pt and larger. Without the key nothing changes. It is for brands whose main colour is mid-tone (orange, yellow, cyan): that colour cannot carry white text, so it sits on a middle accent and the dark panels stay on `accent1`; `emphasis` puts it back on the numbers. Large text only, so the contract asks 3:1 on the slide background (not 4.5:1); a theme whose chosen accent is lighter gets a warning, like any other contract finding. Titles, body text and inline words are not touched.
 
 ## Logo
 

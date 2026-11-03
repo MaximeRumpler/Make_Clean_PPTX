@@ -709,7 +709,10 @@ def check_deck(prs) -> dict:
 
 
 # ------------------------------------------------------------------ theme vs contract
-def theme_findings(theme: dict, contract: dict, cmap: dict | None = None) -> list:
+LARGE_TEXT_MIN = 3.0  # WCAG: large text (18 pt, or 14 pt bold) and graphics
+
+
+def theme_findings(theme: dict, contract: dict, cmap: dict | None = None, emphasis: str | None = None) -> list:
     """Check a theme against assets/theme-contract.json without looking at slides.
 
     Returns a list of {"level": "warning", "message": ...} in plain language.
@@ -751,4 +754,10 @@ def theme_findings(theme: dict, contract: dict, cmap: dict | None = None) -> lis
             where = (" (%d text runs in the libraries)" % pair["runs"]) if pair.get("runs") else ""
             out.append({"level": "warning", "message": "%s: %.1f:1 with this theme, %.1f:1 needed%s" % (
                 what, r, pair["min_ratio"], where)})
+    if emphasis:  # key numbers are large text: 3:1 on the slide background
+        r = ratio(pal.token("a" + emphasis[-1]), paper)
+        if r < LARGE_TEXT_MIN:
+            out.append({"level": "warning", "message": (
+                "emphasis %s on paper: %.1f:1 with this theme, %.1f:1 needed (key numbers are large text)" % (
+                    emphasis, r, LARGE_TEXT_MIN))})
     return out
