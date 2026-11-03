@@ -87,7 +87,7 @@ module.exports = {
       description: "Five stacked stages narrowing downwards, each with its label, value and conversion.",
       use_when: "Conversion through successive stages: marketing, sales, recruitment, validation.",
       limits: "Bar widths are decorative; the values carry the information.",
-      tags: "funnel conversion stages pipeline drop off leads sales recruitment",
+      tags: "funnel conversion stages pipeline drop off leads sales recruitment sequential",
       related: "V-PRO-01 V-COM-02",
       fill_notes: "Text: Stage n, Value n, Rate n.",
       draw(ctx, b) {

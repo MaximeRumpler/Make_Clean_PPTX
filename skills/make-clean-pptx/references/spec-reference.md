@@ -14,6 +14,7 @@ The whole format is also a JSON Schema (draft 2020-12), `assets/deck.schema.json
   "logo": "brand/logo.png",
   "logo_alt": "Brand name",
   "logo_dark": "brand/logo-light.png",
+  "accent_scale": "tints",
   "slides": [ { …slide… }, { …slide… } ]
 }
 ```
@@ -25,6 +26,10 @@ The whole format is also a JSON Schema (draft 2020-12), `assets/deck.schema.json
 The theme is then checked against `references/theme-contract.md` (accent ramp, text and fill pairs): problems are **warnings**, the deck is still built. Fix the theme, not the slides, then check the deck with `lint_deck.py --contrast`.
 
 Fonts: a brand font that is neither common (Windows, macOS, Office) nor installed on this machine gives a warning; with `theme_fonts_fallback` (`"Arial"`, or `{"major": "Georgia", "minor": "Arial"}`) the theme uses the fallback instead. The character limits are measured with Arial, so after a font change run `lint_deck.py` and `render_check.py` again and shorten what overflows. The report gets a `theme` object: source, name, fonts, `dark`, `colour_map`, `contract_findings`.
+
+## Accent scale
+
+`accent_scale` (optional, needs `theme`) is `"colours"` (the default: nothing changes) or `"tints"`. The visuals that read the accents as a scale (tag `sequential` in the index: heatmap grid, funnel, pyramid, staircase, concentric circles, half-ring layers) normally use `accent2` to `accent6`; with a multi-colour brand ramp that reads as categories more than as levels. With `"tints"`, the shape and cell fills of those visuals use tints of `accent1` at the lightness of each accent they replace, so the text colour chosen for each level still reads on it. Charts and categorical visuals keep the brand colours. Without a theme the key is ignored with a warning.
 
 ## Logo
 

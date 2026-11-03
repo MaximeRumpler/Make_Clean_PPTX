@@ -586,6 +586,32 @@ def _walk(parent, tf, pal, scene, sink, master_root, grp_fill=None, check_text=T
                     sink(name, what, res[0], res[1], label(col), pt, b in ("1", "true"), under)
 
 
+def tint_steps(colors: dict) -> dict:
+    """{"accent2": (lumMod, lumOff), ...}: accent1 re-lightened to the relative luminance of accent2..accent6.
+
+    Same hue and saturation as accent1, the lightness of each other accent, so the text colour chosen for
+    that accent still reads on it. Values are in 1/100000, as DrawingML writes them.
+    """
+    h, l1, s1 = colorsys.rgb_to_hls(*hex_to_rgb(colors["accent1"]))
+    steps = {}
+    for k in range(2, 7):
+        want = luminance(hex_to_rgb(colors["accent%d" % k]))
+        lo, hi = 0.0, 1.0
+        for _ in range(40):  # luminance grows with HLS lightness at a fixed hue and saturation
+            mid = (lo + hi) / 2
+            if luminance(colorsys.hls_to_rgb(h, mid, s1)) < want:
+                lo = mid
+            else:
+                hi = mid
+        target = (lo + hi) / 2
+        if target >= l1:
+            mod = (1 - target) / (1 - l1) if l1 < 1 else 1.0
+            steps["accent%d" % k] = (round(mod * 100000), round((1 - mod) * 100000))
+        else:
+            steps["accent%d" % k] = (round(target / l1 * 100000) if l1 else 100000, 0)
+    return steps
+
+
 def _slide_palette(slide, theme, cmap_over=None):
     """(Palette, background) of one slide: colour map of the master, then of layout and slide overrides,
     and the first background found on slide, layout or master. `cmap_over` replaces the master's map."""

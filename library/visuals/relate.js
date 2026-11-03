@@ -64,7 +64,7 @@ module.exports = {
       description: "Grid of cells, rows by columns, each cell shaded by its value and showing the number.",
       use_when: "Intensity across two dimensions: activity by day and hour, sales by product and region, cohort retention.",
       limits: "Shade cells with {\"text\": \"42\", \"fill\": \"a1\"} (high) to \"a6\" (low); dark cells need light text, the builder handles it.",
-      tags: "heatmap grid intensity matrix cohort retention shading cells two dimensions",
+      tags: "heatmap grid intensity matrix cohort retention shading cells two dimensions sequential",
       related: "V-CMP-06 V-MAT-04",
       fill_notes: "Text: Row n, Column n. Cells: Cell r-c as {\"text\", \"fill\"}.",
       draw(ctx, b) {
