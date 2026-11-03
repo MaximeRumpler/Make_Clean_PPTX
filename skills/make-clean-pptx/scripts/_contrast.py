@@ -586,6 +586,59 @@ def _walk(parent, tf, pal, scene, sink, master_root, grp_fill=None, check_text=T
                     sink(name, what, res[0], res[1], label(col), pt, b in ("1", "true"), under)
 
 
+def _slide_palette(slide, theme, cmap_over=None):
+    """(Palette, background) of one slide: colour map of the master, then of layout and slide overrides,
+    and the first background found on slide, layout or master. `cmap_over` replaces the master's map."""
+    layout = slide.slide_layout
+    mroot, lroot, sroot = layout.slide_master._element, layout._element, slide._element
+    cmap = cmap_over or clr_map(mroot.find("p:clrMap", NS)) or {}
+    for root in (lroot, sroot):
+        ov = root.find("p:clrMapOvr/a:overrideClrMapping", NS)
+        if ov is not None:
+            cmap = clr_map(ov)
+    pal = Palette(theme, cmap)
+    bg = "inherit"
+    for root in (sroot, lroot, mroot):
+        bg = _bg_of(root.find("p:cSld", NS), pal)
+        if bg != "inherit":
+            break
+    if bg == "inherit":
+        res = pal.resolve(etree.Element(A + "schemeClr", val="bg1"))
+        bg = (res[0], "paper") if res else None
+    return pal, bg
+
+
+def backdrop_luminance(slide, shape, theme=None, cmap=None):
+    """Relative luminance of what is painted behind `shape` (centre of its box) on `slide`, or None when it
+    is a picture or gradient. `theme` ({"colors": ...}) and `cmap` stand in for a theme not applied yet."""
+    from copy import deepcopy
+    layout = slide.slide_layout
+    master = layout.slide_master
+    if theme is None:
+        try:
+            theme = read_theme(master.part.part_related_by(RT_THEME).blob)
+        except Exception:  # noqa: BLE001
+            return None
+    pal, bg = _slide_palette(slide, theme, cmap)
+    scene = Scene(bg)
+    box = (shape.left, shape.top, shape.left + shape.width, shape.top + shape.height)
+    for root, check in ((master._element, False), (layout._element, False), (slide._element, True)):
+        tree = root.find("p:cSld/p:spTree", NS)
+        if tree is None:
+            continue
+        if root is slide._element:  # only what is painted below the shape
+            tree = deepcopy(tree)
+            target = next((e for e in tree if e.tag == shape._element.tag
+                           and e.find(".//p:cNvPr", NS).get("id") == shape._element.find(".//p:cNvPr", NS).get("id")),
+                          None)
+            if target is not None:
+                for e in list(tree)[list(tree).index(target):]:
+                    tree.remove(e)
+        _walk(tree, (1.0, 1.0, 0, 0), pal, scene, lambda *a: None, master._element, check_text=False)
+    under = scene.under((box[0] + box[2]) / 2, (box[1] + box[3]) / 2)
+    return luminance(under[0]) if under else None
+
+
 def check_deck(prs) -> dict:
     """Contrast of every text run of a python-pptx Presentation.
 
@@ -605,20 +658,7 @@ def check_deck(prs) -> dict:
             theme = {"name": "", "colors": {}, "fonts": {}}
         first_theme = first_theme or theme
         mroot, lroot, sroot = master._element, layout._element, slide._element
-        cmap = clr_map(mroot.find("p:clrMap", NS)) or {}
-        for root in (lroot, sroot):
-            ov = root.find("p:clrMapOvr/a:overrideClrMapping", NS)
-            if ov is not None:
-                cmap = clr_map(ov)
-        pal = Palette(theme, cmap)
-        bg = "inherit"
-        for root in (sroot, lroot, mroot):
-            bg = _bg_of(root.find("p:cSld", NS), pal)
-            if bg != "inherit":
-                break
-        if bg == "inherit":
-            res = pal.resolve(etree.Element(A + "schemeClr", val="bg1"))
-            bg = (res[0], "paper") if res else None
+        pal, bg = _slide_palette(slide, theme)
         scene = Scene(bg)
         for root, part, check in ((mroot, master.part, False), (lroot, layout.part, False), (sroot, slide.part, True)):
             tree = root.find("p:cSld/p:spTree", NS)
