@@ -52,6 +52,10 @@ and the closing slide, scaled to fit with its aspect ratio kept (path relative t
 the spec file, then to the current folder); "logo_alt" is its alt text, usually
 the brand name (without it the logo is marked decorative). Without "logo" the
 slots are removed, as any optional field left unfilled.
+"logo_dark" (optional) is a light version for slides whose background is dark
+(the dark cover, a dark theme): it replaces "logo" in a slot whose backdrop is
+dark, measured with the theme the deck will get. Alone, it only appears on dark
+slides.
 
 "accent_scale": "tints" (optional, needs "theme") draws the visuals that read the accents
 as a scale (heatmap, funnel, pyramid, staircase, rings; tag "sequential" in the index)
@@ -95,7 +99,7 @@ try:
     from _common import (eprint, estimate_fit, is_dark, iter_shapes, mark_decorative, overflows, set_offline,
                          shape_kind, token_xml)
     from _svg import SvgError, parse_svg, svg_to_shapes
-    from _contrast import read_theme, tint_steps
+    from _contrast import backdrop_luminance, read_theme, tint_steps
     from _theme import ThemeError, apply_theme, fallback_fonts, load_theme_source
     from fetch_templates import FetchError, ensure_templates
     from read_index import load_index, resolve
@@ -108,12 +112,13 @@ except ImportError as _exc:  # a missing package would otherwise end in a traceb
 
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tif", ".tiff", ".webp"}
 SOURCE_ALIASES = {"design": "layouts", "shapes": "visuals"}
-SPEC_KEYS = {"output", "properties", "slides", "language", "theme", "theme_fonts_fallback", "logo", "logo_alt",
+SPEC_KEYS = {"output", "properties", "slides", "language", "theme", "theme_fonts_fallback", "logo", "logo_dark", "logo_alt",
              "skeleton", "accent_scale"}
 DUMMY_SERIES = "Dummy data — replace"  # lint_deck.py looks for this name
 SKELETON_ICON = "lucide:circle-dashed"
 LABEL_FIELD = "Footer"  # skeleton mode keeps its value: the confidentiality label, not content
 LOGO_FIELD = "Logo"  # the logo slot of the layouts (role=logo in the index)
+DARK_BACKDROP = 0.179  # below this luminance white beats black as the colour on top
 LOGO_EXT = {".png", ".jpg", ".jpeg", ".svg"}
 SLIDE_KEYS = {"source", "slide", "id", "fill", "insert", "notes", "keep_unfilled", "hidden"}
 INSERT_KEYS = {"source", "slide", "id", "component", "into", "box", "fit", "fill", "keep_unfilled"}
@@ -171,27 +176,27 @@ def resolve_input(value, base: Path | None, what: str = "file") -> str:
                             f"nor in {cwd} (the working directory)")
 
 
-def load_logo(spec: dict, spec_dir: Path) -> dict | None:
-    """Check the deck's "logo" before any work: a wrong file stops the build with a plain message."""
-    value = spec.get("logo")
+def load_logo(spec: dict, spec_dir: Path, key: str = "logo") -> dict | None:
+    """Check the deck's "logo" (or "logo_dark") before any work: a wrong file stops the build with a plain message."""
+    value = spec.get(key)
     if value in (None, ""):
         return None
     if not isinstance(value, str):
-        raise SpecError("'logo' must be the path of a PNG, JPG or SVG file")
+        raise SpecError(f"'{key}' must be the path of a PNG, JPG or SVG file")
     suffix = Path(value).suffix.lower()
     if suffix not in LOGO_EXT:
-        raise SpecError(f"logo '{value}': use a PNG, JPG or SVG file (got '{suffix or 'no extension'}')")
+        raise SpecError(f"{key} '{value}': use a PNG, JPG or SVG file (got '{suffix or 'no extension'}')")
     try:
-        path = Path(resolve_input(value, spec_dir, "logo"))
+        path = Path(resolve_input(value, spec_dir, key))
     except FileNotFoundError as exc:
         raise SpecError(str(exc)) from exc
     if not path.is_file():  # an absolute path is returned as given
-        raise SpecError(f"logo not found: '{value}'")
+        raise SpecError(f"{key} not found: '{value}'")
     if path.suffix.lower() == ".svg":
         try:
             parse_svg(path.read_text(encoding="utf-8"))
         except (SvgError, UnicodeDecodeError) as exc:
-            raise SpecError(f"logo '{value}' is not a usable SVG ({exc}); export it as PNG instead") from exc
+            raise SpecError(f"{key} '{value}' is not a usable SVG ({exc}); export it as PNG instead") from exc
     else:
         from PIL import Image
 
@@ -200,9 +205,9 @@ def load_logo(spec: dict, spec_dir: Path) -> dict | None:
                 fmt = im.format
                 im.verify()
         except Exception as exc:  # noqa: BLE001 - Pillow raises many kinds of errors on bad files
-            raise SpecError(f"logo '{value}' is not a readable image ({exc.__class__.__name__})") from exc
+            raise SpecError(f"{key} '{value}' is not a readable image ({exc.__class__.__name__})") from exc
         if fmt not in ("PNG", "JPEG"):
-            raise SpecError(f"logo '{value}' is a {fmt} file; use a PNG, JPG or SVG file")
+            raise SpecError(f"{key} '{value}' is a {fmt} file; use a PNG, JPG or SVG file")
     alt = spec.get("logo_alt") or ""
     if not isinstance(alt, str):
         raise SpecError("'logo_alt' must be text (the brand name)")
@@ -212,11 +217,12 @@ def load_logo(spec: dict, spec_dir: Path) -> dict | None:
 class Builder:
     def __init__(self, design_path: str, shapes_path: str | None, design_index=None, shapes_index=None, strict=False,
                  logo: dict | None = None, spec_dir: Path | None = None, skeleton: bool = False,
-                 theme_src: dict | None = None, accent_scale: str | None = None):
+                 logo_dark: dict | None = None, theme_src: dict | None = None, accent_scale: str | None = None):
         self.prs = Presentation(design_path)
         self.skeleton = skeleton
         self.sheet: list[dict] = []  # skeleton mode: one row per field to fill
         self.logo = logo
+        self.logo_dark = logo_dark
         self.theme_src = theme_src
         self.accent_scale = accent_scale
         self._tints = None
@@ -282,9 +288,12 @@ class Builder:
         if self.skeleton:
             fill = self._skeleton_fill(resolve(index, slide=n), fill, {c.get("into") for c in spec.get("insert") or []},
                                        pos + 1)
-        if (self.logo and not any(str(k).strip().lower() == LOGO_FIELD.lower() for k in fill)
-                and any(s.name == LOGO_FIELD for s in slide.shapes)):
-            fill[LOGO_FIELD] = dict(self.logo)  # the deck's logo goes in every logo slot
+        slot = next((s for s in slide.shapes if s.name == LOGO_FIELD), None)
+        if ((self.logo or self.logo_dark) and slot is not None
+                and not any(str(k).strip().lower() == LOGO_FIELD.lower() for k in fill)):
+            chosen = self._logo_for(slide, slot)  # the deck's logo goes in every logo slot
+            if chosen:
+                fill[LOGO_FIELD] = dict(chosen)
         self._fill(slide, list(iter_shapes(slide)), list(slide.shapes), fill, label)
 
         used = set(fill)
@@ -318,7 +327,7 @@ class Builder:
         cp.comments = props.get("comments", "")
         cp.last_modified_by = props.get("author", "")
         self.warnings.extend(self.cloner.warnings)
-        if self.logo and not self.logos_placed:
+        if (self.logo or self.logo_dark) and not self.logos_placed:
             self.warn("spec: 'logo' is not shown: no slide has a logo slot (covers L-01 to L-05, closing L-49)")
 
     # ---------------------------------------------------------------- insert
@@ -673,6 +682,19 @@ class Builder:
                 etree.SubElement(clr, qn("a:lumOff")).set("val", str(off))
 
     # ---------------------------------------------------------------- logo
+    def _logo_for(self, slide, slot) -> dict | None:
+        """"logo_dark" on a dark background (measured with the theme the deck will get), else "logo"."""
+        if not self.logo_dark:
+            return self.logo
+        theme = cmap = None
+        if self.theme_src:
+            theme = read_theme(etree.tostring(self.theme_src["root"]))
+            cmap = self.theme_src.get("clrmap")
+        lum = backdrop_luminance(slide, slot, theme, cmap)
+        if lum is not None and lum < DARK_BACKDROP:
+            return self.logo_dark
+        return self.logo
+
     def _fill_logo(self, slide, shp, value: dict, label: str) -> None:
         """The logo, whole, in its slot: scaled to fit, aspect ratio kept, aligned on the slot's side.
 
@@ -1086,6 +1108,7 @@ def main(argv=None) -> int:
             theme_src = load_theme_source(theme_path)
             fallback_fonts(spec.get("theme_fonts_fallback"))
         logo = load_logo(spec, spec_dir)  # same: a wrong logo file stops the build first
+        logo_dark = load_logo(spec, spec_dir, "logo_dark")
         accent_scale = spec.get("accent_scale")
         if accent_scale not in (None, "", "tints", "colours"):
             raise SpecError("'accent_scale' can be 'tints' or 'colours' (the default)")
@@ -1120,6 +1143,7 @@ def main(argv=None) -> int:
             logo=logo,
             spec_dir=spec_dir,
             skeleton=skeleton,
+            logo_dark=logo_dark,
             theme_src=theme_src,
             accent_scale=accent_scale,
         )
@@ -1130,7 +1154,7 @@ def main(argv=None) -> int:
         if accent_scale and not theme_src:
             b.warn("spec: 'accent_scale' needs a 'theme' (the tints follow the theme's accent colours): ignored")
             b.accent_scale = None
-        if spec.get("logo_alt") and not logo:
+        if spec.get("logo_alt") and not (logo or logo_dark):
             b.warn("spec: 'logo_alt' is ignored without a 'logo'")
         for i, s in enumerate(spec["slides"]):
             if s.get("hidden"):
