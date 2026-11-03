@@ -57,6 +57,10 @@ slots are removed, as any optional field left unfilled.
 dark, measured with the theme the deck will get. Alone, it only appears on dark
 slides.
 
+"emphasis": "accent3" (optional) colours the key numbers (KPI values, big numbers: 28 pt and
+larger) with that theme accent instead of the text colour. It must reach 3:1 on the slide
+background (large text); a theme that does not gets a warning.
+
 "accent_scale": "tints" (optional, needs "theme") draws the visuals that read the accents
 as a scale (heatmap, funnel, pyramid, staircase, rings; tag "sequential" in the index)
 with tints of accent1 instead of accent2 to accent6; "colours" is the default.
@@ -113,11 +117,12 @@ except ImportError as _exc:  # a missing package would otherwise end in a traceb
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tif", ".tiff", ".webp"}
 SOURCE_ALIASES = {"design": "layouts", "shapes": "visuals"}
 SPEC_KEYS = {"output", "properties", "slides", "language", "theme", "theme_fonts_fallback", "logo", "logo_dark", "logo_alt",
-             "skeleton", "accent_scale"}
+             "skeleton", "accent_scale", "emphasis"}
 DUMMY_SERIES = "Dummy data — replace"  # lint_deck.py looks for this name
 SKELETON_ICON = "lucide:circle-dashed"
 LABEL_FIELD = "Footer"  # skeleton mode keeps its value: the confidentiality label, not content
 LOGO_FIELD = "Logo"  # the logo slot of the layouts (role=logo in the index)
+EMPHASIS_MIN_SZ = 2800  # hundredths of a point: 28 pt, well inside the 'large text' range
 DARK_BACKDROP = 0.179  # below this luminance white beats black as the colour on top
 LOGO_EXT = {".png", ".jpg", ".jpeg", ".svg"}
 SLIDE_KEYS = {"source", "slide", "id", "fill", "insert", "notes", "keep_unfilled", "hidden"}
@@ -217,7 +222,8 @@ def load_logo(spec: dict, spec_dir: Path, key: str = "logo") -> dict | None:
 class Builder:
     def __init__(self, design_path: str, shapes_path: str | None, design_index=None, shapes_index=None, strict=False,
                  logo: dict | None = None, spec_dir: Path | None = None, skeleton: bool = False,
-                 logo_dark: dict | None = None, theme_src: dict | None = None, accent_scale: str | None = None):
+                 logo_dark: dict | None = None, theme_src: dict | None = None, accent_scale: str | None = None,
+                 emphasis: str | None = None):
         self.prs = Presentation(design_path)
         self.skeleton = skeleton
         self.sheet: list[dict] = []  # skeleton mode: one row per field to fill
@@ -225,6 +231,7 @@ class Builder:
         self.logo_dark = logo_dark
         self.theme_src = theme_src
         self.accent_scale = accent_scale
+        self.emphasis = emphasis
         self._tints = None
         self.logos_placed = 0
         self.spec_dir = spec_dir or Path.cwd()
@@ -659,6 +666,22 @@ class Builder:
         shp._element.getparent().remove(shp._element)
         if meta.get("attribution_required"):
             self.credits.append({"slide": int(re.search(r"slide (\d+)", label).group(1)), "credit": meta["credit"], "path": meta.get("ref", "")})
+
+    # ---------------------------------------------------------------- emphasis
+    def apply_emphasis(self) -> None:
+        """Key numbers (fields named "... value" or "Number ...", 28 pt and larger, in the text colour) take the
+        emphasis accent: a brand whose main colour is mid-tone keeps the dark panels on accent1 and still
+        shows its colour on the numbers. Large text only: the contract asks 3:1 there, not 4.5:1."""
+        slot = self.emphasis
+        for slide in self.prs.slides:
+            for shp in iter_shapes(slide):
+                if not re.search(r"\b(value|number)\b", shp.name, re.I):
+                    continue
+                for rpr in shp._element.iter(qn("a:rPr")):
+                    clr = rpr.find(qn("a:solidFill") + "/" + qn("a:schemeClr"))
+                    if clr is not None and clr.get("val") == "tx1" and not len(clr) \
+                            and int(rpr.get("sz") or 0) >= EMPHASIS_MIN_SZ:
+                        clr.set("val", slot)
 
     # ---------------------------------------------------------------- accent scale
     def _tint_fills(self, root) -> None:
@@ -1113,6 +1136,13 @@ def main(argv=None) -> int:
         if accent_scale not in (None, "", "tints", "colours"):
             raise SpecError("'accent_scale' can be 'tints' or 'colours' (the default)")
         accent_scale = "tints" if accent_scale == "tints" else None
+        emphasis = spec.get("emphasis")
+        if emphasis in (None, ""):
+            emphasis = None
+        elif str(emphasis).lower() in {f"accent{i}" for i in range(1, 7)} | {f"a{i}" for i in range(1, 7)}:
+            emphasis = "accent" + str(emphasis)[-1]
+        else:
+            raise SpecError("'emphasis' must be a theme accent: accent1 to accent6")
         skeleton = bool(args.skeleton or spec.get("skeleton") is True)
 
         if args.layouts:
@@ -1146,6 +1176,7 @@ def main(argv=None) -> int:
             logo_dark=logo_dark,
             theme_src=theme_src,
             accent_scale=accent_scale,
+            emphasis=emphasis,
         )
         b.base_dir = Path(args.spec).resolve().parent
         b.warnings.extend(check_keys(spec))
@@ -1161,9 +1192,11 @@ def main(argv=None) -> int:
                 continue
             b.add_slide(s, i)
         b.finish(None if skeleton else spec.get("properties"), spec.get("language"))
+        if emphasis:
+            b.apply_emphasis()
         theme_report = None
         if theme_src:
-            theme_report, theme_warnings = apply_theme(b.prs, theme_src, spec.get("theme_fonts_fallback"))
+            theme_report, theme_warnings = apply_theme(b.prs, theme_src, spec.get("theme_fonts_fallback"), emphasis)
             b.warnings.extend(theme_warnings)
 
         out.parent.mkdir(parents=True, exist_ok=True)

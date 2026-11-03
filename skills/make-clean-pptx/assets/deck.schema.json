@@ -31,6 +31,7 @@
     "logo": {"type": ["string", "null"], "pattern": "^$|\\.([Pp][Nn][Gg]|[Jj][Pp][Ee]?[Gg]|[Ss][Vv][Gg])$", "description": "PNG, JPG or SVG file put in the Logo slot of the covers and the closing slide."},
     "logo_dark": {"type": ["string", "null"], "pattern": "^$|\\.([Pp][Nn][Gg]|[Jj][Pp][Ee]?[Gg]|[Ss][Vv][Gg])$", "description": "Light version of the logo, used instead of logo in a Logo slot whose background is dark (dark cover, dark theme)."},
     "accent_scale": {"enum": ["tints", "colours", null], "description": "tints: visuals tagged sequential use tints of accent1 instead of accent2 to accent6 (needs theme)."},
+    "emphasis": {"enum": ["accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "a1", "a2", "a3", "a4", "a5", "a6", null], "description": "Theme accent used for key numbers (28 pt and larger) instead of the text colour. Needs 3:1 on the background."},
     "logo_alt": {"type": "string", "description": "Alt text of the logo, normally the brand name. Without it the logo is decorative."},
     "skeleton": {"type": "boolean", "description": "true builds the deck without the user's content (same as --skeleton)."},
     "slides": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/slide"}}
