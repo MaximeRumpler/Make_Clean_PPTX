@@ -75,3 +75,21 @@ jobs:
       # Theme contract: the neutral libraries pass the opt-in contrast check
       - run: python skills/make-clean-pptx/scripts/lint_deck.py --contrast skills/make-clean-pptx/assets/layouts.pptx
       - run: python skills/make-clean-pptx/scripts/lint_deck.py --contrast skills/make-clean-pptx/assets/visuals.pptx
+
+  install:
+    # A user's first run on a system whose Python refuses pip (PEP 668): the doctor must build the private
+    # environment and the scripts must find it by themselves. Uses the system Python, no setup-python.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends python3-venv
+      - name: The system Python has no python-pptx and refuses pip
+        run: |
+          ! /usr/bin/python3 -c "import pptx"
+          ! /usr/bin/python3 -m pip install --dry-run python-pptx 2>/dev/null || echo "this runner's pip is not externally managed: the fallback is still exercised below"
+      - name: doctor --fix builds a private environment
+        run: /usr/bin/python3 skills/make-clean-pptx/scripts/doctor.py --fix --offline | tee doctor.json
+      - name: A script switches to it by itself and builds a deck
+        run: |
+          /usr/bin/python3 skills/make-clean-pptx/scripts/build_deck.py --spec examples/home-energy.json --out "$RUNNER_TEMP/deck.pptx"
+          /usr/bin/python3 skills/make-clean-pptx/scripts/lint_deck.py "$RUNNER_TEMP/deck.pptx"
