@@ -7,8 +7,11 @@ Required: Python >= 3.9, python-pptx, openpyxl, Pillow, and the bundled librarie
 Optional: LibreOffice + poppler (visual check), network access (online icons, images, --remote libraries).
 
 With --fix, missing Python packages are installed with pip from requirements.txt
-(first normally, then with --user). It never forces packages into a Python that
-the system manages (--break-system-packages): that can break the computer's own tools.
+(first normally, then with --user). When the system Python is "externally managed"
+(PEP 668: recent Ubuntu, Debian, Fedora, Homebrew), the skill builds its own private
+environment in a per-user folder (see _env.py) and the scripts use it automatically.
+It never forces packages into a Python that the system manages
+(--break-system-packages): that can break the computer's own tools.
 The "message" field is one plain sentence the agent can pass on to the user.
 
 Exit code 0 when the required pieces are present, 1 otherwise.
@@ -24,6 +27,9 @@ import sys
 import urllib.error
 import urllib.request
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _env  # noqa: E402  (no dependency; re-runs the script in the private environment if it exists)
 
 # Not imported from _common: _common needs python-pptx, which may be the thing that is missing.
 SKILL_DIR = Path(__file__).resolve().parent.parent
@@ -49,7 +55,7 @@ def reachable(url: str) -> bool:
         return False
 
 
-def check_packages() -> dict:
+def check_packages(python: str | None = None) -> dict:
     """{package: version or None}. Runs in a fresh interpreter so packages installed by --fix are seen."""
     code = ("import importlib, json\nout = {}\n"
             f"for mod, pkg in {REQUIRED!r}:\n"
@@ -57,7 +63,7 @@ def check_packages() -> dict:
             "    except ImportError:\n        out[pkg] = None\n"
             "print(json.dumps(out))")
     try:
-        p = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=120)
+        p = subprocess.run([python or sys.executable, "-c", code], capture_output=True, text=True, timeout=120)
         return json.loads(p.stdout)
     except (OSError, ValueError, subprocess.SubprocessError):
         out = {}  # cannot start a second interpreter: check in this one
@@ -82,10 +88,35 @@ def pip_install(user: bool) -> dict:
     return {"command": " ".join(cmd), "ok": p.returncode == 0, "error": None if p.returncode == 0 else last[0]}
 
 
+def build_private_env() -> dict:
+    """Create the skill's private environment and install requirements.txt into it."""
+    folder = _env.venv_dir()
+    py = _env.venv_python()
+    steps = []
+    try:
+        if not py.is_file():
+            p = subprocess.run([sys.executable, "-m", "venv", str(folder)], capture_output=True, text=True, timeout=300)
+            if p.returncode != 0:
+                last = (p.stderr or p.stdout).strip().splitlines()[-1:] or ["venv failed"]
+                hint = (" On Debian/Ubuntu, install it with: sudo apt install python3-venv"
+                        if "ensurepip" in " ".join(last) + (p.stderr or "") else "")
+                return {"ok": False, "folder": str(folder), "error": last[0] + hint}
+        steps.append(str(folder))
+        cmd = [str(py), "-m", "pip", "install", "--disable-pip-version-check", "-r", str(REQUIREMENTS)]
+        p = subprocess.run(cmd, capture_output=True, text=True, timeout=900)
+        if p.returncode != 0:
+            last = (p.stderr or p.stdout).strip().splitlines()[-1:] or ["pip failed"]
+            return {"ok": False, "folder": str(folder), "error": last[0]}
+    except (OSError, subprocess.SubprocessError) as exc:
+        return {"ok": False, "folder": str(folder), "error": str(exc)}
+    return {"ok": True, "folder": str(folder), "python": str(py)}
+
+
 def fix_packages(missing: list[str]) -> dict:
     """Install the missing packages, then check again. Never uses --break-system-packages."""
     attempts = []
     in_venv = sys.prefix != getattr(sys, "base_prefix", sys.prefix)
+    still = missing
     for user in (False, True):
         if user and in_venv:
             break  # --user is refused inside a virtual environment
@@ -93,7 +124,14 @@ def fix_packages(missing: list[str]) -> dict:
         still = [pkg for pkg, v in check_packages().items() if v is None]
         if not still:
             break
-    return {"attempts": attempts, "installed": [p for p in missing if p not in still], "still_missing": still}
+    out = {"attempts": attempts}
+    if still:  # typical on "externally managed" systems: use a private environment instead
+        private = build_private_env()
+        out["private_env"] = private
+        if private["ok"]:
+            still = [pkg for pkg, v in check_packages(private["python"]).items() if v is None]
+    out.update({"installed": [p for p in missing if p not in still], "still_missing": still})
+    return out
 
 
 def main(argv=None) -> int:
@@ -111,20 +149,34 @@ def main(argv=None) -> int:
 
     report["required"] = check_packages()
     missing = [pkg for pkg, v in report["required"].items() if v is None]
+    private_py = str(_env.venv_python())
+    if missing and Path(private_py).is_file():  # packages live in the skill's private environment
+        in_private = check_packages(private_py)
+        if not [pkg for pkg, v in in_private.items() if v is None]:
+            report["required"], missing = in_private, []
+            report["private_env"] = str(_env.venv_dir())
     if missing and args.fix:
         report["install"] = fix_packages(missing)
         missing = report["install"]["still_missing"]
-        report["required"] = check_packages()
         if not missing:
-            message = "The missing Python packages are now installed; the skill is ready."
+            if report["install"].get("private_env", {}).get("ok"):
+                report["private_env"] = report["install"]["private_env"]["folder"]
+                report["required"] = check_packages(report["install"]["private_env"]["python"])
+                message = ("The missing Python packages are installed in a private folder "
+                           f"({report['private_env']}); the skill uses it automatically and is ready.")
+            else:
+                report["required"] = check_packages()
+                message = "The missing Python packages are now installed; the skill is ready."
     if missing:
         ok = False
         cmd = f'"{sys.executable}" -m pip install -r "{REQUIREMENTS}"'
+        venv_cmd = (f'"{sys.executable}" -m venv "{_env.venv_dir()}" && "{_env.venv_python()}" -m pip install -r "{REQUIREMENTS}"')
         if args.fix:
-            report["fix"].append(f"automatic install failed: create a virtual environment (python -m venv .venv), "
-                                 f"activate it and run pip install -r {REQUIREMENTS}")
+            err = report.get("install", {}).get("private_env", {}).get("error", "")
+            report["fix"].append("automatic install failed" + (f" ({err})" if err else "")
+                                 + f": run in a terminal: {venv_cmd}")
             message = ("Some Python packages could not be installed automatically (" + ", ".join(missing)
-                       + "). Please run this command in a terminal, or ask whoever manages this computer: " + cmd)
+                       + "). Please run this command in a terminal, or ask whoever manages this computer: " + venv_cmd)
         else:
             report["fix"].append("missing Python packages (" + ", ".join(missing) + "): run doctor.py --fix, or " + cmd)
             message = ("A few Python packages are missing (" + ", ".join(missing)

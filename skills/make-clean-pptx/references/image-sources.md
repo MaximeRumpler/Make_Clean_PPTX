@@ -22,7 +22,7 @@ NC (non-commercial) and ND (no derivatives) licences are filtered out. Always pa
 ## Using it
 
 ```bash
-python3 scripts/fetch_image.py --query "solar panels on a roof" --out build/img/s3.jpg --orientation wide
+python3 scripts/fetch_image.py --query "solar panels on a roof" --out "$WORK/img/s3.jpg" --orientation wide
 python3 scripts/fetch_image.py --query "coffee shop interior" --list            # inspect candidates only
 python3 scripts/fetch_image.py --query "coffee shop interior" --out x.jpg --pick 3   # take the 3rd acceptable result
 ```

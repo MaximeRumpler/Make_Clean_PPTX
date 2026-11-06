@@ -1,13 +1,13 @@
 # Review checklist
 
-Use it on `build/render/contact-sheet.png` and on single slides (`build/render/slide-N.png`). It is written so that a separate reviewer (a sub-agent, a colleague) can apply it without context. Report findings as: slide number, problem, concrete fix (field, value, other layout id).
+Use it on `$WORK/render/contact-sheet.png` and on single slides (`$WORK/render/slide-N.png`). It is written so that a separate reviewer (a sub-agent, a colleague) can apply it without context. Report findings as: slide number, problem, concrete fix (field, value, other layout id).
 
 ## Blocking (fix before delivery)
 
 1. **Placeholder left**: any slot description ("Slide title states the takeaway", "Short text", "00", "Item name", "Category 1") or an empty grey frame/image box.
 2. **Invented content**: a figure, name, quote or date that is not in the user's material.
 3. **Overflow or clipping**: text outside its box, over another shape, or cut at the slide edge.
-4. **Unreadable**: text smaller than ~9 pt on screen, light grey on light grey, chart labels colliding.
+4. **Unreadable**: text smaller than 12 pt on screen, light grey on light grey, chart labels colliding.
 5. **Wrong data visual**: chart type that misleads (pie with many parts, unsorted ranking, two bars for a variation that needs a waterfall).
 6. **Image problem**: visible text, logo or watermark, recognisable person not supplied by the user, an important part cropped out, missing credit in notes.
 

@@ -62,7 +62,7 @@ The agent writes a small JSON file; `build_deck.py` does the rest.
 
 ```json
 {
-  "output": "build/deck.pptx",
+  "output": "deck.pptx",
   "slides": [
     { "id": "L-01", "fill": { "Title": "Q3 **review**", "Subtitle": "Growth, risks, next steps" } },
     { "id": "L-32", "fill": { "Title": "Volume explains the gap", "Points": ["Price +12", "Volume −20"] },

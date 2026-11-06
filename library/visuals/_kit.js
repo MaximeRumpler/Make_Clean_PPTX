@@ -30,7 +30,7 @@ function plot(ctx, x, y, w, h, o = {}) {
 function marker(ctx, i, cx, cy, o = {}) {
   const d = o.d || 0.42;
   text(ctx, `Item ${i}`, L.num(i), cx - d / 2, cy - d / 2, d, d, "small", {
-    shape: "ellipse", fill: o.fill || "a1", role: "label", color: "paper", bold: true, align: "center", valign: "middle", size: 11,
+    shape: "ellipse", fill: o.fill || "a1", role: "label", color: "paper", bold: true, align: "center", valign: "middle", size: 12,
     optional: true, limit: 3, keep: false,
   });
 }

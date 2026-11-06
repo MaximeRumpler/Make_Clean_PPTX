@@ -20,7 +20,7 @@ Lucide is the default because it is bundled (works offline) and its thin, rounde
 python3 scripts/find_icon.py "data security"                 # bundled Lucide only
 python3 scripts/find_icon.py "solar panel" --source tabler,material
 python3 scripts/find_icon.py "handshake" --source all --top 15
-python3 scripts/find_icon.py --get material:solar_power --out build/icons/solar.svg   # to look at it
+python3 scripts/find_icon.py --get material:solar_power --out "$WORK/icons/solar.svg"   # to look at it
 ```
 
 Search in English with concrete words. Results are ranked by name, tags and categories; the `ref` is what goes into the spec.

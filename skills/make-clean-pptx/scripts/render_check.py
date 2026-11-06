@@ -15,6 +15,8 @@ Exit code 4 when the rendering tools are missing, 5 when LibreOffice cannot conv
 """
 from __future__ import annotations
 
+import _env  # noqa: F401  (first project import: switches to the skill's private environment if needed)
+
 import argparse
 import glob
 import json

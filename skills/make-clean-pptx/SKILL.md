@@ -61,15 +61,15 @@ python3 scripts/find_icon.py "rocket launch" --source all       # + Tabler, Mate
 ```
 Photos come from keyless free banks with licence filtering and credits:
 ```bash
-python3 scripts/fetch_image.py --query "team workshop whiteboard" --out build/img/s4.jpg --orientation wide
+python3 scripts/fetch_image.py --query "team workshop whiteboard" --out "$WORK/img/s4.jpg" --orientation wide
 ```
 For confidential content, skip online sources: search queries reveal the topic (bundled icons only, no photos). Open every image with the Read tool before using it; reject text, logos, recognisable faces, or anything off-message. One icon family per deck. Details: `references/icons-and-illustrations.md`, `references/image-sources.md`.
 
 ### 4. Build
-Write the deck spec and run `python3 scripts/build_deck.py --spec build/deck.json`.
+Keep everything that is not the deliverable (spec, renders, reports, downloaded images) in a scratch folder, so the user's folder ends up with the deck only: `WORK=$(python3 scripts/workdir.py)` prints one (Windows PowerShell: `$WORK = python scripts/workdir.py`). Write the deck spec there and run `python3 scripts/build_deck.py --spec "$WORK/deck.json"`; `output` is the final path in the user's folder (`<topic>.pptx`).
 ```json
 {
-  "output": "build/deck.pptx",
+  "output": "Q3-review.pptx",
   "language": "en-GB",
   "slides": [
     {"id": "L-01", "fill": {"Title": "Q3 **review**", "Subtitle": "Growth, risks, next steps", "Date": "October 2026"}},
@@ -80,17 +80,17 @@ Write the deck spec and run `python3 scripts/build_deck.py --spec build/deck.jso
   ]
 }
 ```
-`language` is the language tag of the content (screen readers and spell check rely on it). For the user's brand, add `"theme": "brand.thmx"` (or a `.potx`/`.pptx`, path relative to deck.json): colours and fonts change in one pass and theme problems come back as warnings. Keys in `fill` are the field names from the index. Optional fields you do not fill are removed automatically; required ones you forget are reported. Every value type (text, bullets, charts, waterfall and Gantt shortcuts, tables, images, icons, shading with `fill`, positions with `at`) is in `references/spec-reference.md`, as is the optional `"logo"` key when the user gives a logo file. `assets/deck.schema.json` is the same contract as a JSON Schema; `scripts/validate_spec.py build/deck.json` checks a spec against it before building. **Treat every warning in the JSON report as a to-do.**
+`language` is the language tag of the content (screen readers and spell check rely on it). For the user's brand, add `"theme": "brand.thmx"` (or a `.potx`/`.pptx`, path relative to deck.json): colours and fonts change in one pass and theme problems come back as warnings. Keys in `fill` are the field names from the index. Optional fields you do not fill are removed automatically; required ones you forget are reported. Every value type (text, bullets, charts, waterfall and Gantt shortcuts, tables, images, icons, shading with `fill`, positions with `at`) is in `references/spec-reference.md`, as is the optional `"logo"` key when the user gives a logo file. `assets/deck.schema.json` is the same contract as a JSON Schema; `scripts/validate_spec.py "$WORK/deck.json"` checks a spec against it before building. **Treat every warning in the JSON report as a to-do.**
 
 ### 5. Check, then fix
 ```bash
-python3 scripts/lint_deck.py build/deck.pptx
-python3 scripts/render_check.py build/deck.pptx --out-dir build/render
+python3 scripts/lint_deck.py Q3-review.pptx
+python3 scripts/render_check.py Q3-review.pptx --out-dir "$WORK/render"
 ```
-Open `build/render/contact-sheet.png`, then single slides where something looks off. Review against `references/review-checklist.md`: leftover placeholders, overflow, cramped or empty slides, three identical layouts in a row, a chart whose headline does not say what it shows. If your harness offers sub-agents (Claude Code: the `deck-reviewer` agent of this plugin), delegate this review to get a fresh pair of eyes; otherwise do it yourself. Fix the spec and rebuild. Stop after three rounds and tell the user what is still off and why. LibreOffice differs from PowerPoint by a few pixels: judge layout and content, not kerning. Without a way to view images, rely on the lint and say the visual check was skipped.
+Open `$WORK/render/contact-sheet.png`, then single slides where something looks off. Review against `references/review-checklist.md`: leftover placeholders, overflow, cramped or empty slides, three identical layouts in a row, a chart whose headline does not say what it shows. If your harness offers sub-agents (Claude Code: the `deck-reviewer` agent of this plugin), delegate this review to get a fresh pair of eyes; otherwise do it yourself. Fix the spec and rebuild. Stop after three rounds and tell the user what is still off and why. LibreOffice differs from PowerPoint by a few pixels: judge layout and content, not kerning. Without a way to view images, rely on the lint and say the visual check was skipped.
 
-### 6. Deliver
-Hand over the `.pptx` (and `<deck>.credits.md` when images or attributed icons were used). Give the full path of every delivered file; in harnesses with an outputs folder (Claude.ai, Claude desktop), save them there so the user can download them. If the user asked for `.odp` or uses LibreOffice, add `--odp` to the last `render_check.py` run and hand over the `.odp` too. Two or three sentences: the options applied (format, confidentiality label, see `references/deck-options.md`), slide count, the storyline, anything to double-check (figures you could not verify, an image you could not find), and how to open it if the user seems unsure (PowerPoint, Keynote, Google Slides by import, LibreOffice). If the visual check was skipped because LibreOffice is missing, say so in plain words and that it is optional. No recap of the steps.
+### 6. Deliver and clean up
+Remove the scratch folder: `python3 scripts/workdir.py --clean "$WORK"`. Keep the spec only if the user wants to rework the deck later: then copy it next to the deck as `<topic>.deck.json` and say so. The user's folder must hold the deliverables and nothing else (no `build/`, renders, reports or test files). Hand over the `.pptx` (and `<deck>.credits.md` when images or attributed icons were used). Give the full path of every delivered file; in harnesses with an outputs folder (Claude.ai, Claude desktop), save them there so the user can download them. If the user asked for `.odp` or uses LibreOffice, add `--odp` to the last `render_check.py` run (before cleaning up), move the `.odp` next to the deck and hand it over too. Two or three sentences: the options applied (format, confidentiality label, see `references/deck-options.md`), slide count, the storyline, anything to double-check (figures you could not verify, an image you could not find), and how to open it if the user seems unsure (PowerPoint, Keynote, Google Slides by import, LibreOffice). If the visual check was skipped because LibreOffice is missing, say so in plain words and that it is optional. No recap of the steps.
 
 ## Reviewing an existing deck
 When the user asks to review, clean up or "make professional" a deck they already have: run `lint_deck.py` and `render_check.py` on it, review with `references/review-checklist.md`, then either list concrete fixes or, if asked to redo it, extract the content and rebuild it with this workflow. **Never overwrite the user's file**: write the new deck next to it (`<name>-clean.pptx`) and say where it is.

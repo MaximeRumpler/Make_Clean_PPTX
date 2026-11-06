@@ -18,6 +18,12 @@ sys.path.insert(0, str(SCRIPTS))
 import doctor  # noqa: E402
 import render_check  # noqa: E402
 
+@pytest.fixture(autouse=True)
+def _no_private_environment(tmp_path, monkeypatch):
+    """Tests never read or build the real per-user environment."""
+    monkeypatch.setenv("MAKE_CLEAN_PPTX_VENV", str(tmp_path / "no-private-env"))
+
+
 ALL = {"python-pptx": "1", "openpyxl": "1", "Pillow": "1", "lxml": "1"}
 
 
@@ -28,7 +34,7 @@ def _doctor(capsys, *args):
 
 
 def test_doctor_reports_without_fixing(capsys, monkeypatch):
-    monkeypatch.setattr(doctor, "check_packages", lambda: dict(ALL, openpyxl=None))
+    monkeypatch.setattr(doctor, "check_packages", lambda python=None: dict(ALL, openpyxl=None))
     monkeypatch.setattr(doctor, "pip_install", lambda user: pytest.fail("pip must not run without --fix"))
     code, rep = _doctor(capsys)
     assert code == 1 and rep["ok"] is False and "install" not in rep
@@ -44,7 +50,7 @@ def test_doctor_fix_falls_back_to_user_install(capsys, monkeypatch):
         return {"command": "pip", "ok": user, "error": None if user else "permission denied"}
 
     monkeypatch.setattr(doctor, "pip_install", fake_pip)
-    monkeypatch.setattr(doctor, "check_packages", lambda: ALL if state["present"] else dict(ALL, Pillow=None))
+    monkeypatch.setattr(doctor, "check_packages", lambda python=None: ALL if state["present"] else dict(ALL, Pillow=None))
     monkeypatch.setattr(sys, "base_prefix", sys.prefix)  # behave as outside a virtual environment
     code, rep = _doctor(capsys, "--fix")
     assert code == 0 and rep["ok"] is True
@@ -55,12 +61,47 @@ def test_doctor_fix_falls_back_to_user_install(capsys, monkeypatch):
 
 def test_doctor_fix_reports_what_is_still_missing(capsys, monkeypatch):
     monkeypatch.setattr(doctor, "pip_install", lambda user: {"command": "pip", "ok": False, "error": "externally managed"})
-    monkeypatch.setattr(doctor, "check_packages", lambda: dict(ALL, **{"python-pptx": None}))
+    monkeypatch.setattr(doctor, "check_packages", lambda python=None: dict(ALL, **{"python-pptx": None}))
+    monkeypatch.setattr(doctor, "build_private_env", lambda: {"ok": False, "folder": "/x/venv", "error": "no venv module"})
     monkeypatch.setattr(sys, "base_prefix", sys.prefix)
     code, rep = _doctor(capsys, "--fix")
     assert code == 1 and len(rep["install"]["attempts"]) == 2
     assert rep["install"]["still_missing"] == ["python-pptx"]
-    assert "python-pptx" in rep["message"] and "pip install" in rep["message"]
+    assert "python-pptx" in rep["message"] and "-m venv" in rep["message"]
+
+
+def test_doctor_fix_falls_back_to_a_private_environment(capsys, monkeypatch):
+    """PEP 668 systems refuse pip: the skill builds its own environment and says so."""
+    state = {"private": False}
+    monkeypatch.setattr(doctor, "pip_install", lambda user: {"command": "pip", "ok": False, "error": "externally managed"})
+    monkeypatch.setattr(doctor, "build_private_env", lambda: state.update(private=True) or
+                        {"ok": True, "folder": "/x/venv", "python": "/x/venv/bin/python"})
+    monkeypatch.setattr(doctor, "check_packages",
+                        lambda python=None: dict(ALL) if python else dict(ALL, **{"python-pptx": None}))
+    monkeypatch.setattr(sys, "base_prefix", sys.prefix)
+    code, rep = _doctor(capsys, "--fix")
+    assert code == 0 and state["private"]
+    assert rep["private_env"] == "/x/venv" and "private folder" in rep["message"]
+
+
+def test_scripts_switch_to_the_private_environment(tmp_path, monkeypatch):
+    import _env
+    monkeypatch.setenv("MAKE_CLEAN_PPTX_VENV", str(tmp_path / "v"))
+    assert _env.venv_dir() == tmp_path / "v"
+    assert str(_env.venv_python()).startswith(str(tmp_path / "v"))
+    monkeypatch.setenv("MAKE_CLEAN_PPTX_REEXEC", "1")  # a re-launched script must never loop
+    _env._maybe_reexec()  # no private python exists: nothing happens
+
+
+def test_workdir_cleans_only_what_it_made(tmp_path, monkeypatch):
+    import workdir
+    monkeypatch.setenv("MAKE_CLEAN_PPTX_WORKDIR", str(tmp_path))
+    d = workdir.create()
+    assert d.parent == tmp_path and (d / "x").parent == d
+    other = tmp_path / "keep"
+    other.mkdir()
+    assert not workdir.clean(other) and other.exists()  # not created by workdir.py
+    assert workdir.clean(d) and not d.exists()
 
 
 def test_pip_command_never_breaks_system_packages(monkeypatch):

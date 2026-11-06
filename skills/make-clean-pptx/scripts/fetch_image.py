@@ -22,6 +22,8 @@ Exit codes: 0 ok, 3 network blocked / no results (JSON explains).
 """
 from __future__ import annotations
 
+import _env  # noqa: F401  (first project import: switches to the skill's private environment if needed)
+
 import argparse
 import html
 import io
