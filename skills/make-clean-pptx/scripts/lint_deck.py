@@ -127,6 +127,7 @@ def lint(path: str, max_fonts: int = 3, min_font: float = 12.0, check_contrast: 
 
     for n, slide in enumerate(prs.slides, 1):
         text_boxes, logos = [], []
+        body_bottoms = []  # estimated bottom (EMU) of each text block below the title zone
         for shp in iter_shapes(slide):
             kind = shape_kind(shp)
             name = shp.name
@@ -170,6 +171,14 @@ def lint(path: str, max_fonts: int = 3, min_font: float = 12.0, check_contrast: 
                     b = _box(shp)
                     if b:
                         text_boxes.append((name, b))
+                        if fit and b[1] >= int(sh * 0.26) and b[1] <= int(sh * 0.75):
+                            used = fit["needed_lines"] * fit["font_pt"] * 1.25 * 12700  # EMU
+                            body_bottoms.append(min(b[3], b[1] + used))
+
+            if kind in ("picture", "chart", "table"):
+                b = _box(shp)
+                if b and b[1] >= int(sh * 0.26):
+                    body_bottoms.append(b[3])
 
             if kind == "picture" and shp._element.tag.endswith("}pic"):
                 cnvpr = shp._element.xpath(".//p:cNvPr")[0]
@@ -194,6 +203,10 @@ def lint(path: str, max_fonts: int = 3, min_font: float = 12.0, check_contrast: 
                     dummy = False
                 if dummy:
                     add("warning", n, name, "chart still holds dummy data; replace it with your figures")
+
+        if len(body_bottoms) >= 3 and max(body_bottoms) < sh * 0.68:
+            add("warning", n, None, f"content stops at {max(body_bottoms) / sh * 100:.0f}% of the slide height: "
+                "the bottom is empty. Use a layout with a bigger body, or fewer slots")
 
         for i in range(len(text_boxes)):
             for j in range(i + 1, len(text_boxes)):
