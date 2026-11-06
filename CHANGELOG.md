@@ -6,6 +6,13 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [1.4.1] - 2026-11-06
 
+### Fixed
+- KPI card captions (Four figures on cards, KPI cards visual) use the body text colour instead of the muted one, so the cards can take brand colours with Make_Colors_PPTX `--expressive`: the muted caption passed the contrast check on no accent.
+
+### Changed
+- **Gallery page** (GitHub Pages): a first screen with one promise, one call to action and the sample slides; install and the Make PPTX set below the gallery; one scrolling row of category filters with a Clear button, a skip link and larger touch targets; a detail view with plainer labels and previous/next; muted text darker for contrast. The hero statistics block is gone.
+- README: the set section links the new Make PPTX website.
+
 ## [1.4.0] - 2026-11-06
 
 ### Changed
@@ -17,7 +24,6 @@ All notable changes to this project are documented here. Format based on [Keep a
 - Column layouts (Two columns, Three columns with icons, Four columns, Position and three arguments, Story in four acts) start lower on the slide and Before and after, Findings and implications use 18 to 20 pt text, so the content fills the slide instead of hugging the title.
 
 ### Fixed
-- KPI card captions (Four figures on cards, KPI cards visual) use the body text colour instead of the muted one, so the cards can take brand colours with Make_Colors_PPTX `--expressive`: the muted caption passed the contrast check on no accent.
 - **344 of the 1,900 bundled icons drew incompletely** (the briefcase showed as a stem and a dot, no box): the icon build removed `width` and `height` from every element instead of the root `<svg>` only, so every `<rect>` lost its size. Rebuilt from Lucide; tests check that no bundled shape lacks its size and every icon has extent.
 
 ### Added
