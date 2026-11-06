@@ -4,6 +4,8 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-11-06
+
 ## [1.4.0] - 2026-11-06
 
 ### Changed
