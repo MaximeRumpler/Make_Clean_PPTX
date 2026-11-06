@@ -189,3 +189,19 @@ def test_render_retry_with_libreoffice(tmp_path, monkeypatch):
     monkeypatch.setattr(render_check.subprocess, "run", flaky)
     info = render_check.render(deck, tmp_path / "r", dpi=30, cols=3)
     assert info["resaved_copy"] is True and len(info["slides"]) == 1
+
+
+def test_lint_flags_content_stuck_at_the_top(tmp_path):
+    from pptx.util import Inches, Pt
+    import lint_deck
+    prs = Presentation()
+    prs.slide_width, prs.slide_height = Inches(13.333), Inches(7.5)
+    sl = prs.slides.add_slide(prs.slide_layouts[6])
+    for i in range(3):
+        tb = sl.shapes.add_textbox(Inches(0.6 + 4 * i), Inches(2.3), Inches(3.6), Inches(0.9))
+        tb.text_frame.text = "Short text"
+        tb.text_frame.paragraphs[0].runs[0].font.size = Pt(16)
+    path = tmp_path / "top.pptx"
+    prs.save(str(path))
+    msgs = [w["message"] for w in lint_deck.lint(str(path))["warnings"]]
+    assert any("bottom is empty" in m for m in msgs)

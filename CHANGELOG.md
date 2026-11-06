@@ -9,6 +9,7 @@ All notable changes to this project are documented here. Format based on [Keep a
 - **A clean folder at the end.** The workflow keeps the spec, renders, reports and downloaded images in a scratch folder (`scripts/workdir.py`, removed at the end, never anything it did not create) and writes only the deliverables to the user's folder.
 
 ### Added
+- **Empty-bottom check in `lint_deck.py`**: a warning when the content of a slide (three or more blocks) ends above 68 % of the slide height.
 - **Private Python environment on "externally managed" systems** (PEP 668: recent Ubuntu, Debian, Fedora, Homebrew). When pip refuses to install, `doctor.py --fix` builds a private environment in a per-user folder (`~/.cache/make-clean-pptx/venv`, or `%LOCALAPPDATA%` on Windows) and the scripts switch to it by themselves (`scripts/_env.py`). The system Python is never modified. If even that fails, the message carries one working command.
 - `scripts/workdir.py`: a scratch folder and a safe clean-up.
 
