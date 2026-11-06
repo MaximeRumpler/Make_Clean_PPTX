@@ -7,10 +7,11 @@
 Writes
   docs/thumbnails/<id>.jpg   one image per layout and per visual
   docs/catalog.json          data for the GitHub Pages gallery (docs/index.html)
-  docs/index.html            static cards, counts and heading between the <!-- x:start/end -->
+  docs/index.html            static cards and heading between the <!-- x:start/end -->
                              markers, so crawlers and readers without JavaScript see the gallery;
                              also the counts and version quoted in <head>
-                             (the rest of the page, header text included, is edited by hand)
+                             (the rest of the page, the hero text and the install and set sections
+                             included, is edited by hand)
   CATALOG.md                 the same catalogue, readable on GitHub
   docs/preview.jpg           a mosaic used in the README
 Needs LibreOffice and poppler (same as render_check.py), except with --html-only.
@@ -49,17 +50,13 @@ def write_static_html(catalog: list) -> None:
         return html.escape(str(v), quote=True)
 
     n = {lib: sum(c["lib"] == lib for c in catalog) for lib in ("layouts", "visuals")}
-    cats = len({c["lib"] + c["category"] for c in catalog})
-    stats = "".join(f"<div><b>{v}</b><span>{label}</span></div>" for v, label in
-                    ((n["layouts"], "layouts"), (n["visuals"], "visuals"), (cats, "categories"), ("1,900", "bundled icons")))
     cards = "".join(
         f'\n      <button type="button" class="card" data-i="{i}">'
-        f'\n        <img src="{e(c["thumbnail"])}" alt="{e(c["name"])}: {e(c["description"])}" loading="lazy" width="640" height="360">'
-        f'\n        <div><span class="id">{e(c["id"])}</span><h3>{e(c["name"])}</h3><p>{e(c["use_when"])}</p></div>'
+        f'\n        <img src="{e(c["thumbnail"])}" alt="{e(c["name"])}" loading="lazy" width="640" height="360">'
+        f'\n        <div class="meta"><span class="id">{e(c["id"])}</span><h3>{e(c["name"])}</h3><p>{e(c["use_when"])}</p></div>'
         f'\n      </button>' for i, c in enumerate(catalog)) + "\n    "
     path = DOCS / "index.html"
     page = path.read_text(encoding="utf-8")
-    page = _fill(page, "stats", stats)
     page = _fill(page, "heading", f'{n["layouts"]} slide layouts and {n["visuals"]} charts and diagrams')
     page = _fill(page, "cards", cards)
     # counts and version quoted in <head> (title, description, Open Graph, JSON-LD)
