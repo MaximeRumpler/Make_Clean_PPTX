@@ -12,7 +12,7 @@
       "role": "Main text colour (token ink: titles, key numbers) and, lightened, captions and labels (token muted). Also the fill of the few panels drawn in ink.",
       "neutral": "111111",
       "uses": {
-        "text": 1060,
+        "text": 1016,
         "fill": 27,
         "line": 131,
         "chart_series": 0,
@@ -34,11 +34,11 @@
       "role": "Body text (token ink2).",
       "neutral": "404040",
       "uses": {
-        "text": 540,
+        "text": 584,
         "fill": 0,
         "line": 0,
         "chart_series": 0,
-        "entries": 112
+        "entries": 120
       }
     },
     "lt2": {
@@ -78,7 +78,7 @@
       "role": "Middle of the ramp: third series, comparison. Carries ink text; used as a muted text colour on dark slides.",
       "neutral": "8C8C8C",
       "uses": {
-        "text": 4,
+        "text": 3,
         "fill": 25,
         "line": 80,
         "chart_series": 8,
@@ -89,7 +89,7 @@
       "role": "Fourth step: reference series, light fills. Carries ink text; used as a kicker colour on dark slides.",
       "neutral": "B3B3B3",
       "uses": {
-        "text": 15,
+        "text": 16,
         "fill": 26,
         "line": 16,
         "chart_series": 8,
@@ -275,7 +275,7 @@
       "text": "a3",
       "on": "a1",
       "kind": "text",
-      "runs": 3,
+      "runs": 2,
       "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
@@ -301,7 +301,7 @@
       "text": "a4",
       "on": "a1",
       "kind": "text",
-      "runs": 15,
+      "runs": 16,
       "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
@@ -470,7 +470,7 @@
       "text": "ink2",
       "on": "paper",
       "kind": "text",
-      "runs": 412,
+      "runs": 455,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
@@ -483,7 +483,7 @@
       "text": "ink2",
       "on": "surface",
       "kind": "text",
-      "runs": 57,
+      "runs": 58,
       "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
@@ -496,7 +496,7 @@
       "text": "muted",
       "on": "paper",
       "kind": "text",
-      "runs": 384,
+      "runs": 341,
       "smallest_pt": 10.0,
       "min_ratio": 4.5,
       "slots": [
@@ -509,7 +509,7 @@
       "text": "muted",
       "on": "surface",
       "kind": "text",
-      "runs": 16,
+      "runs": 15,
       "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [

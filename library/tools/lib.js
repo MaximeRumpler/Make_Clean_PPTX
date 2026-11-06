@@ -311,7 +311,7 @@ function chrome(ctx, o = {}) {
 
 function footer(ctx, dark) {
   text(ctx, "Footer", "Source or confidentiality note", MX, G.footer.y, 8, G.footer.h, "caption", { color: dark ? "a3" : undefined, valign: "middle", optional: true });
-  ctx.s.slideNumber = { x: W - MX - 0.8, y: G.footer.y, w: 0.8, h: G.footer.h, fontFace: FONT.body, fontSize: 12, color: dark ? C.a3 : C.muted, align: "right", valign: "middle" };
+  ctx.s.slideNumber = { x: W - MX - 0.8, y: G.footer.y, w: 0.8, h: G.footer.h, fontFace: FONT.body, fontSize: 12, color: dark ? C.a4 : C.ink2, align: "right", valign: "middle" };
 }
 
 function background(ctx, color) { ctx.s.background = { color: C[color] || color }; }
