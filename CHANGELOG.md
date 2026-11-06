@@ -12,6 +12,9 @@ All notable changes to this project are documented here. Format based on [Keep a
 ### Changed (layouts)
 - Column layouts (Two columns, Three columns with icons, Four columns, Position and three arguments, Story in four acts) start lower on the slide and Before and after, Findings and implications use 18 to 20 pt text, so the content fills the slide instead of hugging the title.
 
+### Fixed
+- **344 of the 1,900 bundled icons drew incompletely** (the briefcase showed as a stem and a dot, no box): the icon build removed `width` and `height` from every element instead of the root `<svg>` only, so every `<rect>` lost its size. Rebuilt from Lucide; tests check that no bundled shape lacks its size and every icon has extent.
+
 ### Added
 - **Empty-bottom check in `lint_deck.py`**: a warning when the content of a slide (three or more blocks) ends above 68 % of the slide height.
 - **Private Python environment on "externally managed" systems** (PEP 668: recent Ubuntu, Debian, Fedora, Homebrew). When pip refuses to install, `doctor.py --fix` builds a private environment in a per-user folder (`~/.cache/make-clean-pptx/venv`, or `%LOCALAPPDATA%` on Windows) and the scripts switch to it by themselves (`scripts/_env.py`). The system Python is never modified. If even that fails, the message carries one working command.

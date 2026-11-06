@@ -26,7 +26,9 @@ def compact(svg: str) -> str:
     svg = re.sub(r"<!--.*?-->", "", svg, flags=re.S)
     svg = re.sub(r"\s+", " ", svg).strip()
     svg = re.sub(r">\s+<", "><", svg)
-    svg = re.sub(r'\s(class|width|height)="[^"]*"', "", svg)
+    # Only the root <svg> loses class, width and height: the same attributes on <rect> and others are geometry.
+    root_end = svg.index(">") + 1
+    svg = re.sub(r'\s(class|width|height)="[^"]*"', "", svg[:root_end]) + svg[root_end:]
     return svg
 
 
