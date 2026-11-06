@@ -14,7 +14,7 @@ module.exports = {
       draw(ctx) {
         hrule(ctx, MX, 2.2, 1.2, { color: "ink", w: 2 });
         text(ctx, "Message", "The one sentence the audience must remember", MX, 2.5, 10.8, 2.6, "hero", { size: 38 });
-        text(ctx, "Source", "Source or supporting detail", MX, 5.4, 8, 0.4, "caption", { optional: true });
+        text(ctx, "Source", "Source or supporting detail", MX, 5.4, 9, 0.5, "small", { optional: true, size: 16 });
         footer(ctx);
       },
     },
