@@ -187,6 +187,7 @@ module.exports = {
     },
     {
       id: "L-25", name: "Findings and implications", category: "Text", style: "Editorial", density: "High",
+      arrange: false, // each arrow joins a finding to its implication: arranged, it crosses the text
       description: "Three rows: a finding on the left, an arrow, its implication on the right.",
       use_when: "Turning a diagnosis into consequences: what we saw, what it means.",
       tags: "findings implications diagnosis so what consequences insight analysis",

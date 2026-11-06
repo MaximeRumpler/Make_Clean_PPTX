@@ -5,6 +5,7 @@ All notable changes to this project are documented here. Format based on [Keep a
 ## [Unreleased]
 
 ### Changed
+- Findings and implications (L-25) is no longer arranged by Make_Style (its arrows cross the text); the slide number is 12 pt.
 - **Larger text.** Type scale: body 14 to 16 pt, small 12 to 14, lead 16 to 18, subheadings 16 to 18, labels and captions 10 to 12, table text 11 to 14. Roomy layouts go further (Two columns, Three columns with icons, Position and three arguments, Story in four acts: 18 to 22 pt). Character limits follow the geometry, so some fields hold fewer characters (about 12 % fewer on median in layouts); explicit limits can no longer exceed what the box holds at its font size. `lint_deck.py` and the review checklist now flag text under 12 pt (was 10 pt).
 - **A clean folder at the end.** The workflow keeps the spec, renders, reports and downloaded images in a scratch folder (`scripts/workdir.py`, removed at the end, never anything it did not create) and writes only the deliverables to the user's folder.
 

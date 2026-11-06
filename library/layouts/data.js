@@ -73,6 +73,7 @@ module.exports = {
     },
     {
       id: "L-46", name: "Before and after", category: "Decision", style: "Standard", density: "Medium",
+      arrange: false, // the arrow joins the two states: arranged, it points at nothing
       description: "Two columns, current state in grey and target state in black, joined by an arrow.",
       use_when: "Transformation, as-is versus to-be, the change you propose.",
       tags: "before after as is to be current target change transformation",
