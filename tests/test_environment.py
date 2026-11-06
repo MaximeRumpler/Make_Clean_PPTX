@@ -205,3 +205,12 @@ def test_lint_flags_content_stuck_at_the_top(tmp_path):
     prs.save(str(path))
     msgs = [w["message"] for w in lint_deck.lint(str(path))["warnings"]]
     assert any("bottom is empty" in m for m in msgs)
+
+
+def test_check_quotes_finds_real_quotes_and_flags_invented_ones():
+    import check_quotes
+    source = "Il dit : « Il faut qu'on s'en débarrasse. » Puis elle sortit."
+    spec = {"slides": [{"fill": {"Body": "Sa sœur tranche : « Il faut qu’on s’en débarrasse »"}},
+                       {"fill": {"Body": "Elle ajoute « nous ne pouvons plus continuer ainsi »"}}]}
+    rep = check_quotes.check(spec, source)
+    assert rep["checked"] == 2 and [m["slide"] for m in rep["missing"]] == [2]

@@ -38,6 +38,8 @@ Read what the user gave you. Work out the audience, the goal, the language (the 
 - If everything is clear, or your harness cannot wait for an answer, state your assumptions in one line (defaults: `.pptx`, no label, the length you inferred, standard accessibility) and go.
 - A few facts make a short deck (3 to 4 slides); only when there is a topic and no content at all, ask for the key points instead of inventing them, and offer `assets/brief-template.md` in one line as an optional way to answer.
 
+- **Long source (a report, a book, a transcript): read all of it, in chunks, before planning.** A preview or your memory of the work is not the source. When the deck quotes the source, check the quotations: `python3 scripts/check_quotes.py "$WORK/deck.json" source.txt` lists quotes that are not in the text (convert a PDF with `pdftotext` first). Fix the wording, or present it as a paraphrase without quotation marks.
+
 ### 2. Plan the story, then choose
 Read `references/layout-rules.md` (storytelling, density, rhythm) before planning. Write the outline for yourself: one line per slide with **the message as a full sentence**, then for each message:
 
@@ -99,7 +101,9 @@ When the user asks to review, clean up or "make professional" a deck they alread
 
 - **Content stays the user's.** Never invent figures, quotes, names or claims to fill a slot. No data for a chart: choose a text layout. The libraries contain placeholders only, never sample content, and nothing from them may reach the final deck.
 - **Fit the design, don't bend it.** Respect character limits, delete what you do not need (`null`), never shrink fonts or move shapes to squeeze text in.
-- **One message per slide**, headline written as the takeaway ("Revenue grew 18%", not "Revenue"). Details go to the speaker notes.
+- **One message per slide**, headline written as the takeaway ("Revenue grew 18%", not "Revenue"). Details go to the speaker notes. For analysis, literature or any subject where experts disagree, the takeaway keeps its nuance: state the tension or ask the question instead of a slogan, say what the reading leaves out, and do not end on a moral by default.
+- **Every number or mark on a slide means something readable**: a step, an order, a figure with its unit. Drop decorative numbering (01, 02, 03) that nothing explains, and write a plain caption when a mark changes from one item to the next (a filled square for the last act only).
+- **Speaker notes** go on every slide whose message is not obvious from its headline, not on a random half of the deck.
 - **Choose by meaning, vary by rhythm**: a structure beats a bullet list when the content has one; alternate dense and airy slides; never the same layout three times in a row.
 - **Stay inside the system**: theme colours and fonts only, one icon family, no outside styles. A brand theme works when it follows `references/theme-contract.md` (accents as one dark-to-light ramp, not six unrelated hues); `lint_deck.py --contrast` checks a deck against its theme when the user applied one or asked for accessibility care.
 - **Everything that leaves the machine is public-safe**: freely licensed images and icons, always credited when the licence asks for it.
