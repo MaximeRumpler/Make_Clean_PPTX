@@ -83,12 +83,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends python3-venv
-      - name: The system Python has no python-pptx and refuses pip
+      - name: Make the system Python refuse pip, as recent Ubuntu, Debian and Homebrew do (PEP 668)
         run: |
+          sudo touch "$(/usr/bin/python3 -c 'import sysconfig; print(sysconfig.get_path("stdlib"))')/EXTERNALLY-MANAGED"
           ! /usr/bin/python3 -c "import pptx"
-          ! /usr/bin/python3 -m pip install --dry-run python-pptx 2>/dev/null || echo "this runner's pip is not externally managed: the fallback is still exercised below"
+          ! /usr/bin/python3 -m pip install --user --dry-run python-pptx
       - name: doctor --fix builds a private environment
-        run: /usr/bin/python3 skills/make-clean-pptx/scripts/doctor.py --fix --offline | tee doctor.json
+        run: |
+          /usr/bin/python3 skills/make-clean-pptx/scripts/doctor.py --fix --offline | tee "$RUNNER_TEMP/doctor.json"
+          grep -q '"private_env"' "$RUNNER_TEMP/doctor.json"
       - name: A script switches to it by itself and builds a deck
         run: |
           /usr/bin/python3 skills/make-clean-pptx/scripts/build_deck.py --spec examples/home-energy.json --out "$RUNNER_TEMP/deck.pptx"
