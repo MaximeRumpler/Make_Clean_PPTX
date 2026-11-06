@@ -83,11 +83,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends python3-venv
-      - name: Make the system Python refuse pip, as recent Ubuntu, Debian and Homebrew do (PEP 668)
-        run: |
-          sudo touch "$(/usr/bin/python3 -c 'import sysconfig; print(sysconfig.get_path("stdlib"))')/EXTERNALLY-MANAGED"
-          ! /usr/bin/python3 -c "import pptx"
-      - name: doctor --fix builds a private environment
+      - name: The system Python has no python-pptx
+        run: "! /usr/bin/python3 -c 'import pptx'"
+      - name: doctor --fix builds a private environment when pip refuses (PIP_REQUIRE_VIRTUALENV makes pip refuse like PEP 668)
+        env:
+          PIP_REQUIRE_VIRTUALENV: "1"
         run: |
           /usr/bin/python3 skills/make-clean-pptx/scripts/doctor.py --fix --offline | tee "$RUNNER_TEMP/doctor.json"
           grep -q '"private_env"' "$RUNNER_TEMP/doctor.json"
