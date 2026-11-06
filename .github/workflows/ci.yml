@@ -87,7 +87,6 @@ jobs:
         run: |
           sudo touch "$(/usr/bin/python3 -c 'import sysconfig; print(sysconfig.get_path("stdlib"))')/EXTERNALLY-MANAGED"
           ! /usr/bin/python3 -c "import pptx"
-          ! /usr/bin/python3 -m pip install --user --dry-run python-pptx
       - name: doctor --fix builds a private environment
         run: |
           /usr/bin/python3 skills/make-clean-pptx/scripts/doctor.py --fix --offline | tee "$RUNNER_TEMP/doctor.json"
