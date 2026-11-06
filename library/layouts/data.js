@@ -80,11 +80,11 @@ module.exports = {
         chrome(ctx);
         rect(ctx, MX, 2.2, 5.5, 4.55, { fill: "surface", role: "card", for: "Left points" });
         text(ctx, "Left label", "Today", MX + 0.35, 2.5, 4.8, 0.3, "label", { keep: true });
-        text(ctx, "Left points", ["Current situation", "Current situation", "Current situation"], MX + 0.35, 2.95, 4.8, 3.5, "body", { bullets: true });
+        text(ctx, "Left points", ["Current situation", "Current situation", "Current situation"], MX + 0.35, 2.95, 4.8, 3.5, "body", { bullets: true, size: 20 });
         line(ctx, 6.35, 4.45, 7.0, 4.45, { color: "ink", w: 2, end: "triangle" });
         rect(ctx, 7.233, 2.2, 5.5, 4.55, { fill: "a1", role: "card", for: "Right points" });
         text(ctx, "Right label", "Tomorrow", 7.583, 2.5, 4.8, 0.3, "label", { color: "a4", keep: true });
-        text(ctx, "Right points", ["Target situation", "Target situation", "Target situation"], 7.583, 2.95, 4.8, 3.5, "body", { bullets: true, color: "paper" });
+        text(ctx, "Right points", ["Target situation", "Target situation", "Target situation"], 7.583, 2.95, 4.8, 3.5, "body", { bullets: true, color: "paper", size: 20 });
       },
     },
   ],

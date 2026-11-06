@@ -65,10 +65,10 @@ module.exports = {
         chrome(ctx, { titlePh: "The position, stated as a full sentence", titleW: CW * 0.85 });
         const cc = cols(3);
         cc.forEach((c, i) => {
-          hrule(ctx, c.x, 2.6, c.w, { color: "ink", w: 1.25, follows: `Argument ${i + 1}` });
-          text(ctx, `Number ${i + 1}`, L.num(i + 1), c.x, 2.8, 1, 0.8, "display", { size: 40, follows: `Argument ${i + 1}` });
-          text(ctx, `Argument ${i + 1}`, "Argument in a few words", c.x, 3.75, c.w, 0.75, "h3", { size: 20 });
-          text(ctx, `Argument ${i + 1} detail`, "Evidence or explanation for this argument.", c.x, 4.55, c.w, 1.9, "body", { optional: true, size: 18 });
+          hrule(ctx, c.x, 3.0, c.w, { color: "ink", w: 1.25, follows: `Argument ${i + 1}` });
+          text(ctx, `Number ${i + 1}`, L.num(i + 1), c.x, 3.2, 1, 0.8, "display", { size: 40, follows: `Argument ${i + 1}` });
+          text(ctx, `Argument ${i + 1}`, "Argument in a few words", c.x, 4.15, c.w, 0.75, "h3", { size: 20 });
+          text(ctx, `Argument ${i + 1} detail`, "Evidence or explanation for this argument.", c.x, 4.95, c.w, 1.9, "body", { optional: true, size: 18 });
         });
       },
     },
@@ -108,9 +108,9 @@ module.exports = {
       draw(ctx) {
         chrome(ctx, { lead: true });
         cols(2, MX, CW, 0.6).forEach((c, i) => {
-          hrule(ctx, c.x, 2.3, c.w, { color: "ink", w: 1.25 });
-          text(ctx, `Heading ${i + 1}`, "Column heading", c.x, 2.45, c.w, 0.5, "h3");
-          text(ctx, `Body ${i + 1}`, ["Point", "Point", "Point"], c.x, 3.05, c.w, 3.4, "body", { bullets: true, size: 18 });
+          hrule(ctx, c.x, 2.6, c.w, { color: "ink", w: 1.25 });
+          text(ctx, `Heading ${i + 1}`, "Column heading", c.x, 2.75, c.w, 0.5, "h3");
+          text(ctx, `Body ${i + 1}`, ["Point", "Point", "Point"], c.x, 3.35, c.w, 3.4, "body", { bullets: true, size: 18 });
         });
       },
     },
@@ -122,9 +122,9 @@ module.exports = {
       draw(ctx) {
         chrome(ctx, { lead: true });
         cols(3).forEach((c, i) => {
-          icon(ctx, `Icon ${i + 1}`, c.x, 2.35, 0.6, { optional: true });
-          text(ctx, `Heading ${i + 1}`, "Pillar heading", c.x, 3.2, c.w, 0.5, "h3", { size: 22 });
-          text(ctx, `Body ${i + 1}`, "Two or three sentences that explain this pillar.", c.x, 3.85, c.w, 2.6, "body", { size: 18 });
+          icon(ctx, `Icon ${i + 1}`, c.x, 2.7, 0.6, { optional: true });
+          text(ctx, `Heading ${i + 1}`, "Pillar heading", c.x, 3.55, c.w, 0.5, "h3", { size: 22 });
+          text(ctx, `Body ${i + 1}`, "Two or three sentences that explain this pillar.", c.x, 4.2, c.w, 2.6, "body", { size: 18 });
         });
       },
     },
@@ -136,10 +136,10 @@ module.exports = {
       draw(ctx) {
         chrome(ctx, { lead: true });
         cols(4).forEach((c, i) => {
-          if (i) vrule(ctx, c.x - L.GUT / 2, 2.35, 4.1, { color: "line" });
-          text(ctx, `Number ${i + 1}`, L.num(i + 1, "padded"), c.x, 2.35, c.w, 0.6, "h3", { size: 24, color: "muted", follows: `Heading ${i + 1}` });
-          text(ctx, `Heading ${i + 1}`, "Heading", c.x, 3.05, c.w, 0.75, "h3");
-          text(ctx, `Body ${i + 1}`, "Short text for this column.", c.x, 3.85, c.w, 2.6, "body");
+          if (i) vrule(ctx, c.x - L.GUT / 2, 2.7, 4.1, { color: "line" });
+          text(ctx, `Number ${i + 1}`, L.num(i + 1, "padded"), c.x, 2.7, c.w, 0.6, "h3", { size: 24, color: "muted", follows: `Heading ${i + 1}` });
+          text(ctx, `Heading ${i + 1}`, "Heading", c.x, 3.4, c.w, 0.75, "h3");
+          text(ctx, `Body ${i + 1}`, "Short text for this column.", c.x, 4.2, c.w, 2.6, "body");
         });
       },
     },
@@ -197,9 +197,9 @@ module.exports = {
         for (let i = 0; i < 3; i++) {
           const y = 2.65 + i * 1.35;
           hrule(ctx, MX, y, CW, { color: i ? "line" : "ink", w: i ? 0.75 : 1.25, follows: i ? `Finding ${i + 1}` : undefined });
-          text(ctx, `Finding ${i + 1}`, "What we observed", MX, y + 0.2, 5.3, 1.0, "body", { optional: i > 1 });
+          text(ctx, `Finding ${i + 1}`, "What we observed", MX, y + 0.2, 5.3, 1.0, "body", { optional: i > 1, size: 18 });
           line(ctx, 6.15, y + 0.33, 6.75, y + 0.33, { color: "ink", w: 1.25, end: "triangle", follows: `Implication ${i + 1}` });
-          text(ctx, `Implication ${i + 1}`, "What it means for us", 7.0, y + 0.2, 5.7, 1.0, "body", { bold: true, color: "ink", optional: i > 1 });
+          text(ctx, `Implication ${i + 1}`, "What it means for us", 7.0, y + 0.2, 5.7, 1.0, "body", { bold: true, color: "ink", optional: i > 1, size: 18 });
         }
       },
     },
