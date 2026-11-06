@@ -597,7 +597,7 @@
   "slide": 38,
   "name": "Four figures on cards",
   "category": "KPI",
-  "description": "Four grey cards in a row, each with a figure, its label and its variation.",
+  "description": "Four cards in a row, each with a figure, its label and its variation. The cards can take brand colours.",
   "use_when": "Four indicators of a scorecard; each needs a short comparison.",
   "tags": "kpi four figures cards scorecard indicators variation metrics",
   "objective": "",

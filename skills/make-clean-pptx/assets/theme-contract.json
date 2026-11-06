@@ -12,7 +12,7 @@
       "role": "Main text colour (token ink: titles, key numbers) and, lightened, captions and labels (token muted). Also the fill of the few panels drawn in ink.",
       "neutral": "111111",
       "uses": {
-        "text": 1015,
+        "text": 1008,
         "fill": 27,
         "line": 131,
         "chart_series": 0,
@@ -34,11 +34,11 @@
       "role": "Body text (token ink2).",
       "neutral": "404040",
       "uses": {
-        "text": 585,
+        "text": 592,
         "fill": 0,
         "line": 0,
         "chart_series": 0,
-        "entries": 120
+        "entries": 121
       }
     },
     "lt2": {
@@ -483,7 +483,7 @@
       "text": "ink2",
       "on": "surface",
       "kind": "text",
-      "runs": 58,
+      "runs": 65,
       "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
@@ -509,7 +509,7 @@
       "text": "muted",
       "on": "surface",
       "kind": "text",
-      "runs": 15,
+      "runs": 8,
       "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [

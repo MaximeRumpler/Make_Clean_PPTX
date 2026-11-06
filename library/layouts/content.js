@@ -165,14 +165,14 @@ module.exports = {
     },
     {
       id: "L-38", name: "Four figures on cards", category: "KPI", style: "Standard", density: "Medium",
-      description: "Four grey cards in a row, each with a figure, its label and its variation.",
+      description: "Four cards in a row, each with a figure, its label and its variation. The cards can take brand colours.",
       use_when: "Four indicators of a scorecard; each needs a short comparison.",
       tags: "kpi four figures cards scorecard indicators variation metrics",
       draw(ctx) {
         chrome(ctx, { lead: true });
         cols(4, MX, CW, 0.25).forEach((c, i) => {
           rect(ctx, c.x, 2.3, c.w, 3.4, { fill: "surface", role: "keyfigure", for: `KPI ${i + 1} value` });
-          kpi(ctx, i + 1, c.x + 0.3, 2.6, c.w - 0.6, { size: 40, h: 0.9, detailPh: "Variation and reference" });
+          kpi(ctx, i + 1, c.x + 0.3, 2.6, c.w - 0.6, { size: 40, h: 0.9, detailPh: "Variation and reference", detailColor: "ink2" });
         });
       },
     },
