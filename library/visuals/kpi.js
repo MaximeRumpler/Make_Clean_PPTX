@@ -24,7 +24,7 @@ module.exports = {
           rect(ctx, x, b.y, w, 0.06, { fill: i === 0 ? "a1" : "a4" });
           text(ctx, `Value ${i + 1}`, "00", x + 0.25, b.y + 0.3, w - 0.5, 0.9, "number", { size: 40, optional: i > 0 });
           text(ctx, `Label ${i + 1}`, "What is measured", x + 0.25, b.y + 1.25, w - 0.5, 0.45, "small", { bold: true, color: "ink", optional: i > 0 });
-          text(ctx, `Change ${i + 1}`, "+0% vs reference", x + 0.25, b.y + 1.7, w - 0.5, 0.45, "caption", { optional: true });
+          text(ctx, `Change ${i + 1}`, "+0% vs reference", x + 0.25, b.y + 1.7, w - 0.5, 0.45, "caption", { optional: true, color: "ink2" });
         }
       },
     },
