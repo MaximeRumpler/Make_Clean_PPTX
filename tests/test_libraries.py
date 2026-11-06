@@ -287,3 +287,30 @@ def test_gallery_static_cards_match_catalog():
     cards = re.search(r"<!-- cards:start -->(.*?)<!-- cards:end -->", page, re.S).group(1)
     ids = re.findall(r'<span class="id">([^<]+)</span>', cards)
     assert ids == [c["id"] for c in catalog], "run: python library/tools/gallery.py --html-only"
+
+
+def test_bundled_icons_keep_the_size_of_their_shapes():
+    """The icon build once stripped width/height from every element: a rect without them draws nothing."""
+    icons = json.loads((ASSETS / "icons" / "lucide.json").read_text(encoding="utf-8"))
+    for name, d in icons.items():
+        for rect in re.findall(r"<rect\b[^>]*>", d["svg"]):
+            assert "width=" in rect and "height=" in rect, (name, rect)
+        for el in re.findall(r"<(?:circle|ellipse)\b[^>]*>", d["svg"]):
+            assert re.search(r"\br=|\brx=", el), (name, el)
+
+
+def test_every_bundled_icon_draws_something_with_extent():
+    from _svg import parse_svg
+    icons = json.loads((ASSETS / "icons" / "lucide.json").read_text(encoding="utf-8"))
+    tiny = {"dot", "signal-zero", "wifi-zero"}  # a point or a base mark: small by design
+    for name, d in icons.items():
+        if name in tiny:
+            continue
+        (_, _, vw, vh), items, _ = parse_svg(d["svg"])
+        xs, ys = [], []
+        for it in items:
+            for seg in it["segs"]:
+                nums = seg[1:]
+                xs += nums[0::2]
+                ys += nums[1::2]
+        assert xs and (max(xs) - min(xs) > vw * 0.2 or max(ys) - min(ys) > vh * 0.2), name
