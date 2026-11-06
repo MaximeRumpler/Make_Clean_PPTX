@@ -12,6 +12,8 @@ All notable changes to this project are documented here. Format based on [Keep a
 - **Empty-bottom check in `lint_deck.py`**: a warning when the content of a slide (three or more blocks) ends above 68 % of the slide height.
 - **Private Python environment on "externally managed" systems** (PEP 668: recent Ubuntu, Debian, Fedora, Homebrew). When pip refuses to install, `doctor.py --fix` builds a private environment in a per-user folder (`~/.cache/make-clean-pptx/venv`, or `%LOCALAPPDATA%` on Windows) and the scripts switch to it by themselves (`scripts/_env.py`). The system Python is never modified. If even that fails, the message carries one working command.
 - `scripts/workdir.py`: a scratch folder and a safe clean-up.
+- `scripts/check_quotes.py`: lists quotations of a deck spec that are not found in the source text.
+- SKILL.md: read a long source in full before planning; keep nuance in headlines on analytical subjects; no unexplained decorative numbers; speaker notes on every non-obvious slide.
 
 ## [1.3.0] - 2026-11-03
 
