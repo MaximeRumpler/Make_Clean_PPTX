@@ -84,6 +84,7 @@ All notable changes to this project are documented here. Format based on [Keep a
 - `render_check.py`: a deck LibreOffice cannot convert now exits 5 ("rendering failed"), as documented, instead of 4 (reserved for missing tools).
 
 ### Fixed
+- Slide numbers use the body text colour (they were unreadable over background motifs); Story in four acts gives its titles more room above the text; the source line of Key message is 16 pt.
 - Text too faint in the neutral visuals, found by the new contrast check: the dark-slice labels of V-COM-03 (donut, now white on dark slices), the captions on mid-grey boxes of V-MAT-05, V-TIM-04 and V-STR-09 (now ink), and the quadrant texts of V-MAT-03 (now ink2 on grey fills).
 - `doctor.py` crashed when python-pptx was missing (the very case it checks for).
 - Windows: scripts print UTF-8 (the console code page could not encode some characters and stopped the script), and the LibreOffice profile path is now a valid `file:` URI.
