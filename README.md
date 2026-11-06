@@ -73,8 +73,6 @@ It may ask a few quick choices first (file format, a confidentiality label, leng
 
 Text stays readable: 16 pt for body text and never below 12 pt, which the check flags. Working files go to a temporary folder that is deleted at the end, so your folder holds the deck and nothing else.
 
-Text stays readable: 16 pt for body text and never below 12 pt, which the check flags. Working files go to a temporary folder that is deleted at the end, so your folder holds the deck and nothing else.
-
 19 of the visuals are opt-in: six *signature* illustrations (gears, a light bulb, a summit…) and thirteen *expressive* orbital diagrams. The skill uses them only when you ask or when the content clearly suits them, and sparingly: how many depends on your request, your audience and the style of the content.
 
 Browse them in the [gallery](https://maximerumpler.github.io/Make_Clean_PPTX/), or download a [finished example deck](https://github.com/MaximeRumpler/Make_Clean_PPTX/releases/latest) made from a page of notes. How it works and how to add your own designs: [docs/how-it-works.md](docs/how-it-works.md).
