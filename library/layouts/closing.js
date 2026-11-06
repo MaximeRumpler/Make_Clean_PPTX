@@ -103,12 +103,12 @@ module.exports = {
       tags: "story narrative four acts storytelling arc situation complication resolution",
       draw(ctx) {
         chrome(ctx);
-        hrule(ctx, MX, 2.75, CW, { color: "line" });
+        hrule(ctx, MX, 3.1, CW, { color: "line" });
         cols(4).forEach((c, i) => {
-          rect(ctx, c.x, 2.55, 0.4, 0.4, { fill: i === 3 ? "ink" : "paper", line: "ink", lw: 1.25, follows: `Act ${i + 1} title` });
-          text(ctx, `Act ${i + 1} label`, `Act ${i + 1}`, c.x + 0.55, 2.6, c.w - 0.55, 0.3, "label", { color: "ink", keep: true, follows: `Act ${i + 1} title` });
-          text(ctx, `Act ${i + 1} title`, "Act title", c.x, 3.2, c.w, 0.85, "h3", { size: 20 });
-          text(ctx, `Act ${i + 1} body`, "What happens in this act.", c.x, 4.2, c.w, 2.3, "body", { size: 18 });
+          rect(ctx, c.x, 2.9, 0.4, 0.4, { fill: i === 3 ? "ink" : "paper", line: "ink", lw: 1.25, follows: `Act ${i + 1} title` });
+          text(ctx, `Act ${i + 1} label`, `Act ${i + 1}`, c.x + 0.55, 2.95, c.w - 0.55, 0.3, "label", { color: "ink", keep: true, follows: `Act ${i + 1} title` });
+          text(ctx, `Act ${i + 1} title`, "Act title", c.x, 3.55, c.w, 0.85, "h3", { size: 20 });
+          text(ctx, `Act ${i + 1} body`, "What happens in this act.", c.x, 4.55, c.w, 2.3, "body", { size: 18 });
         });
       },
     },
