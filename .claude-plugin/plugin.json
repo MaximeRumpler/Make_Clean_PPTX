@@ -1,6 +1,6 @@
 {
   "name": "make-clean-pptx",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Turns your notes into PowerPoint decks from 54 slide layouts and 81 editable charts and diagrams, checks the file before delivery, never invents figures. Works with your own theme and logo. English and French.",
   "author": {
     "name": "Maxime Rumpler",

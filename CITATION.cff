@@ -9,8 +9,8 @@ authors:
 repository-code: "https://github.com/MaximeRumpler/Make_Clean_PPTX"
 url: "https://maximerumpler.github.io/Make_Clean_PPTX/"
 license: EUPL-1.2
-version: 1.3.0
-date-released: 2026-11-03
+version: 1.4.0
+date-released: 2026-11-06
 keywords:
   - powerpoint
   - pptx
