@@ -67,8 +67,8 @@ module.exports = {
         cc.forEach((c, i) => {
           hrule(ctx, c.x, 2.6, c.w, { color: "ink", w: 1.25, follows: `Argument ${i + 1}` });
           text(ctx, `Number ${i + 1}`, L.num(i + 1), c.x, 2.8, 1, 0.8, "display", { size: 40, follows: `Argument ${i + 1}` });
-          text(ctx, `Argument ${i + 1}`, "Argument in a few words", c.x, 3.75, c.w, 0.75, "h3");
-          text(ctx, `Argument ${i + 1} detail`, "Evidence or explanation for this argument.", c.x, 4.55, c.w, 1.9, "body", { optional: true });
+          text(ctx, `Argument ${i + 1}`, "Argument in a few words", c.x, 3.75, c.w, 0.75, "h3", { size: 20 });
+          text(ctx, `Argument ${i + 1} detail`, "Evidence or explanation for this argument.", c.x, 4.55, c.w, 1.9, "body", { optional: true, size: 18 });
         });
       },
     },
@@ -110,7 +110,7 @@ module.exports = {
         cols(2, MX, CW, 0.6).forEach((c, i) => {
           hrule(ctx, c.x, 2.3, c.w, { color: "ink", w: 1.25 });
           text(ctx, `Heading ${i + 1}`, "Column heading", c.x, 2.45, c.w, 0.5, "h3");
-          text(ctx, `Body ${i + 1}`, ["Point", "Point", "Point"], c.x, 3.05, c.w, 3.4, "body", { bullets: true });
+          text(ctx, `Body ${i + 1}`, ["Point", "Point", "Point"], c.x, 3.05, c.w, 3.4, "body", { bullets: true, size: 18 });
         });
       },
     },
@@ -123,8 +123,8 @@ module.exports = {
         chrome(ctx, { lead: true });
         cols(3).forEach((c, i) => {
           icon(ctx, `Icon ${i + 1}`, c.x, 2.35, 0.6, { optional: true });
-          text(ctx, `Heading ${i + 1}`, "Pillar heading", c.x, 3.2, c.w, 0.5, "h3");
-          text(ctx, `Body ${i + 1}`, "Two or three sentences that explain this pillar.", c.x, 3.8, c.w, 2.6, "body");
+          text(ctx, `Heading ${i + 1}`, "Pillar heading", c.x, 3.2, c.w, 0.5, "h3", { size: 22 });
+          text(ctx, `Body ${i + 1}`, "Two or three sentences that explain this pillar.", c.x, 3.85, c.w, 2.6, "body", { size: 18 });
         });
       },
     },
@@ -139,7 +139,7 @@ module.exports = {
           if (i) vrule(ctx, c.x - L.GUT / 2, 2.35, 4.1, { color: "line" });
           text(ctx, `Number ${i + 1}`, L.num(i + 1, "padded"), c.x, 2.35, c.w, 0.6, "h3", { size: 24, color: "muted", follows: `Heading ${i + 1}` });
           text(ctx, `Heading ${i + 1}`, "Heading", c.x, 3.05, c.w, 0.75, "h3");
-          text(ctx, `Body ${i + 1}`, "Short text for this column.", c.x, 3.85, c.w, 2.6, "small");
+          text(ctx, `Body ${i + 1}`, "Short text for this column.", c.x, 3.85, c.w, 2.6, "body");
         });
       },
     },

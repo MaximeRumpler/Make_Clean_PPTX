@@ -45,9 +45,9 @@ The slides are black, grey and white. Apply your company's PowerPoint theme and 
 
 **Not sure which one?** If you talk to Claude in a browser or in the Claude app, use the first column: nothing to install on your computer. Without step 2, Claude can read the skill but cannot build the file. First time with a skill? The [Get started guide](https://github.com/MaximeRumpler/Make_PPTX/blob/main/docs/get-started.md) walks you through it.
 
-Works on Windows, macOS and Linux. The second and third columns need Python on your computer; the skill tells you if it, or anything else, is missing. Other ways (manual copy, `install.sh`): [docs/how-it-works.md](docs/how-it-works.md#manual-install-and-requirements).
+Works on Windows, macOS and Linux. The second and third columns need Python on your computer; the skill tells you if it, or anything else, is missing, and on systems that refuse `pip install` (recent Ubuntu, Debian, Fedora, Homebrew) it sets up its own private Python folder instead of touching the system one. Other ways (manual copy, `install.sh`): [docs/how-it-works.md](docs/how-it-works.md#manual-install-and-requirements).
 
-The Claude Code command adds `make-pptx`, the marketplace of the Make PPTX set. Installed earlier with `/plugin marketplace add MaximeRumpler/Make_Clean_PPTX`? That still works; update with `/plugin marketplace update make-clean-pptx`.
+The Claude Code commands add `make-pptx`, the marketplace of the whole Make PPTX set (one marketplace, one install line per skill), then this skill. Run them inside Claude Code, or from a terminal as `claude plugin marketplace add MaximeRumpler/Make_PPTX` then `claude plugin install make-clean-pptx@make-pptx`. Installed earlier with `/plugin marketplace add MaximeRumpler/Make_Clean_PPTX`? That still works; update with `/plugin marketplace update make-clean-pptx`.
 
 **Update**: Claude Code, `/plugin marketplace update make-pptx`; Claude.ai, upload the new zip; other assistants, run the `npx skills add` line again.
 

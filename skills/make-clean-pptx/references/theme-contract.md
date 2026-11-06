@@ -50,7 +50,7 @@ Hue is free: a ramp of one brand hue (navy to pale blue) or a ramp that drifts b
 
 ## Pairs to keep readable
 
-Thresholds are WCAG 2.x: **4.5:1** for text, **3:1** for large text (18 pt and above, or 14 pt bold and above) and for graphics that carry meaning on their own. The libraries use 10 pt text on almost every pair, so 4.5:1 applies nearly everywhere.
+Thresholds are WCAG 2.x: **4.5:1** for text, **3:1** for large text (18 pt and above, or 14 pt bold and above) and for graphics that carry meaning on their own. The libraries use 12 pt text or more on every pair, so 4.5:1 applies nearly everywhere.
 
 | Text | On | Slots | Runs | Needs | Neutral |
 |---|---|---|---|---|---|

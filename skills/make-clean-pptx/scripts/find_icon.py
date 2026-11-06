@@ -24,6 +24,8 @@ Prints JSON. Exit codes: 0 ok, 1 nothing found, 2 bad arguments, 3 network or so
 """
 from __future__ import annotations
 
+import _env  # noqa: F401  (first project import: switches to the skill's private environment if needed)
+
 import argparse
 import json
 import os

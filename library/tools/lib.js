@@ -139,7 +139,8 @@ function text(ctx, name, ph, x, y, w, h, style = "body", o = {}) {
   // default: the placeholder is an acceptable value (framework headings, numbering), kept when not filled.
   const numbering = typeof ph === "string" && /^(0?[1-9]|1[0-9]|[A-Z]?[0-9])$/.test(ph);
   // Editorial caps: labels stay labels, and text inside a visual stays short.
-  let limit = o.limit || fit.limit;
+  // An explicit limit can only lower what the box holds at this font size, never raise it.
+  let limit = o.limit ? Math.min(o.limit, fit.limit) : fit.limit;
   if (!o.limit && style === "label") limit = Math.min(limit, 40);
   if (!o.limit && ctx.prefix) limit = Math.min(limit, 60);
   ctx.field({
@@ -277,14 +278,14 @@ function table(ctx, name, nCols, nRows, x, y, w, o = {}) {
   const colW = o.colW || Array(nCols).fill(w / nCols);
   const head = Array.from({ length: nCols }, (_, i) => ({
     text: o.headers ? o.headers[i] : `Header ${i + 1}`,
-    options: { bold: true, color: C.ink, fontFace: FONT.body, fontSize: 11,
+    options: { bold: true, color: C.ink, fontFace: FONT.body, fontSize: 14,
       border: [{ type: "none" }, { type: "none" }, { pt: 1.25, color: C.ink }, { type: "none" }] },
   }));
   const rows = [head];
   for (let r = 0; r < nRows; r++) {
     rows.push(Array.from({ length: nCols }, (_, i) => ({
       text: i === 0 ? `Row ${r + 1}` : "Value",
-      options: { color: C.ink2, fontFace: FONT.body, fontSize: 11,
+      options: { color: C.ink2, fontFace: FONT.body, fontSize: 14,
         fill: o.zebra && r % 2 === 1 ? { color: C.surface } : undefined,
         border: [{ type: "none" }, { type: "none" }, { pt: 0.5, color: C.line }, { type: "none" }] },
     })));

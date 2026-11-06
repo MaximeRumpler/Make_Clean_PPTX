@@ -6,7 +6,7 @@ The whole format is also a JSON Schema (draft 2020-12), `assets/deck.schema.json
 
 ```json
 {
-  "output": "build/deck.pptx",
+  "output": "deck.pptx",
   "language": "fr-FR",
   "properties": {"title": "…", "author": "…", "subject": "…", "keywords": "…"},
   "theme": "brand/brand.thmx",
@@ -128,7 +128,7 @@ A visual scaled down to fit a small frame has its fonts scaled too, never below 
 ## Report printed by build_deck.py
 
 ```json
-{"output": "build/deck.pptx", "slides": 12, "warnings": ["slide 4 (layouts#32): required field 'Takeaway' still shows its template placeholder; fill it or set it to null."], "credits_file": "build/deck.credits.md"}
+{"output": "deck.pptx", "slides": 12, "warnings": ["slide 4 (layouts#32): required field 'Takeaway' still shows its template placeholder; fill it or set it to null."], "credits_file": "deck.credits.md"}
 ```
 
 Exit codes: `0` built (read the warnings), `2` fatal spec or library problem (JSON `error`), `3` libraries could not be located.

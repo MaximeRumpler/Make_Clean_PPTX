@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Structural quality checks for a finished deck.
 
-    lint_deck.py deck.pptx [--json] [--max-fonts 3] [--min-font 10] [--contrast]
+    lint_deck.py deck.pptx [--json] [--max-fonts 3] [--min-font 12] [--contrast]
 
 Catches what the eyes of a tired reviewer miss: leftover template text,
 empty placeholders, text that probably overflows, text or pictures outside the
@@ -22,6 +22,8 @@ See references/theme-contract.md.
 Exit code: 0 = no errors (warnings may exist), 1 = errors found, 2 = unreadable file.
 """
 from __future__ import annotations
+
+import _env  # noqa: F401  (first project import: switches to the skill's private environment if needed)
 
 import argparse
 import json
@@ -110,7 +112,7 @@ def rhythm(prs, add) -> None:
                                 "about 3 in 10 is the usual ceiling, keep more only if the request asks for it")
 
 
-def lint(path: str, max_fonts: int = 3, min_font: float = 10.0, check_contrast: bool = False) -> dict:
+def lint(path: str, max_fonts: int = 3, min_font: float = 12.0, check_contrast: bool = False) -> dict:
     prs = Presentation(path)
     sw, sh = prs.slide_width, prs.slide_height
     tol_x, tol_y = int(sw * 0.01), int(sh * 0.01)
@@ -221,7 +223,7 @@ def main(argv=None) -> int:
     ap.add_argument("pptx")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--max-fonts", type=int, default=3)
-    ap.add_argument("--min-font", type=float, default=10.0)
+    ap.add_argument("--min-font", type=float, default=12.0)
     ap.add_argument("--contrast", action="store_true", help="also check text contrast against the deck's theme")
     args = ap.parse_args(argv)
     try:

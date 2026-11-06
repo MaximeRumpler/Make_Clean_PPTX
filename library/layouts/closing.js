@@ -107,8 +107,8 @@ module.exports = {
         cols(4).forEach((c, i) => {
           rect(ctx, c.x, 2.55, 0.4, 0.4, { fill: i === 3 ? "ink" : "paper", line: "ink", lw: 1.25, follows: `Act ${i + 1} title` });
           text(ctx, `Act ${i + 1} label`, `Act ${i + 1}`, c.x + 0.55, 2.6, c.w - 0.55, 0.3, "label", { color: "ink", keep: true, follows: `Act ${i + 1} title` });
-          text(ctx, `Act ${i + 1} title`, "Act title", c.x, 3.25, c.w, 0.8, "h3", { size: 18 });
-          text(ctx, `Act ${i + 1} body`, "What happens in this act.", c.x, 4.1, c.w, 2.3, "body");
+          text(ctx, `Act ${i + 1} title`, "Act title", c.x, 3.2, c.w, 0.85, "h3", { size: 20 });
+          text(ctx, `Act ${i + 1} body`, "What happens in this act.", c.x, 4.2, c.w, 2.3, "body", { size: 18 });
         });
       },
     },

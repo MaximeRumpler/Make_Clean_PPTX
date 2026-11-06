@@ -302,7 +302,7 @@
       "on": "a1",
       "kind": "text",
       "runs": 15,
-      "smallest_pt": 10.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "accent4",
@@ -315,7 +315,7 @@
       "on": "a1",
       "kind": "text",
       "runs": 18,
-      "smallest_pt": 10.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "accent5",
@@ -328,7 +328,7 @@
       "on": "a2",
       "kind": "text",
       "runs": 1,
-      "smallest_pt": 10.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "accent5",
@@ -341,7 +341,7 @@
       "on": "a1",
       "kind": "text",
       "runs": 8,
-      "smallest_pt": 10.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "accent6",
@@ -380,7 +380,7 @@
       "on": "a5",
       "kind": "text",
       "runs": 17,
-      "smallest_pt": 10.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "dk1",
@@ -419,7 +419,7 @@
       "on": "surface",
       "kind": "text",
       "runs": 101,
-      "smallest_pt": 10.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "dk1",
@@ -432,7 +432,7 @@
       "on": "a4",
       "kind": "text",
       "runs": 2,
-      "smallest_pt": 10.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "dk2",
@@ -445,7 +445,7 @@
       "on": "a5",
       "kind": "text",
       "runs": 7,
-      "smallest_pt": 10.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "dk2",
@@ -458,7 +458,7 @@
       "on": "a6",
       "kind": "text",
       "runs": 5,
-      "smallest_pt": 10.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "dk2",
@@ -484,7 +484,7 @@
       "on": "surface",
       "kind": "text",
       "runs": 57,
-      "smallest_pt": 10.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "dk2",
@@ -536,7 +536,7 @@
       "on": "a2",
       "kind": "text",
       "runs": 43,
-      "smallest_pt": 10.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "lt1",
@@ -549,7 +549,7 @@
       "on": "ink",
       "kind": "text",
       "runs": 11,
-      "smallest_pt": 11.0,
+      "smallest_pt": 12.0,
       "min_ratio": 4.5,
       "slots": [
         "lt1",
